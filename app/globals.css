@@ -1,0 +1,126 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ivoire text-nuit font-sans antialiased;
+    font-feature-settings: "liga" 1, "kern" 1;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+  ::selection {
+    @apply bg-or/30 text-nuit;
+  }
+  /* Refined thin scrollbar */
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(196, 160, 90, 0.35);
+    border-radius: 99px;
+  }
+}
+
+@layer components {
+  /* The editorial eyebrow — small caps, tracked out */
+  .eyebrow {
+    @apply font-sans text-[11px] uppercase tracking-luxe text-or;
+  }
+  .eyebrow-dark {
+    @apply font-sans text-[11px] uppercase tracking-luxe text-or/80;
+  }
+
+  /* Section numbering, e.g. 01 — Discover */
+  .section-index {
+    @apply font-sans text-[11px] uppercase tracking-wide2 text-nuit/40;
+  }
+
+  /* Display headings */
+  .display {
+    @apply font-serif font-light leading-[1.02] tracking-[-0.01em];
+  }
+
+  /* The luxury line-button — no fills, an underline that draws itself */
+  .btn-line {
+    @apply relative inline-flex items-center gap-3 font-sans text-[12px] uppercase tracking-wide2 pb-1 transition-colors duration-500;
+  }
+  .btn-line::after {
+    content: "";
+    @apply absolute left-0 bottom-0 h-px w-full origin-left scale-x-100 bg-current transition-transform duration-700 ease-luxe;
+  }
+  .btn-line:hover::after {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+
+  /* Solid pill CTA — used sparingly for the primary purchase action */
+  .btn-solid {
+    @apply inline-flex items-center justify-center gap-3 rounded-full bg-nuit px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-ivoire transition-all duration-500 ease-luxe hover:bg-cacao;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-3 rounded-full border border-nuit/25 px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-nuit transition-all duration-500 ease-luxe hover:border-nuit;
+  }
+
+  /* Hairline used to separate editorial blocks */
+  .hairline {
+    @apply h-px w-full bg-nuit/10;
+  }
+}
+
+/* Film grain overlay — sits above the page, below content, adds a photographic, non-digital feel */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Reveal-on-scroll baseline (progressively enhanced by Framer Motion) */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+/* Respect reduced motion — kill decorative movement, keep content visible */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* 3D packaging stage — real CSS 3D, no WebGL */
+.stage {
+  perspective: 1600px;
+  perspective-origin: 50% 40%;
+}
+.preserve-3d {
+  transform-style: preserve-3d;
+}
