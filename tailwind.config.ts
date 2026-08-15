@@ -5,15 +5,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Maison Noor — "Nuit & Champagne": dark, cinematic, couture.
-        nuit: "#0C0A08", // deep near-black (the dominant canvas)
-        ombre: "#17130E", // soft warm dark (alternate dark surface)
-        cacao: "#2E241B", // warm dark panel / hover
-        ivoire: "#F3EDE1", // ivory (light accent, text on dark)
-        sable: "#E7DCC8", // pale sand (rare light accent)
-        champagne: "#E7D8B5", // champagne
-        or: "#CBAE74", // signature cool gold
-        orclair: "#E4CE9A", // luminous champagne-gold (a ray of light)
+        // Maison Noor — "Vert & Or" (Bateel-inspired): deep emerald + warm gold + cream.
+        nuit: "#0A1F18", // deep emerald-black (the dominant canvas)
+        ombre: "#103128", // emerald surface (alternate)
+        cacao: "#1A4636", // mid emerald (panels / hover)
+        ivoire: "#F4EEE0", // warm cream (light accent, text on dark)
+        sable: "#E4D9C2", // pale sand (rare light accent)
+        champagne: "#E3D2A8", // champagne
+        or: "#C2A25A", // signature warm gold
+        orclair: "#D8BE7E", // luminous gold (a ray of light)
       },
       fontFamily: {
         serif: ["var(--font-serif)", "Cormorant Garamond", "Georgia", "serif"],

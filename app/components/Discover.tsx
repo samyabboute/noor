@@ -71,7 +71,7 @@ export default function Discover() {
                   rotateX: lidRotate,
                   y: lidLift,
                   transformStyle: "preserve-3d",
-                  background: "linear-gradient(160deg, #2A2018 0%, #17110B 100%)",
+                  background: "linear-gradient(160deg, #1a4636 0%, #0a1f18 100%)",
                   boxShadow: "0 20px 60px -20px rgba(0,0,0,0.7)",
                 }}
               >
