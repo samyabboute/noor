@@ -62,8 +62,8 @@ export default function ProductPage() {
     | { kind: "photo"; src: string; alt: string };
   const views: GalleryView[] = [
     { kind: "svg", variant: "case" },
-    { kind: "photo", src: "/products/deglet-trio.jpg", alt: `${product.name} — daktyle Deglet Nour` },
-    { kind: "photo", src: "/products/deglet-single.jpg", alt: `${product.name} — detal owocu` },
+    { kind: "photo", src: "/products/deglet-trio.webp", alt: `${product.name} — daktyle Deglet Nour` },
+    { kind: "photo", src: "/products/deglet-single.webp", alt: `${product.name} — detal owocu` },
     { kind: "svg", variant: "macro" },
   ];
   const current = views[view] ?? views[0];

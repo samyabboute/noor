@@ -23,7 +23,7 @@ export function TheDate() {
             {/* Real Deglet Nour photography, mounted like a specimen print on
                 an ivory card so the white studio background melts away. */}
             <Photo
-              src="/products/deglet-trio.jpg"
+              src="/products/deglet-trio.webp"
               alt="Trzy daktyle Deglet Nour z oaz Tozeur"
               blend
               className="aspect-[4/5] w-full rounded-sm"
@@ -83,7 +83,7 @@ export function Craftsmanship() {
         <Reveal delay={0.05}>
           <figure className="mx-auto mb-16 max-w-sm md:mb-24">
             <Photo
-              src="/products/deglet-branch.jpg"
+              src="/products/deglet-branch.webp"
               alt="Kiść daktyli Deglet Nour prosto z palmy — oazy Tozeur"
               blend
               className="aspect-[4/5]"

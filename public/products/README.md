@@ -5,9 +5,9 @@ Umieść tutaj 3 zdjęcia Deglet Nour (białe tło studyjne). Kod odwołuje się
 
 | Plik | Zdjęcie | Gdzie się pojawia |
 |------|---------|-------------------|
-| `deglet-single.jpg` | pojedynczy daktyl | Galeria na stronie produktu (detal) |
-| `deglet-trio.jpg`   | trzy daktyle | Sekcja „03 — Daktyl” + galeria produktu |
-| `deglet-branch.jpg` | kiść na gałązce | Sekcja „04 — Rzemiosło” (zbiór, prosto z palmy) |
+| `deglet-single.webp` | pojedynczy daktyl | Galeria na stronie produktu (detal) |
+| `deglet-trio.webp`   | trzy daktyle | Sekcja „03 — Daktyl” + galeria produktu |
+| `deglet-branch.webp` | kiść na gałązce | Sekcja „04 — Rzemiosło” (zbiór, prosto z palmy) |
 
 Zdjęcia na **białym tle** wtapiają się automatycznie w kremowe tło strony
 (technika `mix-blend-multiply`) — nie trzeba wycinać tła.
