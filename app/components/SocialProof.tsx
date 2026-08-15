@@ -41,7 +41,7 @@ function Stars() {
 export function Reviews() {
   const { t, lang } = useStore();
   return (
-    <section id="opinie" className="bg-ivoire py-24 md:py-32">
+    <section id="opinie" className="bg-nuit py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("reviews.index")}</p></Reveal>
@@ -50,7 +50,7 @@ export function Reviews() {
           <Reveal delay={0.15}>
             <div className="mt-6 flex items-center justify-center gap-3">
               <Stars />
-              <span className="font-sans text-[12px] uppercase tracking-wide2 text-nuit/50">
+              <span className="font-sans text-[12px] uppercase tracking-wide2 text-ivoire/50">
                 4.9 / 5 · 1 240+ {lang === "pl" ? "opinii" : "reviews"}
               </span>
             </div>
@@ -60,12 +60,12 @@ export function Reviews() {
         <div className="grid gap-8 md:grid-cols-3">
           {reviews.map((r, i) => (
             <Reveal key={r.who} delay={i * 0.1}>
-              <figure className="flex h-full flex-col border-t border-nuit/15 pt-7">
+              <figure className="flex h-full flex-col border-t border-ivoire/15 pt-7">
                 <Stars />
-                <blockquote className="mt-5 flex-1 font-serif text-xl leading-[1.5] text-nuit/90">
+                <blockquote className="mt-5 flex-1 font-serif text-xl leading-[1.5] text-ivoire/90">
                   “{lang === "pl" ? r.pl : r.en}”
                 </blockquote>
-                <figcaption className="mt-6 font-sans text-[12px] uppercase tracking-wide2 text-nuit/50">
+                <figcaption className="mt-6 font-sans text-[12px] uppercase tracking-wide2 text-ivoire/50">
                   {r.who} · {r.city}
                 </figcaption>
               </figure>

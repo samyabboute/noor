@@ -38,7 +38,7 @@ export default function Nav() {
     <header
       className={clsx(
         "fixed inset-x-0 top-0 z-50 transition-all duration-700 ease-luxe",
-        solid ? "bg-ivoire/90 backdrop-blur-md text-nuit border-b border-nuit/10" : "bg-transparent text-ivoire",
+        solid ? "bg-nuit/85 backdrop-blur-md text-ivoire border-b border-ivoire/10" : "bg-transparent text-ivoire",
       )}
     >
       <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 md:px-10 h-[64px] md:h-[68px]">

@@ -20,17 +20,16 @@ export function TheDate() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Reveal>
-            {/* Real Deglet Nour photography, mounted like a specimen print on
-                an ivory card so the white studio background melts away. */}
+            {/* Real Deglet Nour photography, background removed — the fruit
+                floats on the dark canvas with a soft shadow. */}
             <Photo
               src="/products/deglet-trio.webp"
               alt="Trzy daktyle Deglet Nour z oaz Tozeur"
-              blend
-              className="aspect-[4/5] w-full rounded-sm"
+              className="aspect-[4/5] w-full"
             />
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 font-sans text-[11px] uppercase tracking-wide2 text-ivoire/30">
+            <p className="mt-4 text-center font-sans text-[11px] uppercase tracking-wide2 text-ivoire/35">
               Deglet Nour · Jumbo · Oazy Tozeur, Tunezja
             </p>
           </Reveal>
@@ -71,7 +70,7 @@ export function Craftsmanship() {
     { k: "craft.s4.k", v: "craft.s4.v" },
   ];
   return (
-    <section id="rzemioslo" className="bg-ivoire py-24 md:py-36">
+    <section id="rzemioslo" className="bg-ombre py-24 text-ivoire md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("craft.index")}</p></Reveal>
@@ -85,9 +84,7 @@ export function Craftsmanship() {
             <Photo
               src="/products/deglet-branch.webp"
               alt="Kiść daktyli Deglet Nour prosto z palmy — oazy Tozeur"
-              blend
               className="aspect-[4/5]"
-              imgClassName="object-contain"
             />
             <figcaption className="mt-4 text-center section-index">Prosto z palmy · Oazy Tozeur</figcaption>
           </figure>
@@ -104,7 +101,7 @@ export function Craftsmanship() {
                   <span className="hairline flex-1" />
                 </div>
                 <h3 className="mt-6 font-serif text-2xl">{t(s.k)}</h3>
-                <p className="mt-3 font-sans text-[14px] leading-[1.8] text-nuit/60">{t(s.v)}</p>
+                <p className="mt-3 font-sans text-[14px] leading-[1.8] text-ivoire/60">{t(s.v)}</p>
               </div>
             </Reveal>
           ))}
@@ -152,7 +149,7 @@ export function Corporate() {
   const { t } = useStore();
   const bullets = ["corp.b1", "corp.b2", "corp.b3"];
   return (
-    <section id="dla-firm" className="bg-sable py-24 md:py-36">
+    <section id="dla-firm" className="bg-nuit py-24 text-ivoire md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <div>
@@ -160,7 +157,7 @@ export function Corporate() {
             <Reveal delay={0.05}><p className="eyebrow mt-5">{t("corp.eyebrow")}</p></Reveal>
             <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-6xl">{t("corp.title")}</h2></Reveal>
             <Reveal delay={0.15}>
-              <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-nuit/70">{t("corp.body")}</p>
+              <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ivoire/70">{t("corp.body")}</p>
             </Reveal>
             <Reveal delay={0.2}>
               <a href="mailto:corporate@maisonnoor.pl" className="btn-solid mt-9">
@@ -168,12 +165,12 @@ export function Corporate() {
               </a>
             </Reveal>
           </div>
-          <div className="space-y-px overflow-hidden rounded-sm bg-nuit/10">
+          <div className="space-y-px overflow-hidden rounded-sm bg-ivoire/10">
             {bullets.map((b, i) => (
               <Reveal key={b} delay={i * 0.1}>
-                <div className="flex items-center gap-5 bg-sable px-2 py-6">
+                <div className="flex items-center gap-5 bg-ombre px-5 py-6">
                   <span className="font-serif text-3xl text-or">0{i + 1}</span>
-                  <p className="font-serif text-xl text-nuit md:text-2xl">{t(b)}</p>
+                  <p className="font-serif text-xl text-ivoire md:text-2xl">{t(b)}</p>
                 </div>
               </Reveal>
             ))}

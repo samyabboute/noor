@@ -14,13 +14,13 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-ivoire text-nuit font-sans antialiased;
+    @apply bg-nuit text-ivoire font-sans antialiased;
     font-feature-settings: "liga" 1, "kern" 1;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
   }
   ::selection {
-    @apply bg-or/30 text-nuit;
+    @apply bg-or/30 text-ivoire;
   }
   /* Refined thin scrollbar */
   ::-webkit-scrollbar {
@@ -46,7 +46,7 @@
 
   /* Section numbering, e.g. 01 — Discover */
   .section-index {
-    @apply font-sans text-[11px] uppercase tracking-wide2 text-nuit/40;
+    @apply font-sans text-[11px] uppercase tracking-wide2 text-ivoire/40;
   }
 
   /* Display headings */
@@ -67,17 +67,17 @@
     transform-origin: right;
   }
 
-  /* Solid pill CTA — used sparingly for the primary purchase action */
+  /* Solid pill CTA — a light pill on the dark canvas (primary purchase action) */
   .btn-solid {
-    @apply inline-flex items-center justify-center gap-3 rounded-full bg-nuit px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-ivoire transition-all duration-500 ease-luxe hover:bg-cacao;
+    @apply inline-flex items-center justify-center gap-3 rounded-full bg-ivoire px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-nuit transition-all duration-500 ease-luxe hover:bg-champagne;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-3 rounded-full border border-nuit/25 px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-nuit transition-all duration-500 ease-luxe hover:border-nuit;
+    @apply inline-flex items-center justify-center gap-3 rounded-full border border-ivoire/30 px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-ivoire transition-all duration-500 ease-luxe hover:border-ivoire hover:bg-ivoire/5;
   }
 
   /* Hairline used to separate editorial blocks */
   .hairline {
-    @apply h-px w-full bg-nuit/10;
+    @apply h-px w-full bg-ivoire/10;
   }
 }
 

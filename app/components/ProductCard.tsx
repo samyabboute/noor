@@ -30,13 +30,13 @@ export default function ProductCard({ product }: { product: Product }) {
       <div className="mt-4 flex items-baseline justify-between gap-3">
         <div>
           <h3 className="font-serif text-xl leading-tight">{product.name}</h3>
-          <p className="mt-0.5 font-sans text-[12px] text-nuit/50">{product.variety[lang]}</p>
+          <p className="mt-0.5 font-sans text-[12px] text-ivoire/45">{product.variety[lang]}</p>
         </div>
         <div className="text-right">
           {isCorporate ? (
             <span className="font-sans text-[12px] uppercase tracking-wide2 text-or">{t("corp.cta")}</span>
           ) : (
-            <span className="font-serif text-lg text-nuit">{formatPLN(product.price, lang)}</span>
+            <span className="font-serif text-lg text-ivoire">{formatPLN(product.price, lang)}</span>
           )}
         </div>
       </div>

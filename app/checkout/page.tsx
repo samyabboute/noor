@@ -15,10 +15,10 @@ function Field({
 }: { label: string; type?: string; full?: boolean } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className={`flex flex-col gap-1.5 ${full ? "sm:col-span-2" : ""}`}>
-      <span className="font-sans text-[11px] uppercase tracking-wide2 text-nuit/50">{label}</span>
+      <span className="font-sans text-[11px] uppercase tracking-wide2 text-ivoire/50">{label}</span>
       <input
         type={type}
-        className="border-b border-nuit/25 bg-transparent py-2.5 font-sans text-[14px] focus:border-or focus:outline-none"
+        className="border-b border-ivoire/25 bg-transparent py-2.5 font-sans text-[14px] focus:border-or focus:outline-none"
         {...rest}
       />
     </label>
@@ -47,7 +47,7 @@ export default function CheckoutPage() {
         </svg>
         <h1 className="display text-4xl md:text-5xl">{t("co.placed")}</h1>
         <p className="max-w-sm font-sans text-[14px] text-ivoire/60">{t("pdp.deliveryEst")}</p>
-        <Link href="/" className="btn-solid mt-2 bg-ivoire text-nuit hover:bg-orclair">
+        <Link href="/" className="btn-solid mt-2">
           Maison Noor
         </Link>
       </div>
@@ -56,9 +56,9 @@ export default function CheckoutPage() {
 
   if (cart.length === 0) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-ivoire px-6 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-nuit px-6 text-center">
         <Logo />
-        <p className="font-serif text-2xl text-nuit/60">{t("bag.empty")}</p>
+        <p className="font-serif text-2xl text-ivoire/60">{t("bag.empty")}</p>
         <Link href="/kolekcja" className="btn-ghost">{t("bag.emptyCta")}</Link>
       </div>
     );
@@ -68,7 +68,7 @@ export default function CheckoutPage() {
   const grand = subtotal + shippingCost;
 
   return (
-    <div className="min-h-screen bg-ivoire">
+    <div className="min-h-screen bg-nuit">
       <div className="mx-auto grid max-w-[1200px] lg:grid-cols-[1.3fr_1fr]">
         {/* Form */}
         <div className="px-6 pb-20 pt-28 md:px-12 md:pt-32">
@@ -105,11 +105,11 @@ export default function CheckoutPage() {
                     key={m.id}
                     onClick={() => setShip(m.id)}
                     className={`flex items-center justify-between rounded-sm border px-4 py-4 text-left transition ${
-                      ship === m.id ? "border-or bg-or/5" : "border-nuit/20"
+                      ship === m.id ? "border-or bg-or/5" : "border-ivoire/20"
                     }`}
                   >
                     <span className="font-sans text-[13px]">{m.label}</span>
-                    <span className="font-sans text-[12px] text-nuit/60">{m.price}</span>
+                    <span className="font-sans text-[12px] text-ivoire/60">{m.price}</span>
                   </button>
                 ))}
               </div>
@@ -128,7 +128,7 @@ export default function CheckoutPage() {
                 <textarea
                   rows={3}
                   placeholder={t("pdp.giftnote")}
-                  className="mt-3 w-full rounded-sm border border-nuit/20 bg-transparent p-3 font-sans text-[14px] focus:border-or focus:outline-none"
+                  className="mt-3 w-full rounded-sm border border-ivoire/20 bg-transparent p-3 font-sans text-[14px] focus:border-or focus:outline-none"
                 />
               )}
             </fieldset>
@@ -142,11 +142,11 @@ export default function CheckoutPage() {
                     key={m.id}
                     onClick={() => setPay(m.id)}
                     className={`flex flex-col items-start rounded-sm border px-4 py-4 text-left transition ${
-                      pay === m.id ? "border-or bg-or/5" : "border-nuit/20"
+                      pay === m.id ? "border-or bg-or/5" : "border-ivoire/20"
                     }`}
                   >
                     <span className="font-sans text-[13px] font-medium">{m.label}</span>
-                    <span className="mt-0.5 font-sans text-[11px] text-nuit/50">{m.hint}</span>
+                    <span className="mt-0.5 font-sans text-[11px] text-ivoire/50">{m.hint}</span>
                   </button>
                 ))}
               </div>
@@ -155,7 +155,7 @@ export default function CheckoutPage() {
                   inputMode="numeric"
                   maxLength={6}
                   placeholder="• • •  • • •"
-                  className="mt-4 w-40 border-b border-nuit/25 bg-transparent py-2.5 text-center font-sans text-2xl tracking-[0.3em] focus:border-or focus:outline-none"
+                  className="mt-4 w-40 border-b border-ivoire/25 bg-transparent py-2.5 text-center font-sans text-2xl tracking-[0.3em] focus:border-or focus:outline-none"
                 />
               )}
             </fieldset>
@@ -164,7 +164,7 @@ export default function CheckoutPage() {
               <button type="submit" className="btn-solid w-full py-5 text-[13px]">
                 {t("co.pay")} · {formatPLN(grand, lang)}
               </button>
-              <p className="mt-4 flex items-center justify-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-nuit/45">
+              <p className="mt-4 flex items-center justify-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-ivoire/45">
                 <span className="text-or">⌾</span> {t("co.secure")}
               </p>
             </div>
@@ -172,7 +172,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Summary */}
-        <aside className="border-t border-nuit/10 bg-sable/40 px-6 py-12 lg:border-l lg:border-t-0 lg:px-10 lg:pt-32">
+        <aside className="border-t border-ivoire/10 bg-ombre px-6 py-12 lg:border-l lg:border-t-0 lg:px-10 lg:pt-32">
           <p className="eyebrow">{t("co.summary")}</p>
           <ul className="mt-6 space-y-5">
             {cart.map((line) => {
@@ -189,7 +189,7 @@ export default function CheckoutPage() {
                   <div className="flex flex-1 items-center justify-between">
                     <div>
                       <p className="font-serif text-[16px] leading-tight">{p.name}</p>
-                      <p className="font-sans text-[11px] text-nuit/50">{p.weight}</p>
+                      <p className="font-sans text-[11px] text-ivoire/50">{p.weight}</p>
                     </div>
                     <span className="font-serif">{formatPLN(p.price * line.qty, lang)}</span>
                   </div>
@@ -198,22 +198,22 @@ export default function CheckoutPage() {
             })}
           </ul>
 
-          <div className="mt-8 space-y-2 border-t border-nuit/15 pt-6 font-sans text-[13px]">
-            <div className="flex justify-between text-nuit/60">
+          <div className="mt-8 space-y-2 border-t border-ivoire/15 pt-6 font-sans text-[13px]">
+            <div className="flex justify-between text-ivoire/60">
               <span>{t("bag.subtotal")}</span>
               <span>{formatPLN(subtotal, lang)}</span>
             </div>
-            <div className="flex justify-between text-nuit/60">
+            <div className="flex justify-between text-ivoire/60">
               <span>{t("bag.shipping")}</span>
               <span>{shippingCost === 0 ? t("bag.free") : formatPLN(shippingCost, lang)}</span>
             </div>
-            <div className="flex justify-between pt-2 font-serif text-2xl text-nuit">
+            <div className="flex justify-between pt-2 font-serif text-2xl text-ivoire">
               <span>{t("bag.total")}</span>
               <span>{formatPLN(grand, lang)}</span>
             </div>
           </div>
 
-          <div className="mt-8 space-y-3 font-sans text-[12px] text-nuit/60">
+          <div className="mt-8 space-y-3 font-sans text-[12px] text-ivoire/60">
             <p className="flex items-center gap-2"><span className="text-or">✦</span> {t("bag.giftwrap")}</p>
             <p className="flex items-center gap-2"><span className="text-or">✦</span> {t("pdp.delivery.v")}</p>
           </div>

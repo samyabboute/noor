@@ -1,35 +1,48 @@
 import clsx from "clsx";
 
 /**
- * Real product photography on a white studio background.
- * `blend` uses mix-blend-multiply so the white cutout melts into an ivory
- * ground seamlessly (white × ivoire = ivoire) — no visible photo rectangle.
- * Only use `blend` on a light (ivoire/sable) surface, never on a dark one.
- * If the file is missing the container simply shows its warm background,
- * so the layout degrades gracefully until the images are added to /public.
+ * Real product photography, background removed (transparent PNG/WebP).
+ * The subject floats on whatever surface it sits on, with a soft drop shadow
+ * for a premium, weightless feel. No card, no blend — works on dark or light.
  */
 export default function Photo({
   src,
   alt,
   className,
   imgClassName,
-  blend = false,
+  fit = "contain",
+  glow = true,
 }: {
   src: string;
   alt: string;
   className?: string;
   imgClassName?: string;
-  blend?: boolean;
+  fit?: "contain" | "cover";
+  glow?: boolean;
 }) {
   return (
-    <div className={clsx("overflow-hidden bg-ivoire", className)}>
+    <div className={clsx("relative flex items-center justify-center", className)}>
+      {glow && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background: "radial-gradient(closest-side, rgba(228,206,154,0.16), transparent 72%)",
+          }}
+        />
+      )}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={src}
         alt={alt}
         loading="lazy"
         decoding="async"
-        className={clsx("h-full w-full object-cover", blend && "mix-blend-multiply", imgClassName)}
+        className={clsx(
+          "relative h-full w-full",
+          fit === "cover" ? "object-cover" : "object-contain",
+          imgClassName,
+        )}
+        style={{ filter: "drop-shadow(0 26px 40px rgba(0,0,0,0.55))" }}
       />
     </div>
   );
