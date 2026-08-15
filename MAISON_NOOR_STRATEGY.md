@@ -244,7 +244,7 @@ _Pourquoi :_ SSR/SSG = SEO + LCP ; Tailwind = design-system discipliné ; Framer
 images **next/image AVIF/WebP** + CDN ; **GA4 + Meta CAPI**. State panier ici : Context + localStorage (démo).
 
 ## N. SEO (Pologne)
-- Intentions : `luksusowe daktyle`, `daktyle premium`, `daktyle Medjool`, `ekskluzywne prezenty`, `kosz prezentowy`,
+- Intentions : `luksusowe daktyle`, `daktyle premium`, `daktyle Deglet Nour`, `ekskluzywne prezenty`, `kosz prezentowy`,
   `prezenty firmowe premium`, `daktyle w czekoladzie`, `zdrowe słodycze premium`, saisonnier `prezenty na Ramadan / święta`.
 - `lang="pl"`, hreflang pl/en, metadata + OpenGraph PL (voir `layout.tsx`), titres/`H1` sémantiques, URLs PL (`/kolekcja`, `/produkt/…`).
 - À ajouter en prod : JSON-LD `Product`/`Offer`/`AggregateRating`/`BreadcrumbList`, sitemap, blog `Journal` (rituels, recettes, gifting) pour le SEO d'intention haute.

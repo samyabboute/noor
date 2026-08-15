@@ -35,8 +35,8 @@ export const t: Dict = {
     en: "The date is a fruit of light.",
   },
   "discover.body": {
-    pl: "Noor znaczy światło. Rodzi się tam, gdzie słońce spotyka pustynię — w owocu, który od tysięcy lat jest symbolem gościnności i szczodrości. Maison Noor bierze ten gest i podnosi go do rangi haute couture: francuski luksus, bliskowschodnie dziedzictwo, europejski minimalizm.",
-    en: "Noor means light. It is born where the sun meets the desert — in a fruit that for millennia has meant hospitality and generosity. Maison Noor takes that gesture and raises it to haute couture: French luxury, Middle Eastern heritage, European restraint.",
+    pl: "Noor znaczy światło. I nie przez przypadek nasza odmiana — Deglet Nour — znaczy dosłownie „daktyl światła”. Rodzi się w oazach Tozeur, tam gdzie słońce spotyka pustynię, w owocu, który od tysięcy lat jest symbolem gościnności i szczodrości. Maison Noor bierze ten gest i podnosi go do rangi haute couture: francuski luksus, bliskowschodnie dziedzictwo, europejski minimalizm.",
+    en: "Noor means light. And it is no accident that our variety — Deglet Nour — literally means “the date of light”. It is born in the oases of Tozeur, where the sun meets the desert, in a fruit that for millennia has meant hospitality and generosity. Maison Noor takes that gesture and raises it to haute couture: French luxury, Middle Eastern heritage, European restraint.",
   },
 
   // 02 Collection

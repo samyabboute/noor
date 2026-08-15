@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
 import ProductVisual from "./ProductVisual";
+import Photo from "./Photo";
 import { useStore } from "../lib/store";
 
 /* 03 — The Date : why Noor is different */
@@ -19,13 +20,18 @@ export function TheDate() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Reveal>
-            <div className="overflow-hidden rounded-sm">
-              <ProductVisual slug="noor-signature" variant="macro" className="aspect-[4/5] w-full" />
-            </div>
+            {/* Real Deglet Nour photography, mounted like a specimen print on
+                an ivory card so the white studio background melts away. */}
+            <Photo
+              src="/products/deglet-trio.jpg"
+              alt="Trzy daktyle Deglet Nour z oaz Tozeur"
+              blend
+              className="aspect-[4/5] w-full rounded-sm"
+            />
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-4 font-sans text-[11px] uppercase tracking-wide2 text-ivoire/30">
-              Medjool · Jumbo · Dolina Jordanu
+              Deglet Nour · Jumbo · Oazy Tozeur, Tunezja
             </p>
           </Reveal>
         </div>
@@ -67,11 +73,25 @@ export function Craftsmanship() {
   return (
     <section id="rzemioslo" className="bg-ivoire py-24 md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="mb-16 text-center">
+        <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("craft.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("craft.eyebrow")}</p></Reveal>
           <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-7xl">{t("craft.title")}</h2></Reveal>
         </div>
+
+        {/* The raw harvest — a full cluster of Deglet Nour, straight from the palm. */}
+        <Reveal delay={0.05}>
+          <figure className="mx-auto mb-16 max-w-sm md:mb-24">
+            <Photo
+              src="/products/deglet-branch.jpg"
+              alt="Kiść daktyli Deglet Nour prosto z palmy — oazy Tozeur"
+              blend
+              className="aspect-[4/5]"
+              imgClassName="object-contain"
+            />
+            <figcaption className="mt-4 text-center section-index">Prosto z palmy · Oazy Tozeur</figcaption>
+          </figure>
+        </Reveal>
 
         <div className="grid gap-10 md:grid-cols-4">
           {steps.map((s, i) => (

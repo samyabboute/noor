@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import ProductVisual from "../../components/ProductVisual";
+import Photo from "../../components/Photo";
 import AddToBag from "../../components/AddToBag";
 import Reveal from "../../components/Reveal";
 import Footer from "../../components/Footer";
@@ -40,7 +41,7 @@ export default function ProductPage() {
   const slug = String(params.slug);
   const { t, lang } = useStore();
   const product = getProduct(slug);
-  const [view, setView] = useState<"case" | "macro">("case");
+  const [view, setView] = useState(0);
   const [qty, setQty] = useState(1);
 
   if (!product) {
@@ -55,25 +56,46 @@ export default function ProductPage() {
   const isLimited = product.badge?.[lang]?.toLowerCase().includes("limit") || product.tier === "royal";
   const crossSell = shopProducts.filter((p) => p.slug !== product.slug).slice(0, 3);
 
+  // Gallery: the signature case (SVG) alongside real Deglet Nour photography.
+  type GalleryView =
+    | { kind: "svg"; variant: "case" | "macro" }
+    | { kind: "photo"; src: string; alt: string };
+  const views: GalleryView[] = [
+    { kind: "svg", variant: "case" },
+    { kind: "photo", src: "/products/deglet-trio.jpg", alt: `${product.name} — daktyle Deglet Nour` },
+    { kind: "photo", src: "/products/deglet-single.jpg", alt: `${product.name} — detal owocu` },
+    { kind: "svg", variant: "macro" },
+  ];
+  const current = views[view] ?? views[0];
+
   return (
     <>
       <div className="bg-ivoire pt-24 md:pt-28">
         <div className="mx-auto grid max-w-[1400px] gap-10 px-6 md:px-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-sm bg-nuit">
-              <ProductVisual slug={product.slug} variant={view} className="aspect-square w-full" />
+            <div className={`overflow-hidden rounded-sm ${current.kind === "photo" ? "bg-ivoire" : "bg-nuit"}`}>
+              {current.kind === "svg" ? (
+                <ProductVisual slug={product.slug} variant={current.variant} className="aspect-square w-full" />
+              ) : (
+                <Photo src={current.src} alt={current.alt} blend className="aspect-square w-full" />
+              )}
             </div>
             <div className="mt-4 flex gap-3">
-              {(["case", "macro"] as const).map((v) => (
+              {views.map((v, i) => (
                 <button
-                  key={v}
-                  onClick={() => setView(v)}
+                  key={i}
+                  onClick={() => setView(i)}
+                  aria-label={`Widok ${i + 1}`}
                   className={`h-20 w-20 overflow-hidden rounded-sm border-2 transition ${
-                    view === v ? "border-or" : "border-transparent opacity-60"
-                  }`}
+                    view === i ? "border-or" : "border-transparent opacity-60"
+                  } ${v.kind === "photo" ? "bg-ivoire" : "bg-nuit"}`}
                 >
-                  <ProductVisual slug={product.slug} variant={v} className="h-full w-full" />
+                  {v.kind === "svg" ? (
+                    <ProductVisual slug={product.slug} variant={v.variant} className="h-full w-full" />
+                  ) : (
+                    <Photo src={v.src} alt="" blend className="h-full w-full" />
+                  )}
                 </button>
               ))}
             </div>
