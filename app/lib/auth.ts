@@ -1,5 +1,7 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma, dbEnabled } from "./prisma";
 
 /**
  * Auth.js (NextAuth) configuration.
@@ -26,6 +28,8 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
 
 export const authOptions: NextAuthOptions = {
   providers,
+  // Persist users/accounts when a database is connected; JWT sessions either way.
+  adapter: dbEnabled && prisma ? PrismaAdapter(prisma) : undefined,
   // A real secret must be set in production (AUTH_SECRET). The fallback only
   // keeps the un-configured preview from crashing before keys are added.
   secret:

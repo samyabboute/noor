@@ -78,8 +78,24 @@ export default function CheckoutPage() {
 
           <form
             className="mt-10 space-y-12"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
+              const form = e.currentTarget;
+              try {
+                await fetch("/api/orders", {
+                  method: "POST",
+                  headers: { "content-type": "application/json" },
+                  body: JSON.stringify({
+                    email: (form.querySelector('input[type="email"]') as HTMLInputElement)?.value || "",
+                    phone: (form.querySelector('input[type="tel"]') as HTMLInputElement)?.value || "",
+                    items: cart,
+                    shipMethod: ship,
+                    currency: "PLN",
+                  }),
+                });
+              } catch {
+                /* best-effort — payment is the source of truth */
+              }
               clearCart();
               setPlaced(true);
             }}
