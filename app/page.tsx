@@ -2,6 +2,7 @@ import Hero from "./components/Hero";
 import TrustBar from "./components/TrustBar";
 import Showcase360 from "./components/Showcase360";
 import Discover from "./components/Discover";
+import OriginScene from "./components/OriginScene";
 import CollectionSection from "./components/CollectionSection";
 import { TheDate, Craftsmanship, GiftCollection, Corporate, Story } from "./components/EditorialSections";
 import DecisionsCounter from "./components/DecisionsCounter";
@@ -16,6 +17,7 @@ export default function Home() {
       <TrustBar />
       <Showcase360 />
       <Discover />
+      <OriginScene />
       <CollectionSection />
       <TheDate />
       <DecisionsCounter />

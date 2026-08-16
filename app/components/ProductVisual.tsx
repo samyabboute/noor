@@ -103,16 +103,23 @@ export default function ProductVisual({
         {/* tray inset shadow */}
         <polygon points="168,168 432,168 448,452 152,452" fill="#00000010" />
 
-        {/* the dates, arranged in a grid */}
+        {/* the dates — elongated, hand-arranged Deglet Nour */}
         {[0, 1, 2].map((row) =>
           [0, 1, 2, 3].map((col) => {
             const cx = 200 + col * 67;
-            const cy = 210 + row * 82;
+            const cy = 214 + row * 80;
+            const rot = ((row + col) % 3) * 6 - 6; // subtle hand-laid variation
             return (
-              <g key={`${row}-${col}`}>
-                <ellipse cx={cx} cy={cy + 6} rx="26" ry="15" fill="#00000018" />
-                <ellipse cx={cx} cy={cy} rx="27" ry="34" fill={`url(#date-${id})`} />
-                <ellipse cx={cx - 7} cy={cy - 11} rx="8" ry="13" fill="#ffffff" opacity="0.22" />
+              <g key={`${row}-${col}`} transform={`rotate(${rot} ${cx} ${cy})`}>
+                {/* contact shadow */}
+                <ellipse cx={cx} cy={cy + 30} rx="20" ry="7" fill="#00000022" />
+                {/* body — elongated */}
+                <ellipse cx={cx} cy={cy} rx="17" ry="36" fill={`url(#date-${id})`} />
+                {/* wrinkle creases */}
+                <path d={`M ${cx - 8} ${cy - 20} Q ${cx} ${cy} ${cx - 6} ${cy + 22}`} stroke="#00000026" strokeWidth="1.2" fill="none" />
+                <path d={`M ${cx + 6} ${cy - 22} Q ${cx + 2} ${cy} ${cx + 7} ${cy + 20}`} stroke="#00000020" strokeWidth="1" fill="none" />
+                {/* specular highlight */}
+                <ellipse cx={cx - 5} cy={cy - 14} rx="4" ry="12" fill="#ffffff" opacity="0.3" />
               </g>
             );
           }),

@@ -4,6 +4,7 @@ import Link from "next/link";
 import Reveal from "./Reveal";
 import ProductVisual from "./ProductVisual";
 import Photo from "./Photo";
+import MacroDate from "./MacroDate";
 import { useStore } from "../lib/store";
 
 /* 03 — The Date : why Noor is different */
@@ -20,13 +21,8 @@ export function TheDate() {
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Reveal>
-            {/* Real Deglet Nour photography, background removed — the fruit
-                floats on the dark canvas with a soft shadow. */}
-            <Photo
-              src="/products/deglet-trio.webp"
-              alt="Trzy daktyle Deglet Nour z oaz Tozeur"
-              className="aspect-[4/5] w-full"
-            />
+            {/* The date as a jewel — macro, turning gently, catching the light. */}
+            <MacroDate src="/products/deglet-single.webp" alt="Daktyl Deglet Nour — makro" />
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-4 text-center font-sans text-[11px] uppercase tracking-wide2 text-ivoire/35">
