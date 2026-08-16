@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { StoreProvider } from "./lib/store";
+import AuthProvider from "./components/AuthProvider";
 import Nav from "./components/Nav";
 import BagDrawer from "./components/BagDrawer";
 import Loader from "./components/Loader";
@@ -56,6 +57,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="grain">
+        <AuthProvider>
         <StoreProvider>
           <SmoothScroll />
           <Loader />
@@ -64,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <BagDrawer />
           <RegionPrompt />
         </StoreProvider>
+        </AuthProvider>
       </body>
     </html>
   );
