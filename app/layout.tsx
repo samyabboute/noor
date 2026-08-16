@@ -3,6 +3,8 @@ import "./globals.css";
 import { StoreProvider } from "./lib/store";
 import Nav from "./components/Nav";
 import BagDrawer from "./components/BagDrawer";
+import Loader from "./components/Loader";
+import SmoothScroll from "./components/SmoothScroll";
 
 const faviconSvg =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%2316110C'/%3E%3Cpath d='M20 6 C21 15 25 19 34 20 C25 21 21 25 20 34 C19 25 15 21 6 20 C15 19 19 15 20 6 Z' fill='%23C4A05A'/%3E%3C/svg%3E";
@@ -46,6 +48,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="pl">
       <body className="grain">
         <StoreProvider>
+          <SmoothScroll />
+          <Loader />
           <Nav />
           <main>{children}</main>
           <BagDrawer />

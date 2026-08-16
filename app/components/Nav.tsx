@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
-import { Logo } from "./Logo";
+import { Logo, NoorMark } from "./Logo";
 import { useStore } from "../lib/store";
 
 const links = [
@@ -30,30 +31,43 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // The transparent, light-on-dark treatment only makes sense over the hero.
-  // Everywhere else the nav is solid so it stays legible.
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
   const solid = scrolled || !isHome;
 
   return (
     <header
       className={clsx(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-700 ease-luxe",
-        solid ? "bg-nuit/85 backdrop-blur-md text-ivoire border-b border-ivoire/10" : "bg-transparent text-ivoire",
+        "fixed inset-x-0 top-0 z-[100] transition-all duration-700 ease-luxe",
+        menuOpen
+          ? "text-ivoire"
+          : solid
+            ? "bg-nuit/85 backdrop-blur-md text-ivoire border-b border-ivoire/10"
+            : "bg-transparent text-ivoire",
       )}
     >
       <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 md:px-10 h-[64px] md:h-[68px]">
         {/* Left: mobile menu toggle */}
         <button
-          className="lg:hidden -ml-1 p-1"
-          aria-label="Menu"
+          className="-ml-1 flex items-center gap-2.5 p-1 lg:hidden"
+          aria-label={menuOpen ? t("common.close") : "Menu"}
+          aria-expanded={menuOpen}
           onClick={() => setMenuOpen((v) => !v)}
         >
-          <span className="block h-px w-6 bg-current" />
-          <span className="mt-1.5 block h-px w-6 bg-current" />
-          <span className="mt-1.5 block h-px w-4 bg-current" />
+          <span className="flex flex-col gap-1">
+            <span className={clsx("block h-px w-5 bg-current transition-transform duration-300", menuOpen && "translate-y-[3px] rotate-45")} />
+            <span className={clsx("block h-px w-5 bg-current transition-all duration-300", menuOpen && "opacity-0")} />
+            <span className={clsx("block h-px w-5 bg-current transition-transform duration-300", menuOpen && "-translate-y-[3px] -rotate-45")} />
+          </span>
+          <span className="hidden font-sans text-[11px] uppercase tracking-wide2 sm:inline">{menuOpen ? t("common.close") : "Menu"}</span>
         </button>
 
-        <Link href="/" className="lg:flex-none" aria-label="Maison Noor — home">
+        <Link href="/" className="lg:flex-none" aria-label="Maison Noor — home" onClick={() => setMenuOpen(false)}>
           <Logo />
         </Link>
 
@@ -72,7 +86,7 @@ export default function Nav() {
         <div className="flex items-center gap-3 md:gap-6">
           <button
             onClick={toggleLang}
-            className="font-sans text-[11px] uppercase tracking-wide2 opacity-80 hover:opacity-100 transition"
+            className="hidden font-sans text-[11px] uppercase tracking-wide2 opacity-80 transition hover:opacity-100 sm:inline"
             aria-label="Change language"
           >
             <span className={clsx(lang === "pl" && "text-or")}>PL</span>
@@ -81,7 +95,10 @@ export default function Nav() {
           </button>
 
           <button
-            onClick={() => setBagOpen(true)}
+            onClick={() => {
+              setMenuOpen(false);
+              setBagOpen(true);
+            }}
             className="relative font-sans text-[12px] uppercase tracking-wide2 opacity-90 hover:opacity-100 transition"
             aria-label={t("nav.bag")}
           >
@@ -91,26 +108,66 @@ export default function Nav() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
-      <div
-        className={clsx(
-          "lg:hidden overflow-hidden bg-nuit text-ivoire transition-all duration-500 ease-luxe",
-          menuOpen ? "max-h-[420px] border-t border-ivoire/10" : "max-h-0",
-        )}
-      >
-        <div className="flex flex-col px-6 py-4">
-          {links.map((l) => (
-            <Link
-              key={l.key}
-              href={l.href}
-              onClick={() => setMenuOpen(false)}
-              className="border-b border-ivoire/10 py-4 font-serif text-2xl"
+      {/* Full-screen menu (mobile / tablet) */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            className="fixed inset-0 -z-10 flex flex-col bg-nuit lg:hidden"
+            initial={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+            animate={{ opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+            exit={{ opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+          >
+            {/* ambient light */}
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{ background: "radial-gradient(70% 50% at 50% 30%, rgba(194,162,90,0.10), transparent 60%)" }}
+            />
+            <nav className="relative mt-auto flex flex-col px-6 pb-4">
+              {links.map((l, i) => (
+                <motion.div
+                  key={l.key}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 + i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <Link
+                    href={l.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex items-baseline gap-4 border-b border-ivoire/10 py-4"
+                  >
+                    <span className="font-sans text-[11px] tabular-nums text-or">0{i + 1}</span>
+                    <span className="font-serif text-[2rem] leading-none text-ivoire">{t(l.key)}</span>
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              className="relative mt-auto flex items-center justify-between px-6 pb-10 pt-6"
             >
-              {t(l.key)}
-            </Link>
-          ))}
-        </div>
-      </div>
+              <button onClick={toggleLang} className="font-sans text-[11px] uppercase tracking-wide2">
+                <span className={clsx(lang === "pl" && "text-or")}>Polski</span>
+                <span className="opacity-40"> / </span>
+                <span className={clsx(lang === "en" && "text-or")}>English</span>
+              </button>
+              <NoorMark className="h-5 w-5 text-or/70" />
+              <button
+                onClick={() => {
+                  setMenuOpen(false);
+                  setBagOpen(true);
+                }}
+                className="font-sans text-[11px] uppercase tracking-wide2"
+              >
+                {t("nav.bag")} ({count})
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

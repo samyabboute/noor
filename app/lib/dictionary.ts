@@ -17,6 +17,13 @@ export const t: Dict = {
 
   // Hero
   "hero.eyebrow": { pl: "Maison Noor · Światło daktyla", en: "Maison Noor · The light of the date" },
+  "hero.house": { pl: "Maison Noor", en: "Maison Noor" },
+  "hero.light.a": { pl: "Daktyl", en: "The date" },
+  "hero.light.b": { pl: "światła", en: "of light" },
+  "hero.sub2": {
+    pl: "Zebrane u źródła. Komponowane ręcznie.",
+    en: "Harvested at the source. Composed by hand.",
+  },
   "hero.title.a": { pl: "Sztuka", en: "The art" },
   "hero.title.b": { pl: "daktyla", en: "of the date" },
   "hero.sub": {

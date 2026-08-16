@@ -33,7 +33,7 @@ export function Logo({
       <span className="flex flex-col leading-none">
         <span
           className={clsx(
-            "font-serif tracking-[0.12em] md:tracking-[0.14em]",
+            "whitespace-nowrap font-serif tracking-[0.12em] md:tracking-[0.14em]",
             compact ? "text-[14px]" : "text-[13px] md:text-[17px]",
           )}
         >
