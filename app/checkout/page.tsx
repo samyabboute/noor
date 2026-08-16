@@ -5,7 +5,7 @@ import Link from "next/link";
 import ProductVisual from "../components/ProductVisual";
 import { Logo } from "../components/Logo";
 import { useStore } from "../lib/store";
-import { getProduct, formatPLN, SHIPPING_COST } from "../lib/products";
+import { getProduct, SHIPPING_COST } from "../lib/products";
 
 function Field({
   label,
@@ -26,7 +26,7 @@ function Field({
 }
 
 export default function CheckoutPage() {
-  const { t, lang, cart, subtotal, shipping, total, clearCart } = useStore();
+  const { t, lang, money, cart, subtotal, shipping, total, clearCart } = useStore();
   const [pay, setPay] = useState<"blik" | "p24" | "card" | "wallet">("blik");
   const [ship, setShip] = useState<"inpost" | "courier">("inpost");
   const [gift, setGift] = useState(false);
@@ -97,8 +97,8 @@ export default function CheckoutPage() {
               {/* Delivery method */}
               <div className="mt-5 grid gap-3 sm:grid-cols-2">
                 {([
-                  { id: "inpost", label: t("co.inpost"), price: shipping === 0 ? t("bag.free") : formatPLN(SHIPPING_COST, lang) },
-                  { id: "courier", label: t("co.courier"), price: shipping === 0 ? t("bag.free") : formatPLN(SHIPPING_COST + 6, lang) },
+                  { id: "inpost", label: t("co.inpost"), price: shipping === 0 ? t("bag.free") : money(SHIPPING_COST) },
+                  { id: "courier", label: t("co.courier"), price: shipping === 0 ? t("bag.free") : money(SHIPPING_COST + 6) },
                 ] as const).map((m) => (
                   <button
                     type="button"
@@ -162,7 +162,7 @@ export default function CheckoutPage() {
 
             <div>
               <button type="submit" className="btn-solid w-full py-5 text-[13px]">
-                {t("co.pay")} · {formatPLN(grand, lang)}
+                {t("co.pay")} · {money(grand)}
               </button>
               <p className="mt-4 flex items-center justify-center gap-2 font-sans text-[11px] uppercase tracking-wide2 text-ivoire/45">
                 <span className="text-or">⌾</span> {t("co.secure")}
@@ -191,7 +191,7 @@ export default function CheckoutPage() {
                       <p className="font-serif text-[16px] leading-tight">{p.name}</p>
                       <p className="font-sans text-[11px] text-ivoire/50">{p.weight}</p>
                     </div>
-                    <span className="font-serif">{formatPLN(p.price * line.qty, lang)}</span>
+                    <span className="font-serif">{money(p.price * line.qty)}</span>
                   </div>
                 </li>
               );
@@ -201,15 +201,15 @@ export default function CheckoutPage() {
           <div className="mt-8 space-y-2 border-t border-ivoire/15 pt-6 font-sans text-[13px]">
             <div className="flex justify-between text-ivoire/60">
               <span>{t("bag.subtotal")}</span>
-              <span>{formatPLN(subtotal, lang)}</span>
+              <span>{money(subtotal)}</span>
             </div>
             <div className="flex justify-between text-ivoire/60">
               <span>{t("bag.shipping")}</span>
-              <span>{shippingCost === 0 ? t("bag.free") : formatPLN(shippingCost, lang)}</span>
+              <span>{shippingCost === 0 ? t("bag.free") : money(shippingCost)}</span>
             </div>
             <div className="flex justify-between pt-2 font-serif text-2xl text-ivoire">
               <span>{t("bag.total")}</span>
-              <span>{formatPLN(grand, lang)}</span>
+              <span>{money(grand)}</span>
             </div>
           </div>
 

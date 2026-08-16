@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useMemo, useState, useCall
 import type { Lang } from "./products";
 import { products, FREE_SHIPPING_THRESHOLD, SHIPPING_COST } from "./products";
 import { tr } from "./dictionary";
+import { type CurrencyCode, formatMoney, regionForCountry } from "./regions";
 
 export interface CartLine {
   slug: string;
@@ -30,6 +31,14 @@ interface StoreState {
 
   bagOpen: boolean;
   setBagOpen: (v: boolean) => void;
+
+  // Region & currency
+  country: string;
+  currency: CurrencyCode;
+  setCurrency: (c: CurrencyCode) => void;
+  money: (pln: number) => string;
+  regionPrompt: boolean;
+  dismissRegionPrompt: () => void;
 }
 
 const StoreContext = createContext<StoreState | null>(null);
@@ -41,6 +50,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartLine[]>([]);
   const [bagOpen, setBagOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
+  const [country, setCountry] = useState("PL");
+  const [currency, setCurrencyState] = useState<CurrencyCode>("PLN");
+  const [regionPrompt, setRegionPrompt] = useState(false);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -52,12 +64,46 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     } catch {
       /* ignore */
     }
+    // Restore a manually-chosen currency, if any
+    try {
+      const savedCur = localStorage.getItem("noor.currency") as CurrencyCode | null;
+      if (savedCur && ["PLN", "EUR", "GBP", "USD"].includes(savedCur)) setCurrencyState(savedCur);
+    } catch {
+      /* ignore */
+    }
     setHydrated(true);
   }, []);
 
   useEffect(() => {
     if (hydrated) localStorage.setItem("noor.cart", JSON.stringify(cart));
   }, [cart, hydrated]);
+
+  // Detect region from edge geo headers on first visit; suggest the currency.
+  useEffect(() => {
+    let active = true;
+    (async () => {
+      try {
+        const chosen = localStorage.getItem("noor.currency");
+        const acknowledged = localStorage.getItem("noor.region.ack");
+        const res = await fetch("/api/geo");
+        if (!res.ok || !active) return;
+        const geo = (await res.json()) as { country: string; currency: CurrencyCode; detected: boolean };
+        setCountry(geo.country);
+        // Only auto-suggest if the visitor hasn't already picked a currency
+        // and we actually detected a country different from the default.
+        if (!chosen) {
+          if (geo.detected && geo.currency !== "PLN" && !acknowledged) {
+            setRegionPrompt(true);
+          }
+        }
+      } catch {
+        /* ignore — default region stays */
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const setLang = useCallback((l: Lang) => {
     setLangState(l);
@@ -91,6 +137,28 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = useCallback(() => setCart([]), []);
 
+  const setCurrency = useCallback((c: CurrencyCode) => {
+    setCurrencyState(c);
+    setRegionPrompt(false);
+    try {
+      localStorage.setItem("noor.currency", c);
+      localStorage.setItem("noor.region.ack", "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const dismissRegionPrompt = useCallback(() => {
+    setRegionPrompt(false);
+    try {
+      localStorage.setItem("noor.region.ack", "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const money = useCallback((pln: number) => formatMoney(pln, currency), [currency]);
+
   const { count, subtotal } = useMemo(() => {
     let c = 0;
     let s = 0;
@@ -115,6 +183,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setQty,
     removeFromCart,
     clearCart,
+    country,
+    currency,
+    setCurrency,
+    money,
+    regionPrompt,
+    dismissRegionPrompt,
     count,
     subtotal,
     shipping,

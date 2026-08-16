@@ -3,10 +3,10 @@
 import Link from "next/link";
 import ProductVisual from "./ProductVisual";
 import { useStore } from "../lib/store";
-import { formatPLN, type Product } from "../lib/products";
+import { type Product } from "../lib/products";
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { t, lang } = useStore();
+  const { t, lang, money } = useStore();
   const isCorporate = product.tier === "corporate";
 
   return (
@@ -36,7 +36,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {isCorporate ? (
             <span className="font-sans text-[12px] uppercase tracking-wide2 text-or">{t("corp.cta")}</span>
           ) : (
-            <span className="font-serif text-lg text-ivoire">{formatPLN(product.price, lang)}</span>
+            <span className="font-serif text-lg text-ivoire">{money(product.price)}</span>
           )}
         </div>
       </div>

@@ -11,7 +11,7 @@ import Reveal from "../../components/Reveal";
 import Footer from "../../components/Footer";
 import { Reviews } from "../../components/SocialProof";
 import { useStore } from "../../lib/store";
-import { getProduct, shopProducts, formatPLN } from "../../lib/products";
+import { getProduct, shopProducts } from "../../lib/products";
 
 function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -39,7 +39,7 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
 export default function ProductPage() {
   const params = useParams();
   const slug = String(params.slug);
-  const { t, lang } = useStore();
+  const { t, lang, money } = useStore();
   const product = getProduct(slug);
   const [view, setView] = useState(0);
   const [qty, setQty] = useState(1);
@@ -117,11 +117,11 @@ export default function ProductPage() {
 
             <Reveal delay={0.15}>
               <div className="mt-7 flex items-baseline gap-4">
-                <span className="font-serif text-4xl">{formatPLN(product.price, lang)}</span>
+                <span className="font-serif text-4xl">{money(product.price)}</span>
                 {product.compareAt && (
                   <>
                     <span className="font-sans text-lg text-ivoire/40 line-through">
-                      {formatPLN(product.compareAt, lang)}
+                      {money(product.compareAt)}
                     </span>
                     <span className="rounded-full bg-or/15 px-3 py-1 font-sans text-[11px] uppercase tracking-wide2 text-or">
                       −{Math.round((1 - product.price / product.compareAt) * 100)}%
@@ -225,7 +225,7 @@ export default function ProductPage() {
                   </div>
                   <div className="mt-3 flex items-baseline justify-between">
                     <h3 className="font-serif text-lg">{p.name}</h3>
-                    <span className="font-serif">{formatPLN(p.price, lang)}</span>
+                    <span className="font-serif">{money(p.price)}</span>
                   </div>
                 </Link>
               </Reveal>

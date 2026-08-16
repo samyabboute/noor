@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { NoorMark } from "./Logo";
 
@@ -11,10 +12,12 @@ import { NoorMark } from "./Logo";
  */
 export default function Loader() {
   const reduce = useReducedMotion();
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (reduce) return;
+    if (pathname?.startsWith("/admin")) return;
     if (sessionStorage.getItem("noor.entered")) return;
     setShow(true);
     document.body.style.overflow = "hidden";

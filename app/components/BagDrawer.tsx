@@ -8,7 +8,6 @@ import {
   products,
   shopProducts,
   getProduct,
-  formatPLN,
   FREE_SHIPPING_THRESHOLD,
 } from "../lib/products";
 
@@ -25,6 +24,7 @@ export default function BagDrawer() {
     total,
     remainingForFreeShipping,
     lang,
+    money,
     t,
   } = useStore();
 
@@ -68,12 +68,12 @@ export default function BagDrawer() {
                   lang === "pl" ? (
                     <>
                       {t("bag.freeProgressA")}{" "}
-                      <span className="font-medium text-or">{formatPLN(remainingForFreeShipping, lang)}</span>.
+                      <span className="font-medium text-or">{money(remainingForFreeShipping)}</span>.
                     </>
                   ) : (
                     <>
                       {t("bag.freeProgressA")}{" "}
-                      <span className="font-medium text-or">{formatPLN(remainingForFreeShipping, lang)}</span>{" "}
+                      <span className="font-medium text-or">{money(remainingForFreeShipping)}</span>{" "}
                       {t("bag.freeProgressB")}.
                     </>
                   )
@@ -117,7 +117,7 @@ export default function BagDrawer() {
                         <div className="flex flex-1 flex-col">
                           <div className="flex justify-between gap-2">
                             <h3 className="font-serif text-lg leading-tight">{p.name}</h3>
-                            <span className="font-serif text-base">{formatPLN(p.price * line.qty, lang)}</span>
+                            <span className="font-serif text-base">{money(p.price * line.qty)}</span>
                           </div>
                           <p className="mt-0.5 font-sans text-[11px] text-ivoire/50">{p.weight} · {p.pieces}</p>
                           <div className="mt-auto flex items-center justify-between pt-3">
@@ -164,7 +164,7 @@ export default function BagDrawer() {
                         </div>
                         <div className="flex-1">
                           <p className="font-serif text-[15px] leading-tight">{s.name}</p>
-                          <p className="font-sans text-[12px] text-ivoire/50">{formatPLN(s.price, lang)}</p>
+                          <p className="font-sans text-[12px] text-ivoire/50">{money(s.price)}</p>
                         </div>
                         <button
                           onClick={() => addToCart(s.slug, 1)}
@@ -185,15 +185,15 @@ export default function BagDrawer() {
                 <div className="space-y-1.5 font-sans text-[13px]">
                   <div className="flex justify-between text-ivoire/60">
                     <span>{t("bag.subtotal")}</span>
-                    <span>{formatPLN(subtotal, lang)}</span>
+                    <span>{money(subtotal)}</span>
                   </div>
                   <div className="flex justify-between text-ivoire/60">
                     <span>{t("bag.shipping")}</span>
-                    <span>{shipping === 0 ? t("bag.free") : formatPLN(shipping, lang)}</span>
+                    <span>{shipping === 0 ? t("bag.free") : money(shipping)}</span>
                   </div>
                   <div className="flex justify-between pt-2 font-serif text-xl text-ivoire">
                     <span>{t("bag.total")}</span>
-                    <span>{formatPLN(total, lang)}</span>
+                    <span>{money(total)}</span>
                   </div>
                 </div>
                 <p className="mt-3 text-center font-sans text-[11px] uppercase tracking-wide2 text-or/80">

@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion } from "framer-motion";
 import clsx from "clsx";
-import { Logo, NoorMark } from "./Logo";
+import { Logo } from "./Logo";
+import CurrencySwitcher from "./CurrencySwitcher";
 import { useStore } from "../lib/store";
 
 const links = [
@@ -39,6 +40,9 @@ export default function Nav() {
   }, [menuOpen]);
 
   const solid = scrolled || !isHome;
+
+  // The admin console has its own chrome.
+  if (pathname?.startsWith("/admin")) return null;
 
   return (
     <header
@@ -84,6 +88,13 @@ export default function Nav() {
         </div>
 
         <div className="flex items-center gap-3 md:gap-6">
+          <CurrencySwitcher className="hidden sm:block" />
+          <Link
+            href="/konto"
+            className="hidden font-sans text-[11px] uppercase tracking-wide2 opacity-80 transition hover:opacity-100 lg:inline"
+          >
+            {lang === "pl" ? "Konto" : "Account"}
+          </Link>
           <button
             onClick={toggleLang}
             className="hidden font-sans text-[11px] uppercase tracking-wide2 opacity-80 transition hover:opacity-100 sm:inline"
@@ -141,6 +152,20 @@ export default function Nav() {
                   </Link>
                 </motion.div>
               ))}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 + links.length * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Link
+                  href="/konto"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-baseline gap-4 border-b border-ivoire/10 py-4"
+                >
+                  <span className="font-sans text-[11px] tabular-nums text-or">✦</span>
+                  <span className="font-serif text-[2rem] leading-none text-ivoire">{lang === "pl" ? "Konto" : "Account"}</span>
+                </Link>
+              </motion.div>
             </nav>
 
             <motion.div
@@ -154,7 +179,7 @@ export default function Nav() {
                 <span className="opacity-40"> / </span>
                 <span className={clsx(lang === "en" && "text-or")}>English</span>
               </button>
-              <NoorMark className="h-5 w-5 text-or/70" />
+              <CurrencySwitcher />
               <button
                 onClick={() => {
                   setMenuOpen(false);
