@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Logo } from "./Logo";
+import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
 
 export default function Footer() {
@@ -26,8 +27,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-nuit pt-20 text-ivoire">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+    <footer className="relative isolate overflow-hidden bg-nuit pt-20 text-ivoire">
+      <NoorPattern placement="bottom" opacity={0.045} scale={126} />
+      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-12 pb-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Logo size="md" />

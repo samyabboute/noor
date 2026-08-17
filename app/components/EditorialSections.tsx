@@ -5,6 +5,7 @@ import Reveal from "./Reveal";
 import ProductVisual from "./ProductVisual";
 import Photo from "./Photo";
 import MacroDate from "./MacroDate";
+import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
 
 /* 03 — The Date : why Noor is different */
@@ -181,8 +182,9 @@ export function Corporate() {
 export function Story() {
   const { t } = useStore();
   return (
-    <section id="dom-noor" className="bg-nuit py-28 text-ivoire md:py-44">
-      <div className="mx-auto max-w-4xl px-6 text-center">
+    <section id="dom-noor" className="relative isolate overflow-hidden bg-nuit py-28 text-ivoire md:py-44">
+      <NoorPattern placement="edges" opacity={0.05} scale={132} />
+      <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal><p className="section-index text-ivoire/40">{t("story.index")}</p></Reveal>
         <Reveal delay={0.05}><p className="eyebrow mt-6">{t("story.eyebrow")}</p></Reveal>
         <Reveal delay={0.1}>

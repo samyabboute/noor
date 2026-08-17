@@ -141,3 +141,20 @@ html.lenis body {
 .preserve-3d {
   transform-style: preserve-3d;
 }
+
+/* Arabesque texture — quiet luxury. Intensity & scale step down on smaller
+   screens so the motif stays discreet and cheap to paint on mobile. */
+.noor-pattern {
+  background-repeat: repeat;
+}
+@media (min-width: 769px) and (max-width: 1200px) {
+  .noor-pattern {
+    opacity: calc(var(--noor-op, 0.05) * 0.8) !important;
+  }
+}
+@media (max-width: 768px) {
+  .noor-pattern {
+    opacity: calc(var(--noor-op, 0.05) * 0.55) !important;
+    background-size: calc(var(--noor-scale, 130px) * 0.7) calc(var(--noor-scale, 130px) * 0.7) !important;
+  }
+}

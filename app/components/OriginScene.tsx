@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
 
 /**
@@ -31,6 +32,9 @@ export default function OriginScene() {
           className="absolute inset-0"
           style={{ background: "linear-gradient(180deg, #05130e 0%, #0a1f18 42%, #123227 66%, #3a3a1e 88%, #6b5324 100%)" }}
         />
+
+        {/* Heritage arabesque — a shade more present here than elsewhere */}
+        <NoorPattern placement="edges" opacity={0.055} scale={128} color="#D8BE7E" className="!z-0" />
 
         {/* Sun */}
         <motion.div

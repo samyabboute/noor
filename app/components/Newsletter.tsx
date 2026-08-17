@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Reveal from "./Reveal";
+import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
 
 export default function Newsletter() {
@@ -10,8 +11,10 @@ export default function Newsletter() {
   const [sent, setSent] = useState(false);
 
   return (
-    <section id="newsletter" className="bg-ombre py-24 text-ivoire md:py-32">
-      <div className="mx-auto max-w-2xl px-6 text-center">
+    <section id="newsletter" className="relative isolate overflow-hidden bg-ombre py-24 text-ivoire md:py-32">
+      {/* Closing CTA — the arabesque may be a touch more perceptible here */}
+      <NoorPattern placement="edges" opacity={0.06} scale={122} />
+      <div className="relative mx-auto max-w-2xl px-6 text-center">
         <Reveal><p className="section-index text-ivoire/40">{t("news.index")}</p></Reveal>
         <Reveal delay={0.05}><p className="eyebrow mt-5">{t("news.eyebrow")}</p></Reveal>
         <Reveal delay={0.1}><h2 className="display mt-3 text-4xl md:text-6xl">{t("news.title")}</h2></Reveal>

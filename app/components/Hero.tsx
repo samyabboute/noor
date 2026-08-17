@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import Photo from "./Photo";
+import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
 
 export default function Hero() {
@@ -19,9 +20,12 @@ export default function Hero() {
   const veil = useTransform(scrollYProgress, [0, 1], [0, 0.7]);
 
   return (
-    <section ref={ref} className="relative h-[100svh] min-h-[620px] w-full overflow-hidden bg-nuit text-ivoire">
+    <section ref={ref} className="relative isolate h-[100svh] min-h-[620px] w-full overflow-hidden bg-nuit text-ivoire">
       {/* Deep base */}
-      <div className="absolute inset-0" style={{ background: "radial-gradient(120% 90% at 50% 40%, #123227 0%, #0a1f18 55%, #05130e 100%)" }} />
+      <div className="absolute inset-0 -z-20" style={{ background: "radial-gradient(120% 90% at 50% 40%, #123227 0%, #0a1f18 55%, #05130e 100%)" }} />
+
+      {/* Arabesque, whispered in from the margins */}
+      <NoorPattern placement="sides" opacity={0.04} scale={150} color="#D8BE7E" />
 
       {/* Warm light that grows in on load — the "sun" rising into the scene */}
       <motion.div
