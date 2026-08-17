@@ -30,7 +30,7 @@ export default function Footer() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid gap-12 pb-16 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Logo />
+            <Logo size="md" />
             <p className="mt-5 max-w-xs font-serif text-2xl italic text-ivoire/70">{t("footer.tagline")}</p>
             <p className="mt-6 font-sans text-[12px] leading-relaxed text-ivoire/40">{t("footer.made")}</p>
           </div>

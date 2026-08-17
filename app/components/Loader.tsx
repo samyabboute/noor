@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { NoorMark } from "./Logo";
+import { Logo } from "./Logo";
 
 /**
  * Entrance ritual — a fast, black curtain with the NOOR mark and a thin gold
@@ -47,8 +47,7 @@ export default function Loader() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center gap-5"
           >
-            <NoorMark className="h-7 w-7 text-or" />
-            <span className="font-serif text-2xl tracking-[0.4em] text-ivoire">NOOR</span>
+            <Logo size="lg" className="text-ivoire" />
           </motion.div>
 
           <div className="mt-8 h-px w-40 overflow-hidden bg-ivoire/15">

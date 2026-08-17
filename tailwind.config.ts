@@ -18,6 +18,7 @@ const config: Config = {
       fontFamily: {
         serif: ["var(--font-serif)", "Cormorant Garamond", "Georgia", "serif"],
         sans: ["var(--font-sans)", "Jost", "system-ui", "sans-serif"],
+        arabic: ["var(--font-arabic)", "Aref Ruqaa", "Amiri", "serif"],
       },
       letterSpacing: {
         luxe: "0.28em",

@@ -8,6 +8,7 @@
 :root {
   --font-serif: "Cormorant Garamond", Georgia, serif;
   --font-sans: "Jost", system-ui, sans-serif;
+  --font-arabic: "Aref Ruqaa", "Amiri", serif;
 }
 
 /* Lenis smooth-scroll integration */
