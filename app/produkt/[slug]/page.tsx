@@ -88,7 +88,7 @@ export default function ProductPage() {
         <div className="mx-auto grid max-w-[1400px] gap-10 px-6 md:px-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-sm bg-ombre">
+            <div className="overflow-hidden rounded-sm bg-paper2">
               {current.kind === "svg" ? (
                 <ProductVisual slug={product.slug} variant={current.variant} className="aspect-square w-full" />
               ) : (
@@ -101,7 +101,7 @@ export default function ProductPage() {
                   key={i}
                   onClick={() => setView(i)}
                   aria-label={`Widok ${i + 1}`}
-                  className={`aspect-square w-full overflow-hidden rounded-sm border-2 bg-ombre transition ${
+                  className={`aspect-square w-full overflow-hidden rounded-sm border-2 bg-paper2 transition ${
                     view === i ? "border-or" : "border-transparent opacity-60"
                   }`}
                 >
@@ -240,7 +240,7 @@ export default function ProductPage() {
             {crossSell.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.08}>
                 <Link href={`/produkt/${p.slug}`} className="group block">
-                  <div className="aspect-[4/5] overflow-hidden rounded-sm bg-nuit">
+                  <div className="aspect-[4/5] overflow-hidden rounded-sm bg-paper2">
                     <ProductVisual
                       slug={p.slug}
                       className="h-full w-full transition-transform duration-[1200ms] ease-luxe group-hover:scale-105"

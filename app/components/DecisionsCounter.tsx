@@ -23,14 +23,14 @@ export default function DecisionsCounter() {
   const headOpacity = useTransform(scrollYProgress, [0.02, 0.12], [0, 1]);
 
   return (
-    <section ref={ref} className="relative bg-ombre" style={{ height: reduce ? "auto" : "230vh" }}>
+    <section ref={ref} className="relative bg-paper" style={{ height: reduce ? "auto" : "230vh" }}>
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-6 text-center">
         <motion.p style={{ opacity: reduce ? 1 : headOpacity }} className="eyebrow">
           {lang === "pl" ? "Selekcja" : "Selection"}
         </motion.p>
 
         {/* the counter */}
-        <div className="mt-8 flex items-end justify-center gap-2 font-serif leading-none text-ivoire">
+        <div className="mt-8 flex items-end justify-center gap-2 font-serif leading-none text-ink">
           <motion.span className="text-[26vw] font-light md:text-[16rem]">
             {reduce ? "09" : rounded}
           </motion.span>
@@ -38,7 +38,7 @@ export default function DecisionsCounter() {
         </div>
 
         {/* measuring line */}
-        <div className="mt-4 h-px w-[min(80vw,520px)] bg-ivoire/12">
+        <div className="mt-4 h-px w-[min(80vw,520px)] bg-ink/12">
           <motion.div className="h-full bg-or" style={{ width: reduce ? "100%" : line }} />
         </div>
 

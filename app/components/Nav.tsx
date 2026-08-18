@@ -52,7 +52,7 @@ export default function Nav() {
           ? "text-ivoire"
           : solid
             ? "bg-paper/90 backdrop-blur-md text-ink border-b border-ink/10"
-            : "bg-transparent text-ivoire",
+            : "bg-transparent text-ink",
       )}
     >
       {/* Legibility scrim — keeps the menu readable over any hero, without a
@@ -60,7 +60,7 @@ export default function Nav() {
       {!solid && !menuOpen && (
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/45 via-black/15 to-transparent"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-paper/80 via-paper/30 to-transparent"
         />
       )}
       <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 md:px-10 h-[64px] md:h-[68px]">

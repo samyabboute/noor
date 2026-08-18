@@ -196,7 +196,7 @@ export default function CheckoutPage() {
               if (!p) return null;
               return (
                 <li key={line.slug} className="flex gap-4">
-                  <div className="relative h-20 w-16 flex-none overflow-hidden rounded-sm bg-nuit">
+                  <div className="relative h-20 w-16 flex-none overflow-hidden rounded-sm bg-paper2">
                     <ProductVisual slug={p.slug} className="h-full w-full" />
                     <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-nuit text-[11px] text-ivoire">
                       {line.qty}

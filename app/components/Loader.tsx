@@ -40,7 +40,7 @@ export default function Loader() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#05130e]"
+          className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-paper"
           initial={{ opacity: 1 }}
           exit={{ y: "-100%" }}
           transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}
@@ -51,10 +51,10 @@ export default function Loader() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col items-center gap-5"
           >
-            <Logo size="lg" className="text-ivoire" />
+            <Logo size="lg" className="text-ink" />
           </motion.div>
 
-          <div className="mt-8 h-px w-40 overflow-hidden bg-ivoire/15">
+          <div className="mt-8 h-px w-40 overflow-hidden bg-ink/12">
             <motion.div
               className="h-full bg-or"
               initial={{ width: "0%" }}
@@ -67,7 +67,7 @@ export default function Loader() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.5 }}
             transition={{ delay: 0.5, duration: 1 }}
-            className="mt-6 font-sans text-[10px] uppercase tracking-[0.4em] text-ivoire/50"
+            className="mt-6 font-sans text-[10px] uppercase tracking-[0.4em] text-ink/50"
           >
             The Date of Light
           </motion.span>

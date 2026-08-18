@@ -25,8 +25,8 @@ export default function ProductVisual({
       <svg viewBox="0 0 600 600" className={className} role="img" aria-label="Maison Noor — macro">
         <defs>
           <radialGradient id={`bg-${id}`} cx="50%" cy="38%" r="75%">
-            <stop offset="0%" stopColor="#123227" />
-            <stop offset="100%" stopColor="#081a13" />
+            <stop offset="0%" stopColor="#F3ECDC" />
+            <stop offset="100%" stopColor="#E0D4BB" />
           </radialGradient>
           <radialGradient id={`fruit-${id}`} cx="42%" cy="34%" r="80%">
             <stop offset="0%" stopColor={tone} />
@@ -62,8 +62,8 @@ export default function ProductVisual({
     <svg viewBox="0 0 600 600" className={className} role="img" aria-label="Maison Noor — case">
       <defs>
         <radialGradient id={`bg2-${id}`} cx="50%" cy="30%" r="85%">
-          <stop offset="0%" stopColor="#143a2c" />
-          <stop offset="100%" stopColor="#081a13" />
+          <stop offset="0%" stopColor="#F3ECDC" />
+          <stop offset="100%" stopColor="#E0D4BB" />
         </radialGradient>
         <linearGradient id={`lid-${id}`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#1a4636" />

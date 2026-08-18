@@ -20,18 +20,18 @@ export default function Hero() {
   const veil = useTransform(scrollYProgress, [0, 1], [0, 0.7]);
 
   return (
-    <section ref={ref} className="relative isolate h-[100svh] min-h-[620px] w-full overflow-hidden bg-nuit text-ivoire">
+    <section ref={ref} className="relative isolate h-[100svh] min-h-[620px] w-full overflow-hidden bg-paper text-ink">
       {/* Deep base */}
-      <div className="absolute inset-0 -z-20" style={{ background: "radial-gradient(120% 90% at 50% 40%, #123227 0%, #0a1f18 55%, #05130e 100%)" }} />
+      <div className="absolute inset-0 -z-20" style={{ background: "radial-gradient(125% 95% at 50% 32%, #FFFDF7 0%, #FCFBF8 52%, #F2ECDE 100%)" }} />
 
       {/* Arabesque, whispered in from the margins */}
-      <NoorPattern placement="sides" opacity={0.04} scale={150} color="#D8BE7E" />
+      <NoorPattern placement="sides" opacity={0.05} scale={150} color="#122A20" />
 
       {/* Warm light that grows in on load — the "sun" rising into the scene */}
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-[34%] h-[70vh] w-[70vh] -translate-x-1/2 -translate-y-1/2 rounded-full"
-        style={{ background: "radial-gradient(closest-side, rgba(216,190,126,0.28), rgba(194,162,90,0.08), transparent 72%)" }}
+        style={{ background: "radial-gradient(closest-side, rgba(216,190,126,0.34), rgba(194,162,90,0.12), transparent 70%)" }}
         initial={{ opacity: 0, scale: 0.7 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 2.6, ease: [0.16, 1, 0.3, 1] }}
@@ -45,17 +45,17 @@ export default function Hero() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span className="select-none font-arabic text-[44vw] leading-none text-or/[0.05] md:text-[32vw] md:text-or/[0.07]">نور</span>
+        <span className="select-none font-arabic text-[46vw] leading-none text-nuit/[0.045] md:text-[32vw] md:text-nuit/[0.06]">نور</span>
       </motion.div>
 
       {/* Editorial masthead marks (desktop) */}
       <div className="pointer-events-none absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 md:block">
-        <span className="block -rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ivoire/30">
+        <span className="block -rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ink/30">
           Maison Noor
         </span>
       </div>
       <div className="pointer-events-none absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 md:block">
-        <span className="block rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ivoire/30">
+        <span className="block rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ink/30">
           Tozeur — Tunisie
         </span>
       </div>
@@ -80,8 +80,6 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scrim for legibility */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[68%] bg-gradient-to-t from-nuit via-nuit/85 to-transparent" />
 
       {/* Text */}
       <motion.div
@@ -103,7 +101,7 @@ export default function Hero() {
               initial={reduce ? { opacity: 0 } : { opacity: 0, y: "115%" }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
-              className="block italic font-light text-champagne"
+              className="block italic font-light text-or"
             >
               {t("hero.light.a")}
             </motion.span>
@@ -124,7 +122,7 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.45, duration: 1.4 }}
-          className="mt-6 max-w-xs font-sans text-[13px] leading-relaxed tracking-wide text-ivoire/70 sm:max-w-md"
+          className="mt-6 max-w-xs font-sans text-[13px] leading-relaxed tracking-wide text-ink/60 sm:max-w-md"
         >
           {t("hero.sub2")}
         </motion.p>
@@ -135,10 +133,10 @@ export default function Hero() {
           transition={{ delay: 1.65, duration: 1.2 }}
           className="mt-9 flex w-full max-w-xs flex-col items-center gap-4 sm:w-auto sm:flex-row"
         >
-          <Link href="/kolekcja" className="btn-solid-invert w-full sm:w-auto">
+          <Link href="/kolekcja" className="btn-solid w-full sm:w-auto">
             {t("hero.cta.shop")}
           </Link>
-          <a href="#poznaj" className="btn-line text-ivoire">
+          <a href="#poznaj" className="btn-line text-ink">
             {t("hero.cta.discover")}
           </a>
         </motion.div>
@@ -146,8 +144,8 @@ export default function Hero() {
 
       {/* Scroll cue */}
       <div className="absolute bottom-6 left-1/2 z-10 -translate-x-1/2 text-center">
-        <p className="eyebrow mb-2 text-ivoire/40">{t("hero.scroll")}</p>
-        <div className="mx-auto h-9 w-px overflow-hidden bg-ivoire/15">
+        <p className="eyebrow mb-2 text-ink/40">{t("hero.scroll")}</p>
+        <div className="mx-auto h-9 w-px overflow-hidden bg-ink/15">
           {!reduce && (
             <motion.div
               className="h-4 w-px bg-or"
@@ -158,7 +156,7 @@ export default function Hero() {
         </div>
       </div>
 
-      <motion.div className="pointer-events-none absolute inset-0 bg-nuit" style={{ opacity: veil }} />
+      <motion.div className="pointer-events-none absolute inset-0 bg-paper" style={{ opacity: veil }} />
     </section>
   );
 }

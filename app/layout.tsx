@@ -45,12 +45,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: "Noor",
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0A1F18",
+  themeColor: "#FCFBF8",
   width: "device-width",
   initialScale: 1,
 };
