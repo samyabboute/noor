@@ -15,10 +15,11 @@ const config: Config = {
         champagne: "#E3D2A8", // champagne
         or: "#C2A25A", // signature warm gold
         orclair: "#D8BE7E", // luminous gold (a ray of light)
-        // Light-theme surfaces
-        paper: "#F6F1E6", // the dominant cream canvas
-        paper2: "#FCF9F1", // raised cream (cards on paper)
-        ink: "#122A20", // deep-green ink for text on cream (softer than pure nuit)
+        // Light-theme surfaces — "blanc & crème": a luminous warm-white canvas
+        // with soft cream used for alternating sections and raised cards.
+        paper: "#FCFBF8", // luminous warm white (the dominant canvas)
+        paper2: "#F2ECDE", // soft cream (alternating sections / raised cards)
+        ink: "#122A20", // deep-green ink for text on the light canvas
       },
       fontFamily: {
         serif: ["var(--font-serif)", "Cormorant Garamond", "Georgia", "serif"],
