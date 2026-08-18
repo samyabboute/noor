@@ -47,10 +47,10 @@ export default function RegionPrompt() {
                 : `Show prices in ${suggested} (${CURRENCIES[suggested].symbol})?`}
             </p>
             <div className="mt-5 flex gap-3">
-              <button onClick={() => setCurrency(suggested)} className="btn-solid flex-1 py-3 text-[11px]">
+              <button onClick={() => setCurrency(suggested)} className="btn-solid-invert flex-1 py-3 text-[11px]">
                 {lang === "pl" ? `Tak, ${suggested}` : `Yes, ${suggested}`}
               </button>
-              <button onClick={dismissRegionPrompt} className="btn-ghost flex-1 py-3 text-[11px]">
+              <button onClick={dismissRegionPrompt} className="btn-ghost-invert flex-1 py-3 text-[11px]">
                 {lang === "pl" ? "Zostań w PLN" : "Keep PLN"}
               </button>
             </div>

@@ -51,7 +51,7 @@ export default function Nav() {
         menuOpen
           ? "text-ivoire"
           : solid
-            ? "bg-nuit/85 backdrop-blur-md text-ivoire border-b border-ivoire/10"
+            ? "bg-paper/90 backdrop-blur-md text-ink border-b border-ink/10"
             : "bg-transparent text-ivoire",
       )}
     >

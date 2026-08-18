@@ -18,7 +18,7 @@ export function TheDate() {
     { k: "date.f4.k", v: "date.f4.v" },
   ];
   return (
-    <section id="daktyl" className="bg-ombre py-16 text-ivoire md:py-36">
+    <section id="daktyl" className="bg-paper py-16 text-ink md:py-36">
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Reveal>
@@ -26,27 +26,27 @@ export function TheDate() {
             <MacroDate src="/products/deglet-single.webp" alt="Daktyl Deglet Nour — makro" />
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-4 text-center font-sans text-[11px] uppercase tracking-wide2 text-ivoire/35">
+            <p className="mt-4 text-center font-sans text-[11px] uppercase tracking-wide2 text-ink/40">
               Deglet Nour · Jumbo · Oazy Tozeur, Tunezja
             </p>
           </Reveal>
         </div>
 
         <div>
-          <Reveal><p className="section-index text-ivoire/40">{t("date.index")}</p></Reveal>
+          <Reveal><p className="section-index">{t("date.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("date.eyebrow")}</p></Reveal>
           <Reveal delay={0.1}><h2 className="display mt-3 text-4xl md:text-6xl">{t("date.title")}</h2></Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ivoire/65">{t("date.body")}</p>
+            <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ink/65">{t("date.body")}</p>
           </Reveal>
 
-          <div className="mt-12 grid gap-px overflow-hidden rounded-sm bg-ivoire/10 sm:grid-cols-2">
+          <div className="mt-12 grid gap-px overflow-hidden rounded-sm bg-ink/10 sm:grid-cols-2">
             {features.map((f, i) => (
               <Reveal key={f.k} delay={0.1 + i * 0.08}>
-                <div className="h-full bg-ombre p-7">
-                  <p className="font-serif text-2xl text-orclair">0{i + 1}</p>
-                  <p className="mt-3 font-sans text-[11px] uppercase tracking-wide2 text-ivoire/50">{t(f.k)}</p>
-                  <p className="mt-2 font-sans text-[14px] leading-relaxed text-ivoire/80">{t(f.v)}</p>
+                <div className="h-full bg-paper2 p-7">
+                  <p className="font-serif text-2xl text-or">0{i + 1}</p>
+                  <p className="mt-3 font-sans text-[11px] uppercase tracking-wide2 text-ink/55">{t(f.k)}</p>
+                  <p className="mt-2 font-sans text-[14px] leading-relaxed text-ink/75">{t(f.v)}</p>
                 </div>
               </Reveal>
             ))}
@@ -67,7 +67,7 @@ export function Craftsmanship() {
     { k: "craft.s4.k", v: "craft.s4.v" },
   ];
   return (
-    <section id="rzemioslo" className="bg-ombre py-16 text-ivoire md:py-36">
+    <section id="rzemioslo" className="bg-paper2 py-16 text-ink md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("craft.index")}</p></Reveal>
@@ -98,7 +98,7 @@ export function Craftsmanship() {
                   <span className="hairline flex-1" />
                 </div>
                 <h3 className="mt-6 font-serif text-2xl">{t(s.k)}</h3>
-                <p className="mt-3 font-sans text-[14px] leading-[1.8] text-ivoire/60">{t(s.v)}</p>
+                <p className="mt-3 font-sans text-[14px] leading-[1.8] text-ink/60">{t(s.v)}</p>
               </div>
             </Reveal>
           ))}
@@ -112,21 +112,21 @@ export function Craftsmanship() {
 export function GiftCollection() {
   const { t } = useStore();
   return (
-    <section id="prezenty" className="relative overflow-hidden bg-nuit py-16 text-ivoire md:py-40">
+    <section id="prezenty" className="relative overflow-hidden bg-paper py-16 text-ink md:py-40">
       <div
         className="pointer-events-none absolute inset-0"
         style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(228,199,132,0.12), transparent 60%)" }}
       />
       <div className="relative mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-2">
         <div>
-          <Reveal><p className="section-index text-ivoire/40">{t("gift.index")}</p></Reveal>
+          <Reveal><p className="section-index">{t("gift.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("gift.eyebrow")}</p></Reveal>
           <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-7xl">{t("gift.title")}</h2></Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-8 max-w-md font-sans text-[15px] leading-[1.9] text-ivoire/70">{t("gift.body")}</p>
+            <p className="mt-8 max-w-md font-sans text-[15px] leading-[1.9] text-ink/70">{t("gift.body")}</p>
           </Reveal>
           <Reveal delay={0.2}>
-            <Link href="/produkt/collection-noor" className="btn-solid mt-10 bg-ivoire text-nuit hover:bg-orclair">
+            <Link href="/produkt/collection-noor" className="btn-solid mt-10">
               {t("gift.cta")}
             </Link>
           </Reveal>
@@ -146,7 +146,7 @@ export function Corporate() {
   const { t } = useStore();
   const bullets = ["corp.b1", "corp.b2", "corp.b3"];
   return (
-    <section id="dla-firm" className="bg-nuit py-16 text-ivoire md:py-36">
+    <section id="dla-firm" className="bg-paper2 py-16 text-ink md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <div>
@@ -154,7 +154,7 @@ export function Corporate() {
             <Reveal delay={0.05}><p className="eyebrow mt-5">{t("corp.eyebrow")}</p></Reveal>
             <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-6xl">{t("corp.title")}</h2></Reveal>
             <Reveal delay={0.15}>
-              <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ivoire/70">{t("corp.body")}</p>
+              <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ink/70">{t("corp.body")}</p>
             </Reveal>
             <Reveal delay={0.2}>
               <a href="mailto:corporate@maisonnoor.pl" className="btn-solid mt-9">
@@ -162,12 +162,12 @@ export function Corporate() {
               </a>
             </Reveal>
           </div>
-          <div className="space-y-px overflow-hidden rounded-sm bg-ivoire/10">
+          <div className="space-y-px overflow-hidden rounded-sm bg-ink/10">
             {bullets.map((b, i) => (
               <Reveal key={b} delay={i * 0.1}>
-                <div className="flex items-center gap-5 bg-ombre px-5 py-6">
+                <div className="flex items-center gap-5 bg-paper px-5 py-6">
                   <span className="font-serif text-3xl text-or">0{i + 1}</span>
-                  <p className="font-serif text-xl text-ivoire md:text-2xl">{t(b)}</p>
+                  <p className="font-serif text-xl text-ink md:text-2xl">{t(b)}</p>
                 </div>
               </Reveal>
             ))}

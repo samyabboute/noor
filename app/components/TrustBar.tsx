@@ -12,12 +12,12 @@ const items = [
 export default function TrustBar() {
   const { t } = useStore();
   return (
-    <section className="border-y border-ivoire/10 bg-nuit">
-      <div className="mx-auto grid max-w-[1400px] grid-cols-2 divide-ivoire/10 md:grid-cols-4 md:divide-x">
+    <section className="border-y border-ink/10 bg-paper">
+      <div className="mx-auto grid max-w-[1400px] grid-cols-2 divide-ink/10 md:grid-cols-4 md:divide-x">
         {items.map((it) => (
           <div key={it.k} className="px-6 py-7 text-center md:py-8">
-            <p className="font-serif text-lg text-ivoire md:text-xl">{t(it.k)}</p>
-            <p className="mt-1 font-sans text-[11px] uppercase tracking-wide2 text-ivoire/45">{t(it.d)}</p>
+            <p className="font-serif text-lg text-ink md:text-xl">{t(it.k)}</p>
+            <p className="mt-1 font-sans text-[11px] uppercase tracking-wide2 text-ink/50">{t(it.d)}</p>
           </div>
         ))}
       </div>

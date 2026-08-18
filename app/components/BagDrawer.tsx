@@ -96,7 +96,7 @@ export default function BagDrawer() {
               {cart.length === 0 ? (
                 <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
                   <p className="font-serif text-xl text-ivoire/60">{t("bag.empty")}</p>
-                  <Link href="/kolekcja" onClick={() => setBagOpen(false)} className="btn-ghost">
+                  <Link href="/kolekcja" onClick={() => setBagOpen(false)} className="btn-ghost-invert">
                     {t("bag.emptyCta")}
                   </Link>
                 </div>
@@ -199,7 +199,7 @@ export default function BagDrawer() {
                 <p className="mt-3 text-center font-sans text-[11px] uppercase tracking-wide2 text-or/80">
                   ✦ {t("bag.giftwrap")}
                 </p>
-                <Link href="/checkout" onClick={() => setBagOpen(false)} className="btn-solid mt-4 w-full">
+                <Link href="/checkout" onClick={() => setBagOpen(false)} className="btn-solid-invert mt-4 w-full">
                   {t("bag.checkout")}
                 </Link>
               </div>

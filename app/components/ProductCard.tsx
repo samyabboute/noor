@@ -33,10 +33,10 @@ export default function ProductCard({ product }: { product: Product }) {
           {isCorporate ? (
             <span className="shrink-0 whitespace-nowrap pt-0.5 font-sans text-[11px] uppercase tracking-wide2 text-or">{t("corp.cta")}</span>
           ) : (
-            <span className="shrink-0 font-serif text-[15px] text-ivoire sm:text-lg">{money(product.price)}</span>
+            <span className="shrink-0 font-serif text-[15px] text-ink sm:text-lg">{money(product.price)}</span>
           )}
         </div>
-        <p className="mt-1 font-sans text-[11px] text-ivoire/45 sm:text-[12px]">{product.variety[lang]}</p>
+        <p className="mt-1 font-sans text-[11px] text-ink/55 sm:text-[12px]">{product.variety[lang]}</p>
       </div>
     </Link>
   );

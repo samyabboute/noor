@@ -5,15 +5,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Maison Noor — "Vert & Or" (Bateel-inspired): deep emerald + warm gold + cream.
-        nuit: "#0A1F18", // deep emerald-black (the dominant canvas)
-        ombre: "#103128", // emerald surface (alternate)
+        // Maison Noor — "Crème & Vert" (Option C): luminous cream canvas,
+        // deep emerald reserved for strategic "theatre" moments, warm gold accent.
+        nuit: "#0A1F18", // deep emerald-black (green theatres + ink on cream)
+        ombre: "#103128", // emerald surface (alternate dark)
         cacao: "#1A4636", // mid emerald (panels / hover)
-        ivoire: "#F4EEE0", // warm cream (light accent, text on dark)
-        sable: "#E4D9C2", // pale sand (rare light accent)
+        ivoire: "#F4EEE0", // warm cream (text on dark theatres)
+        sable: "#E4D9C2", // pale sand
         champagne: "#E3D2A8", // champagne
         or: "#C2A25A", // signature warm gold
         orclair: "#D8BE7E", // luminous gold (a ray of light)
+        // Light-theme surfaces
+        paper: "#F6F1E6", // the dominant cream canvas
+        paper2: "#FCF9F1", // raised cream (cards on paper)
+        ink: "#122A20", // deep-green ink for text on cream (softer than pure nuit)
       },
       fontFamily: {
         serif: ["var(--font-serif)", "Cormorant Garamond", "Georgia", "serif"],

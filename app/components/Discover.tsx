@@ -20,12 +20,12 @@ export default function Discover() {
   const caseScale = useTransform(scrollYProgress, [0, 0.6], [0.94, 1]);
 
   return (
-    <section id="poznaj" ref={ref} className="relative overflow-hidden bg-nuit py-16 text-ivoire md:py-36">
+    <section id="poznaj" ref={ref} className="relative overflow-hidden bg-paper py-16 text-ink md:py-36">
       <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-6 md:px-10 lg:grid-cols-2 lg:gap-20">
         {/* Editorial column */}
         <div className="order-2 lg:order-1">
           <Reveal>
-            <p className="section-index text-ivoire/40">{t("discover.index")}</p>
+            <p className="section-index">{t("discover.index")}</p>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="eyebrow mt-6">{t("discover.eyebrow")}</p>
@@ -34,12 +34,12 @@ export default function Discover() {
             <h2 className="display mt-4 text-4xl md:text-6xl">{t("discover.title")}</h2>
           </Reveal>
           <Reveal delay={0.15}>
-            <p className="mt-8 max-w-lg font-sans text-[15px] leading-[1.9] text-ivoire/70">
+            <p className="mt-8 max-w-lg font-sans text-[15px] leading-[1.9] text-ink/70">
               {t("discover.body")}
             </p>
           </Reveal>
           <Reveal delay={0.2}>
-            <a href="#kolekcja" className="btn-line mt-10 text-orclair">
+            <a href="#kolekcja" className="btn-line mt-10 text-or">
               {t("collection.all")}
             </a>
           </Reveal>
@@ -86,7 +86,7 @@ export default function Discover() {
               </motion.div>
             </div>
           </div>
-          <p className="mt-6 text-center font-sans text-[11px] uppercase tracking-wide2 text-ivoire/30">
+          <p className="mt-6 text-center font-sans text-[11px] uppercase tracking-wide2 text-ink/40">
             {reduce ? "Maison Noor" : "↕ " + t("hero.scroll")}
           </p>
         </div>

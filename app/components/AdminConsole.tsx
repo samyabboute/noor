@@ -143,7 +143,7 @@ export default function AdminConsole({ data }: { data: AdminData }) {
               <h1 className="font-serif text-3xl md:text-4xl">{nav.find((n) => n.id === tab)?.label}</h1>
               <p className="mt-1 font-sans text-[12px] text-ivoire/45">Maison Noor</p>
             </div>
-            <button className="btn-solid hidden py-3 text-[11px] sm:inline-flex">+ Nowy produkt</button>
+            <button className="btn-solid-invert hidden py-3 text-[11px] sm:inline-flex">+ Nowy produkt</button>
           </div>
 
           {tab === "overview" && (

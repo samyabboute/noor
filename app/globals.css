@@ -31,7 +31,7 @@ html.lenis body {
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-nuit text-ivoire font-sans antialiased;
+    @apply bg-paper text-ink font-sans antialiased;
     font-feature-settings: "liga" 1, "kern" 1;
     text-rendering: optimizeLegibility;
     overflow-x: hidden;
@@ -61,9 +61,10 @@ html.lenis body {
     @apply font-sans text-[11px] uppercase tracking-luxe text-or/80;
   }
 
-  /* Section numbering, e.g. 01 — Discover */
+  /* Section numbering, e.g. 01 — Discover. Ink by default (light sections);
+     dark theatres override with text-ivoire/40. */
   .section-index {
-    @apply font-sans text-[11px] uppercase tracking-wide2 text-ivoire/40;
+    @apply font-sans text-[11px] uppercase tracking-wide2 text-ink/40;
   }
 
   /* Display headings */
@@ -84,17 +85,28 @@ html.lenis body {
     transform-origin: right;
   }
 
-  /* Solid pill CTA — a light pill on the dark canvas (primary purchase action) */
+  /* Primary CTA — a deep-green pill on the cream canvas (the default now). */
   .btn-solid {
-    @apply inline-flex items-center justify-center gap-3 rounded-full bg-ivoire px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-nuit transition-all duration-500 ease-luxe hover:bg-champagne;
+    @apply inline-flex items-center justify-center gap-3 rounded-full bg-nuit px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-ivoire transition-all duration-500 ease-luxe hover:bg-cacao active:scale-[0.99];
   }
+  /* Inverted CTA — a cream pill for the dark green "theatre" sections. */
+  .btn-solid-invert {
+    @apply inline-flex items-center justify-center gap-3 rounded-full bg-ivoire px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-nuit transition-all duration-500 ease-luxe hover:bg-champagne active:scale-[0.99];
+  }
+  /* Outline CTA on cream. */
   .btn-ghost {
+    @apply inline-flex items-center justify-center gap-3 rounded-full border border-ink/25 px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-ink transition-all duration-500 ease-luxe hover:border-ink hover:bg-ink/5;
+  }
+  /* Outline CTA on the dark theatres. */
+  .btn-ghost-invert {
     @apply inline-flex items-center justify-center gap-3 rounded-full border border-ivoire/30 px-8 py-4 font-sans text-[12px] uppercase tracking-wide2 text-ivoire transition-all duration-500 ease-luxe hover:border-ivoire hover:bg-ivoire/5;
   }
 
-  /* Hairline used to separate editorial blocks */
+  /* Hairline used to separate editorial blocks — adapts to text colour. */
   .hairline {
-    @apply h-px w-full bg-ivoire/10;
+    @apply h-px w-full;
+    background-color: currentColor;
+    opacity: 0.14;
   }
 }
 

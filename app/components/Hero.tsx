@@ -108,7 +108,7 @@ export default function Hero() {
           transition={{ delay: 1.65, duration: 1.2 }}
           className="mt-9 flex w-full max-w-xs flex-col items-center gap-4 sm:w-auto sm:flex-row"
         >
-          <Link href="/kolekcja" className="btn-solid w-full sm:w-auto">
+          <Link href="/kolekcja" className="btn-solid-invert w-full sm:w-auto">
             {t("hero.cta.shop")}
           </Link>
           <a href="#poznaj" className="btn-line text-ivoire">

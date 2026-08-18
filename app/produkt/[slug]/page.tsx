@@ -17,7 +17,7 @@ import { getProduct, shopProducts } from "../../lib/products";
 function Accordion({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
-    <div className="border-b border-ivoire/10">
+    <div className="border-b border-ink/10">
       <button
         onClick={() => setOpen((v) => !v)}
         className="flex w-full items-center justify-between py-4 text-left font-sans text-[12px] uppercase tracking-wide2"
@@ -31,7 +31,7 @@ function Accordion({ title, children }: { title: string; children: React.ReactNo
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
         className="overflow-hidden"
       >
-        <div className="pb-5 font-sans text-[14px] leading-[1.8] text-ivoire/70">{children}</div>
+        <div className="pb-5 font-sans text-[14px] leading-[1.8] text-ink/70">{children}</div>
       </motion.div>
     </div>
   );
@@ -60,7 +60,7 @@ export default function ProductPage() {
 
   if (!product) {
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-nuit px-6 text-center">
+      <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-paper px-6 text-center">
         <p className="font-serif text-3xl">404</p>
         <Link href="/kolekcja" className="btn-ghost">{t("collection.all")}</Link>
       </div>
@@ -84,7 +84,7 @@ export default function ProductPage() {
 
   return (
     <>
-      <div className="bg-nuit pt-24 md:pt-28">
+      <div className="bg-paper pt-24 md:pt-28">
         <div className="mx-auto grid max-w-[1400px] gap-10 px-6 md:px-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 lg:self-start">
@@ -118,7 +118,7 @@ export default function ProductPage() {
           {/* Buy panel */}
           <div className="pb-6">
             <Reveal>
-              <Link href="/kolekcja" className="btn-line text-[11px] text-ivoire/50">
+              <Link href="/kolekcja" className="btn-line text-[11px] text-ink/50">
                 ← {t("collection.title")}
               </Link>
             </Reveal>
@@ -126,7 +126,7 @@ export default function ProductPage() {
               <h1 className="display mt-6 text-5xl md:text-6xl">{product.name}</h1>
             </Reveal>
             <Reveal delay={0.1}>
-              <p className="mt-3 font-serif text-xl italic text-ivoire/70">{product.tagline[lang]}</p>
+              <p className="mt-3 font-serif text-xl italic text-ink/70">{product.tagline[lang]}</p>
             </Reveal>
 
             <Reveal delay={0.15}>
@@ -134,7 +134,7 @@ export default function ProductPage() {
                 <span className="font-serif text-4xl">{money(product.price)}</span>
                 {product.compareAt && (
                   <>
-                    <span className="font-sans text-lg text-ivoire/40 line-through">
+                    <span className="font-sans text-lg text-ink/40 line-through">
                       {money(product.compareAt)}
                     </span>
                     <span className="rounded-full bg-or/15 px-3 py-1 font-sans text-[11px] uppercase tracking-wide2 text-or">
@@ -146,7 +146,7 @@ export default function ProductPage() {
             </Reveal>
 
             <Reveal delay={0.2}>
-              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-[12px] text-ivoire/60">
+              <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2 font-sans text-[12px] text-ink/60">
                 <span className="flex items-center gap-2">
                   <span className={`h-1.5 w-1.5 rounded-full ${isLimited ? "bg-or" : "bg-green-700"}`} />
                   {isLimited ? t("pdp.lowstock") : t("pdp.instock")}
@@ -159,9 +159,9 @@ export default function ProductPage() {
                 and thumb-reachable; side-by-side from the sm breakpoint up. */}
             <Reveal delay={0.25}>
               <div ref={buyRef} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-4">
-                <div className="flex items-center justify-between self-stretch rounded-full border border-ivoire/25 sm:self-auto sm:rounded-none">
+                <div className="flex items-center justify-between self-stretch rounded-full border border-ink/25 sm:self-auto sm:rounded-none">
                   <button
-                    className="flex h-12 w-14 items-center justify-center text-xl transition hover:bg-ivoire/5"
+                    className="flex h-12 w-14 items-center justify-center text-xl transition hover:bg-ink/5"
                     onClick={() => setQty((q) => Math.max(1, q - 1))}
                     aria-label={lang === "pl" ? "Zmniejsz ilość" : "Decrease quantity"}
                   >
@@ -169,7 +169,7 @@ export default function ProductPage() {
                   </button>
                   <span className="min-w-[2.5rem] text-center font-sans text-sm tabular-nums">{qty}</span>
                   <button
-                    className="flex h-12 w-14 items-center justify-center text-xl transition hover:bg-ivoire/5"
+                    className="flex h-12 w-14 items-center justify-center text-xl transition hover:bg-ink/5"
                     onClick={() => setQty((q) => q + 1)}
                     aria-label={lang === "pl" ? "Zwiększ ilość" : "Increase quantity"}
                   >
@@ -183,7 +183,7 @@ export default function ProductPage() {
             </Reveal>
 
             <Reveal delay={0.3}>
-              <div className="mt-4 flex items-center gap-3 rounded-sm bg-ombre px-4 py-3 font-sans text-[12px] text-ivoire/70">
+              <div className="mt-4 flex items-center gap-3 rounded-sm border border-ink/10 bg-paper2 px-4 py-3 font-sans text-[12px] text-ink/70">
                 <span className="text-or">✦</span>
                 {t("pdp.giftnote")} · {t("bag.giftwrap")}
               </div>
@@ -192,7 +192,7 @@ export default function ProductPage() {
             {/* Quantity incentive — elegant, never shouty */}
             {product.tier !== "royal" && (
               <Reveal delay={0.32}>
-                <p className="mt-4 font-sans text-[12px] leading-relaxed text-ivoire/50">
+                <p className="mt-4 font-sans text-[12px] leading-relaxed text-ink/55">
                   {lang === "pl"
                     ? "Bierzesz dwie szkatuły? Druga podróżuje bez kosztów dostawy."
                     : "Taking two cases? The second travels with delivery on us."}
@@ -204,12 +204,12 @@ export default function ProductPage() {
             <Reveal delay={0.35}>
               <div className="mt-10">
                 <Accordion title={`${t("pdp.taste")} · ${t("pdp.texture")}`}>
-                  <p className="mb-2"><strong className="text-ivoire">{t("pdp.taste")}.</strong> {product.taste[lang]}</p>
-                  <p><strong className="text-ivoire">{t("pdp.texture")}.</strong> {product.texture[lang]}</p>
+                  <p className="mb-2"><strong className="text-ink">{t("pdp.taste")}.</strong> {product.taste[lang]}</p>
+                  <p><strong className="text-ink">{t("pdp.texture")}.</strong> {product.texture[lang]}</p>
                 </Accordion>
                 <Accordion title={`${t("pdp.variety")} · ${t("pdp.origin")}`}>
-                  <p className="mb-2"><strong className="text-ivoire">{t("pdp.variety")}.</strong> {product.variety[lang]}</p>
-                  <p><strong className="text-ivoire">{t("pdp.origin")}.</strong> {product.origin[lang]}</p>
+                  <p className="mb-2"><strong className="text-ink">{t("pdp.variety")}.</strong> {product.variety[lang]}</p>
+                  <p><strong className="text-ink">{t("pdp.origin")}.</strong> {product.origin[lang]}</p>
                 </Accordion>
                 <Accordion title={`${t("pdp.weight")} · ${t("pdp.pieces")}`}>
                   <p>{product.weight} · {product.pieces}</p>
@@ -230,7 +230,7 @@ export default function ProductPage() {
       </div>
 
       {/* Cross-sell */}
-      <section className="bg-nuit py-16 md:py-32">
+      <section className="bg-paper py-16 md:py-32">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <Reveal>
             <p className="eyebrow text-center">{t("pdp.complete")}</p>
@@ -263,7 +263,7 @@ export default function ProductPage() {
       {/* Sticky mobile add-to-cart — the CTA is never more than a thumb away */}
       <div
         className={clsx(
-          "fixed inset-x-0 bottom-0 z-40 border-t border-ivoire/10 bg-nuit/95 px-4 pt-3 backdrop-blur-md transition-transform duration-500 ease-luxe lg:hidden",
+          "fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-paper/95 px-4 pt-3 backdrop-blur-md transition-transform duration-500 ease-luxe lg:hidden",
           showSticky ? "translate-y-0" : "translate-y-full",
         )}
         style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
@@ -271,9 +271,9 @@ export default function ProductPage() {
         <div className="mx-auto flex max-w-md items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate font-serif text-[15px] leading-tight">{product.name}</p>
-            <p className="font-sans text-[12px] text-ivoire/60">
+            <p className="font-sans text-[12px] text-ink/60">
               {money(product.price)}
-              {qty > 1 && <span className="text-ivoire/40"> · ×{qty}</span>}
+              {qty > 1 && <span className="text-ink/40"> · ×{qty}</span>}
             </p>
           </div>
           <div className="w-[44%] max-w-[200px] shrink-0">
