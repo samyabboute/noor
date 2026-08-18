@@ -170,3 +170,25 @@ html.lenis body {
     background-size: calc(var(--noor-scale, 130px) * 0.7) calc(var(--noor-scale, 130px) * 0.7) !important;
   }
 }
+
+/* Skeleton shimmer — ink-tinted, for cream loading states */
+@keyframes noor-shimmer {
+  100% { transform: translateX(100%); }
+}
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(18, 42, 32, 0.06);
+  border-radius: 3px;
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(18, 42, 32, 0.05), transparent);
+  animation: noor-shimmer 1.6s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .skeleton::after { animation: none; }
+}

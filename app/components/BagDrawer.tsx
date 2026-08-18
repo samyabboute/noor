@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import ProductVisual from "./ProductVisual";
+import { NoorMark } from "./Logo";
 import { useStore } from "../lib/store";
 import {
   products,
@@ -94,8 +95,9 @@ export default function BagDrawer() {
             {/* Lines */}
             <div className="flex-1 overflow-y-auto px-6">
               {cart.length === 0 ? (
-                <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
-                  <p className="font-serif text-xl text-ivoire/60">{t("bag.empty")}</p>
+                <div className="flex h-full flex-col items-center justify-center gap-6 px-6 text-center">
+                  <NoorMark className="h-8 w-8 text-or/70" />
+                  <p className="max-w-[15rem] font-serif text-xl text-ivoire/60">{t("bag.empty")}</p>
                   <Link href="/kolekcja" onClick={() => setBagOpen(false)} className="btn-ghost-invert">
                     {t("bag.emptyCta")}
                   </Link>
