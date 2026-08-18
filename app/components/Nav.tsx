@@ -55,6 +55,14 @@ export default function Nav() {
             : "bg-transparent text-ivoire",
       )}
     >
+      {/* Legibility scrim — keeps the menu readable over any hero, without a
+          solid bar, until the header goes solid on scroll. */}
+      {!solid && !menuOpen && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-black/45 via-black/15 to-transparent"
+        />
+      )}
       <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 md:px-10 h-[64px] md:h-[68px]">
         {/* Left: mobile menu toggle */}
         <button
@@ -80,9 +88,13 @@ export default function Nav() {
             <Link
               key={l.key}
               href={l.href}
-              className="font-sans text-[12px] uppercase tracking-wide2 opacity-80 transition-opacity duration-300 hover:opacity-100"
+              className="group relative font-sans text-[12px] uppercase tracking-wide2 opacity-90 transition-opacity duration-300 hover:opacity-100"
             >
               {t(l.key)}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute -bottom-1.5 left-0 h-px w-full origin-left scale-x-0 bg-or transition-transform duration-500 ease-luxe group-hover:scale-x-100"
+              />
             </Link>
           ))}
         </div>

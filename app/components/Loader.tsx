@@ -21,14 +21,18 @@ export default function Loader() {
     if (sessionStorage.getItem("noor.entered")) return;
     setShow(true);
     document.body.style.overflow = "hidden";
+    const release = () => {
+      // Don't release the scroll lock if the welcome gate is holding it.
+      if (!document.body.dataset.noorGate) document.body.style.overflow = "";
+    };
     const t = setTimeout(() => {
       setShow(false);
       sessionStorage.setItem("noor.entered", "1");
-      document.body.style.overflow = "";
-    }, 1900);
+      release();
+    }, 1300);
     return () => {
       clearTimeout(t);
-      document.body.style.overflow = "";
+      release();
     };
   }, [reduce]);
 
@@ -55,7 +59,7 @@ export default function Loader() {
               className="h-full bg-or"
               initial={{ width: "0%" }}
               animate={{ width: "100%" }}
-              transition={{ duration: 1.5, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ duration: 1.05, ease: [0.4, 0, 0.2, 1] }}
             />
           </div>
 

@@ -39,6 +39,10 @@ interface StoreState {
   money: (pln: number) => string;
   regionPrompt: boolean;
   dismissRegionPrompt: () => void;
+
+  // First-visit welcome (language + country)
+  welcome: boolean;
+  completeWelcome: (lang: Lang, currency: CurrencyCode) => void;
 }
 
 const StoreContext = createContext<StoreState | null>(null);
@@ -53,6 +57,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [country, setCountry] = useState("PL");
   const [currency, setCurrencyState] = useState<CurrencyCode>("PLN");
   const [regionPrompt, setRegionPrompt] = useState(false);
+  const [welcome, setWelcome] = useState(false);
 
   // Hydrate from localStorage
   useEffect(() => {
@@ -68,6 +73,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     try {
       const savedCur = localStorage.getItem("noor.currency") as CurrencyCode | null;
       if (savedCur && ["PLN", "EUR", "GBP", "USD"].includes(savedCur)) setCurrencyState(savedCur);
+    } catch {
+      /* ignore */
+    }
+    // Show the first-visit welcome only if the visitor has never chosen before.
+    try {
+      if (!localStorage.getItem("noor.welcome.done")) setWelcome(true);
     } catch {
       /* ignore */
     }
@@ -89,12 +100,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         if (!res.ok || !active) return;
         const geo = (await res.json()) as { country: string; currency: CurrencyCode; detected: boolean };
         setCountry(geo.country);
-        // Only auto-suggest if the visitor hasn't already picked a currency
-        // and we actually detected a country different from the default.
-        if (!chosen) {
-          if (geo.detected && geo.currency !== "PLN" && !acknowledged) {
-            setRegionPrompt(true);
-          }
+        // First-time visitors get the welcome gate (handles country + currency),
+        // never also the toast. The toast is only a fallback for returning
+        // visitors who dismissed the gate without picking a foreign currency.
+        const welcomeDone = localStorage.getItem("noor.welcome.done");
+        if (welcomeDone && !chosen && geo.detected && geo.currency !== "PLN" && !acknowledged) {
+          setRegionPrompt(true);
         }
       } catch {
         /* ignore — default region stays */
@@ -157,6 +168,23 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  const completeWelcome = useCallback(
+    (l: Lang, c: CurrencyCode) => {
+      setLang(l);
+      setCurrencyState(c);
+      setWelcome(false);
+      setRegionPrompt(false);
+      try {
+        localStorage.setItem("noor.currency", c);
+        localStorage.setItem("noor.welcome.done", "1");
+        localStorage.setItem("noor.region.ack", "1");
+      } catch {
+        /* ignore */
+      }
+    },
+    [setLang],
+  );
+
   const money = useCallback((pln: number) => formatMoney(pln, currency), [currency]);
 
   const { count, subtotal } = useMemo(() => {
@@ -189,6 +217,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     money,
     regionPrompt,
     dismissRegionPrompt,
+    welcome,
+    completeWelcome,
     count,
     subtotal,
     shipping,

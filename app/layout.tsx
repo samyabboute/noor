@@ -7,6 +7,7 @@ import BagDrawer from "./components/BagDrawer";
 import Loader from "./components/Loader";
 import SmoothScroll from "./components/SmoothScroll";
 import RegionPrompt from "./components/RegionPrompt";
+import WelcomeGate from "./components/WelcomeGate";
 
 const faviconSvg =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%230A1F18'/%3E%3Cpath d='M20 6 C21 15 25 19 34 20 C25 21 21 25 20 34 C19 25 15 21 6 20 C15 19 19 15 20 6 Z' fill='%23C2A25A'/%3E%3C/svg%3E";
@@ -36,7 +37,16 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Maison Noor",
   },
-  icons: { icon: faviconSvg },
+  icons: {
+    icon: faviconSvg,
+    apple: "/apple-touch-icon.png",
+  },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    capable: true,
+    title: "Noor",
+    statusBarStyle: "black-translucent",
+  },
 };
 
 export const viewport: Viewport = {
@@ -65,6 +75,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main>{children}</main>
           <BagDrawer />
           <RegionPrompt />
+          <WelcomeGate />
         </StoreProvider>
         </AuthProvider>
       </body>
