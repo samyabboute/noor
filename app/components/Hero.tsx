@@ -37,6 +37,29 @@ export default function Hero() {
         transition={{ duration: 2.6, ease: [0.16, 1, 0.3, 1] }}
       />
 
+      {/* Oversized نور watermark — the brand, ghosted into the canvas */}
+      <motion.div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <span className="select-none font-arabic text-[44vw] leading-none text-or/[0.05] md:text-[32vw] md:text-or/[0.07]">نور</span>
+      </motion.div>
+
+      {/* Editorial masthead marks (desktop) */}
+      <div className="pointer-events-none absolute left-4 top-1/2 z-10 hidden -translate-y-1/2 md:block">
+        <span className="block -rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ivoire/30">
+          Maison Noor
+        </span>
+      </div>
+      <div className="pointer-events-none absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 md:block">
+        <span className="block rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ivoire/30">
+          Tozeur — Tunisie
+        </span>
+      </div>
+
       {/* The object — a single Deglet Nour, filmed like a jewel */}
       <motion.div
         className="absolute inset-x-0 top-0 flex h-[54%] items-end justify-center sm:h-[58%]"
@@ -74,23 +97,27 @@ export default function Hero() {
           {t("hero.house")}
         </motion.p>
 
-        <h1 className="display text-[16vw] leading-[0.92] sm:text-[10vw] md:text-[7.5rem]">
-          <motion.span
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.95, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="block italic font-light text-champagne"
-          >
-            {t("hero.light.a")}
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-            className="block"
-          >
-            {t("hero.light.b")}
-          </motion.span>
+        <h1 className="display text-[15.5vw] leading-[0.9] tracking-[-0.015em] sm:text-[10vw] md:text-[7.75rem]">
+          <span className="block overflow-hidden pb-[0.1em] -mb-[0.1em]">
+            <motion.span
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: "115%" }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.9, duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+              className="block italic font-light text-champagne"
+            >
+              {t("hero.light.a")}
+            </motion.span>
+          </span>
+          <span className="block overflow-hidden pb-[0.1em] -mb-[0.1em]">
+            <motion.span
+              initial={reduce ? { opacity: 0 } : { opacity: 0, y: "115%" }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.05, duration: 1.25, ease: [0.16, 1, 0.3, 1] }}
+              className="block"
+            >
+              {t("hero.light.b")}
+            </motion.span>
+          </span>
         </h1>
 
         <motion.p

@@ -122,7 +122,7 @@ export default function ProductPage() {
                 ← {t("collection.title")}
               </Link>
             </Reveal>
-            <Reveal delay={0.05}>
+            <Reveal delay={0.05} variant="mask">
               <h1 className="display mt-6 text-5xl md:text-6xl">{product.name}</h1>
             </Reveal>
             <Reveal delay={0.1}>

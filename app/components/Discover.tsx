@@ -30,7 +30,7 @@ export default function Discover() {
           <Reveal delay={0.05}>
             <p className="eyebrow mt-6">{t("discover.eyebrow")}</p>
           </Reveal>
-          <Reveal delay={0.1}>
+          <Reveal delay={0.1} variant="mask">
             <h2 className="display mt-4 text-4xl md:text-6xl">{t("discover.title")}</h2>
           </Reveal>
           <Reveal delay={0.15}>

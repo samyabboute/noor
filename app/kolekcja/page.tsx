@@ -13,7 +13,7 @@ export default function KolekcjaPage() {
     <>
       <section className="bg-paper px-6 pt-28 pb-10 text-center md:px-10 md:pt-40">
         <Reveal><p className="eyebrow">{t("collection.eyebrow")}</p></Reveal>
-        <Reveal delay={0.05}>
+        <Reveal delay={0.05} variant="mask">
           <h1 className="display mt-4 text-6xl md:text-8xl">{t("collection.title")}</h1>
         </Reveal>
         <Reveal delay={0.1}>

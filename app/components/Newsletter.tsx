@@ -17,7 +17,7 @@ export default function Newsletter() {
       <div className="relative mx-auto max-w-2xl px-6 text-center">
         <Reveal><p className="section-index text-ivoire/40">{t("news.index")}</p></Reveal>
         <Reveal delay={0.05}><p className="eyebrow mt-5">{t("news.eyebrow")}</p></Reveal>
-        <Reveal delay={0.1}><h2 className="display mt-3 text-4xl md:text-6xl">{t("news.title")}</h2></Reveal>
+        <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-4xl md:text-6xl">{t("news.title")}</h2></Reveal>
         <Reveal delay={0.15}>
           <p className="mx-auto mt-6 max-w-lg font-sans text-[14px] leading-[1.9] text-ivoire/65">{t("news.body")}</p>
         </Reveal>

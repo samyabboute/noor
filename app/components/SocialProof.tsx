@@ -46,7 +46,7 @@ export function Reviews() {
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("reviews.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("reviews.eyebrow")}</p></Reveal>
-          <Reveal delay={0.1}><h2 className="display mt-3 text-4xl md:text-6xl">{t("reviews.title")}</h2></Reveal>
+          <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-4xl md:text-6xl">{t("reviews.title")}</h2></Reveal>
           <Reveal delay={0.15}>
             <div className="mt-6 flex items-center justify-center gap-3">
               <Stars />

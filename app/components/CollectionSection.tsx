@@ -24,7 +24,7 @@ export default function CollectionSection() {
             <Reveal delay={0.05}>
               <p className="eyebrow mt-5">{t("collection.eyebrow")}</p>
             </Reveal>
-            <Reveal delay={0.1}>
+            <Reveal delay={0.1} variant="mask">
               <h2 className="display mt-3 text-5xl md:text-7xl">{t("collection.title")}</h2>
             </Reveal>
           </div>

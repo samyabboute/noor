@@ -35,7 +35,7 @@ export function TheDate() {
         <div>
           <Reveal><p className="section-index">{t("date.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("date.eyebrow")}</p></Reveal>
-          <Reveal delay={0.1}><h2 className="display mt-3 text-4xl md:text-6xl">{t("date.title")}</h2></Reveal>
+          <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-4xl md:text-6xl">{t("date.title")}</h2></Reveal>
           <Reveal delay={0.15}>
             <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ink/65">{t("date.body")}</p>
           </Reveal>
@@ -72,7 +72,7 @@ export function Craftsmanship() {
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("craft.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("craft.eyebrow")}</p></Reveal>
-          <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-7xl">{t("craft.title")}</h2></Reveal>
+          <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-7xl">{t("craft.title")}</h2></Reveal>
         </div>
 
         {/* The raw harvest — a full cluster of Deglet Nour, straight from the palm. */}
@@ -121,7 +121,7 @@ export function GiftCollection() {
         <div>
           <Reveal><p className="section-index">{t("gift.index")}</p></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("gift.eyebrow")}</p></Reveal>
-          <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-7xl">{t("gift.title")}</h2></Reveal>
+          <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-7xl">{t("gift.title")}</h2></Reveal>
           <Reveal delay={0.15}>
             <p className="mt-8 max-w-md font-sans text-[15px] leading-[1.9] text-ink/70">{t("gift.body")}</p>
           </Reveal>
@@ -152,7 +152,7 @@ export function Corporate() {
           <div>
             <Reveal><p className="section-index">{t("corp.index")}</p></Reveal>
             <Reveal delay={0.05}><p className="eyebrow mt-5">{t("corp.eyebrow")}</p></Reveal>
-            <Reveal delay={0.1}><h2 className="display mt-3 text-5xl md:text-6xl">{t("corp.title")}</h2></Reveal>
+            <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-6xl">{t("corp.title")}</h2></Reveal>
             <Reveal delay={0.15}>
               <p className="mt-7 max-w-md font-sans text-[15px] leading-[1.9] text-ink/70">{t("corp.body")}</p>
             </Reveal>
@@ -187,7 +187,7 @@ export function Story() {
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal><p className="section-index text-ivoire/40">{t("story.index")}</p></Reveal>
         <Reveal delay={0.05}><p className="eyebrow mt-6">{t("story.eyebrow")}</p></Reveal>
-        <Reveal delay={0.1}>
+        <Reveal delay={0.1} variant="mask">
           <h2 className="display mt-6 text-4xl italic md:text-6xl">“{t("story.title")}”</h2>
         </Reveal>
         <Reveal delay={0.2}>
