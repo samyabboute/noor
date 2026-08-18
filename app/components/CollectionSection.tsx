@@ -11,7 +11,7 @@ export default function CollectionSection() {
   const featured = shopProducts.slice(0, 4);
 
   return (
-    <section id="kolekcja" className="bg-nuit py-24 md:py-36">
+    <section id="kolekcja" className="bg-nuit py-16 md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 flex flex-col items-start justify-between gap-6 md:mb-20 md:flex-row md:items-end">
           <div>

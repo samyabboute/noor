@@ -18,7 +18,7 @@ export function TheDate() {
     { k: "date.f4.k", v: "date.f4.v" },
   ];
   return (
-    <section id="daktyl" className="bg-ombre py-24 text-ivoire md:py-36">
+    <section id="daktyl" className="bg-ombre py-16 text-ivoire md:py-36">
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Reveal>
@@ -67,7 +67,7 @@ export function Craftsmanship() {
     { k: "craft.s4.k", v: "craft.s4.v" },
   ];
   return (
-    <section id="rzemioslo" className="bg-ombre py-24 text-ivoire md:py-36">
+    <section id="rzemioslo" className="bg-ombre py-16 text-ivoire md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("craft.index")}</p></Reveal>
@@ -112,7 +112,7 @@ export function Craftsmanship() {
 export function GiftCollection() {
   const { t } = useStore();
   return (
-    <section id="prezenty" className="relative overflow-hidden bg-nuit py-24 text-ivoire md:py-40">
+    <section id="prezenty" className="relative overflow-hidden bg-nuit py-16 text-ivoire md:py-40">
       <div
         className="pointer-events-none absolute inset-0"
         style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(228,199,132,0.12), transparent 60%)" }}
@@ -146,7 +146,7 @@ export function Corporate() {
   const { t } = useStore();
   const bullets = ["corp.b1", "corp.b2", "corp.b3"];
   return (
-    <section id="dla-firm" className="bg-nuit py-24 text-ivoire md:py-36">
+    <section id="dla-firm" className="bg-nuit py-16 text-ivoire md:py-36">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <div>
@@ -182,7 +182,7 @@ export function Corporate() {
 export function Story() {
   const { t } = useStore();
   return (
-    <section id="dom-noor" className="relative isolate overflow-hidden bg-nuit py-28 text-ivoire md:py-44">
+    <section id="dom-noor" className="relative isolate overflow-hidden bg-nuit py-20 text-ivoire md:py-44">
       <NoorPattern placement="edges" opacity={0.05} scale={132} />
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal><p className="section-index text-ivoire/40">{t("story.index")}</p></Reveal>

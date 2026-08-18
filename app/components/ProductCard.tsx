@@ -17,7 +17,7 @@ export default function ProductCard({ product }: { product: Product }) {
           className="h-full w-full transition-transform duration-[1400ms] ease-luxe group-hover:scale-[1.06]"
         />
         {product.badge && (
-          <span className="absolute left-4 top-4 rounded-full bg-ivoire/90 px-3 py-1 font-sans text-[10px] uppercase tracking-wide2 text-nuit">
+          <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] truncate rounded-full bg-ivoire/90 px-2.5 py-1 font-sans text-[9px] uppercase tracking-[0.1em] text-nuit sm:left-4 sm:top-4 sm:px-3 sm:text-[10px] sm:tracking-wide2">
             {product.badge[lang]}
           </span>
         )}
@@ -27,18 +27,16 @@ export default function ProductCard({ product }: { product: Product }) {
         </div>
       </div>
 
-      <div className="mt-4 flex items-baseline justify-between gap-3">
-        <div>
-          <h3 className="font-serif text-xl leading-tight">{product.name}</h3>
-          <p className="mt-0.5 font-sans text-[12px] text-ivoire/45">{product.variety[lang]}</p>
-        </div>
-        <div className="text-right">
+      <div className="mt-3.5 sm:mt-4">
+        <div className="flex items-start justify-between gap-2.5">
+          <h3 className="font-serif text-[17px] leading-snug sm:text-xl">{product.name}</h3>
           {isCorporate ? (
-            <span className="font-sans text-[12px] uppercase tracking-wide2 text-or">{t("corp.cta")}</span>
+            <span className="shrink-0 whitespace-nowrap pt-0.5 font-sans text-[11px] uppercase tracking-wide2 text-or">{t("corp.cta")}</span>
           ) : (
-            <span className="font-serif text-lg text-ivoire">{money(product.price)}</span>
+            <span className="shrink-0 font-serif text-[15px] text-ivoire sm:text-lg">{money(product.price)}</span>
           )}
         </div>
+        <p className="mt-1 font-sans text-[11px] text-ivoire/45 sm:text-[12px]">{product.variety[lang]}</p>
       </div>
     </Link>
   );

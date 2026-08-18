@@ -10,12 +10,15 @@ export default function AddToBag({
   className,
   variant = "solid",
   openBag = true,
+  label,
 }: {
   slug: string;
   qty?: number;
   className?: string;
   variant?: "solid" | "ghost";
   openBag?: boolean;
+  /** Overrides the idle label (e.g. a shorter word for a compact sticky bar). */
+  label?: string;
 }) {
   const { addToCart, setBagOpen, t } = useStore();
   const [done, setDone] = useState(false);
@@ -28,9 +31,9 @@ export default function AddToBag({
         if (openBag) setBagOpen(true);
         setTimeout(() => setDone(false), 1600);
       }}
-      className={clsx(variant === "solid" ? "btn-solid" : "btn-ghost", "w-full", className)}
+      className={clsx(variant === "solid" ? "btn-solid" : "btn-ghost", "w-full whitespace-nowrap", className)}
     >
-      {done ? t("pdp.added") : t("pdp.add")}
+      {done ? t("pdp.added") : label ?? t("pdp.add")}
     </button>
   );
 }

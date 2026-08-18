@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
+import clsx from "clsx";
 import ProductVisual from "../../components/ProductVisual";
 import Photo from "../../components/Photo";
 import AddToBag from "../../components/AddToBag";
@@ -44,6 +45,19 @@ export default function ProductPage() {
   const [view, setView] = useState(0);
   const [qty, setQty] = useState(1);
 
+  // Sticky mobile add-to-cart: shown once the inline buy panel scrolls away.
+  const buyRef = useRef<HTMLDivElement>(null);
+  const [showSticky, setShowSticky] = useState(false);
+  useEffect(() => {
+    const el = buyRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(([e]) => setShowSticky(!e.isIntersecting), {
+      rootMargin: "-72px 0px -12% 0px",
+    });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [slug]);
+
   if (!product) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center gap-6 bg-nuit px-6 text-center">
@@ -81,13 +95,13 @@ export default function ProductPage() {
                 <Photo src={current.src} alt={current.alt} className="aspect-square w-full p-8" />
               )}
             </div>
-            <div className="mt-4 flex gap-3">
+            <div className="mt-4 grid grid-cols-4 gap-3">
               {views.map((v, i) => (
                 <button
                   key={i}
                   onClick={() => setView(i)}
                   aria-label={`Widok ${i + 1}`}
-                  className={`h-20 w-20 overflow-hidden rounded-sm border-2 bg-ombre transition ${
+                  className={`aspect-square w-full overflow-hidden rounded-sm border-2 bg-ombre transition ${
                     view === i ? "border-or" : "border-transparent opacity-60"
                   }`}
                 >
@@ -141,20 +155,29 @@ export default function ProductPage() {
               </div>
             </Reveal>
 
-            {/* Quantity + Add */}
+            {/* Quantity + Add — stacks on phones so the CTA is always full-width
+                and thumb-reachable; side-by-side from the sm breakpoint up. */}
             <Reveal delay={0.25}>
-              <div className="mt-8 flex items-stretch gap-4">
-                <div className="flex items-center border border-ivoire/25">
-                  <button className="px-4 py-3.5 hover:bg-ivoire/5" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="-">
+              <div ref={buyRef} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-4">
+                <div className="flex items-center justify-between self-stretch rounded-full border border-ivoire/25 sm:self-auto sm:rounded-none">
+                  <button
+                    className="flex h-12 w-14 items-center justify-center text-xl transition hover:bg-ivoire/5"
+                    onClick={() => setQty((q) => Math.max(1, q - 1))}
+                    aria-label={lang === "pl" ? "Zmniejsz ilość" : "Decrease quantity"}
+                  >
                     −
                   </button>
-                  <span className="w-10 text-center font-sans text-sm tabular-nums">{qty}</span>
-                  <button className="px-4 py-3.5 hover:bg-ivoire/5" onClick={() => setQty((q) => q + 1)} aria-label="+">
+                  <span className="min-w-[2.5rem] text-center font-sans text-sm tabular-nums">{qty}</span>
+                  <button
+                    className="flex h-12 w-14 items-center justify-center text-xl transition hover:bg-ivoire/5"
+                    onClick={() => setQty((q) => q + 1)}
+                    aria-label={lang === "pl" ? "Zwiększ ilość" : "Increase quantity"}
+                  >
                     +
                   </button>
                 </div>
-                <div className="flex-1">
-                  <AddToBag slug={product.slug} qty={qty} />
+                <div className="min-w-0 flex-1">
+                  <AddToBag slug={product.slug} qty={qty} className="h-12 sm:h-full" />
                 </div>
               </div>
             </Reveal>
@@ -207,7 +230,7 @@ export default function ProductPage() {
       </div>
 
       {/* Cross-sell */}
-      <section className="bg-nuit py-24 md:py-32">
+      <section className="bg-nuit py-16 md:py-32">
         <div className="mx-auto max-w-[1400px] px-6 md:px-10">
           <Reveal>
             <p className="eyebrow text-center">{t("pdp.complete")}</p>
@@ -236,6 +259,33 @@ export default function ProductPage() {
 
       <Reviews />
       <Footer />
+
+      {/* Sticky mobile add-to-cart — the CTA is never more than a thumb away */}
+      <div
+        className={clsx(
+          "fixed inset-x-0 bottom-0 z-40 border-t border-ivoire/10 bg-nuit/95 px-4 pt-3 backdrop-blur-md transition-transform duration-500 ease-luxe lg:hidden",
+          showSticky ? "translate-y-0" : "translate-y-full",
+        )}
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      >
+        <div className="mx-auto flex max-w-md items-center gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="truncate font-serif text-[15px] leading-tight">{product.name}</p>
+            <p className="font-sans text-[12px] text-ivoire/60">
+              {money(product.price)}
+              {qty > 1 && <span className="text-ivoire/40"> · ×{qty}</span>}
+            </p>
+          </div>
+          <div className="w-[44%] max-w-[200px] shrink-0">
+            <AddToBag
+              slug={product.slug}
+              qty={qty}
+              label={lang === "pl" ? "Dodaj" : "Add"}
+              className="h-12 !px-5"
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

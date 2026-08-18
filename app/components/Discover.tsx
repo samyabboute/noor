@@ -20,7 +20,7 @@ export default function Discover() {
   const caseScale = useTransform(scrollYProgress, [0, 0.6], [0.94, 1]);
 
   return (
-    <section id="poznaj" ref={ref} className="relative overflow-hidden bg-nuit py-24 text-ivoire md:py-36">
+    <section id="poznaj" ref={ref} className="relative overflow-hidden bg-nuit py-16 text-ivoire md:py-36">
       <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-6 md:px-10 lg:grid-cols-2 lg:gap-20">
         {/* Editorial column */}
         <div className="order-2 lg:order-1">

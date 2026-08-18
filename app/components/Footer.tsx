@@ -63,10 +63,10 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-6 border-t border-ivoire/10 py-8 md:flex-row">
-          <p className="font-sans text-[11px] uppercase tracking-wide2 text-ivoire/35">
+          <p className="text-center font-sans text-[11px] uppercase tracking-wide2 text-ivoire/35 md:text-left">
             © {new Date().getFullYear()} Maison Noor · {t("footer.rights")}
           </p>
-          <div className="flex items-center gap-3 font-sans text-[10px] uppercase tracking-wide2 text-ivoire/40">
+          <div className="flex flex-wrap items-center justify-center gap-2 font-sans text-[10px] uppercase tracking-wide2 text-ivoire/40 md:justify-end md:gap-3">
             {["BLIK", "Przelewy24", "Visa", "Mastercard", "Apple Pay", "Google Pay"].map((p) => (
               <span key={p} className="rounded border border-ivoire/15 px-2.5 py-1">
                 {p}

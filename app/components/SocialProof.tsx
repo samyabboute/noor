@@ -41,7 +41,7 @@ function Stars() {
 export function Reviews() {
   const { t, lang } = useStore();
   return (
-    <section id="opinie" className="bg-nuit py-24 md:py-32">
+    <section id="opinie" className="bg-nuit py-16 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
           <Reveal><p className="section-index">{t("reviews.index")}</p></Reveal>
@@ -81,7 +81,7 @@ export function Instagram() {
   const { t } = useStore();
   const tiles = products.slice(0, 6);
   return (
-    <section id="lifestyle" className="bg-nuit py-20 text-ivoire">
+    <section id="lifestyle" className="bg-nuit py-14 text-ivoire md:py-20">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-10 flex flex-col items-center justify-between gap-4 md:flex-row">
           <div>

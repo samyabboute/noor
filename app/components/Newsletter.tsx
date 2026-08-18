@@ -11,7 +11,7 @@ export default function Newsletter() {
   const [sent, setSent] = useState(false);
 
   return (
-    <section id="newsletter" className="relative isolate overflow-hidden bg-ombre py-24 text-ivoire md:py-32">
+    <section id="newsletter" className="relative isolate overflow-hidden bg-ombre py-16 text-ivoire md:py-32">
       {/* Closing CTA — the arabesque may be a touch more perceptible here */}
       <NoorPattern placement="edges" opacity={0.06} scale={122} />
       <div className="relative mx-auto max-w-2xl px-6 text-center">

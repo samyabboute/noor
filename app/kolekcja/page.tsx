@@ -11,7 +11,7 @@ export default function KolekcjaPage() {
   const { t } = useStore();
   return (
     <>
-      <section className="bg-nuit px-6 pt-32 pb-16 text-center md:px-10 md:pt-40">
+      <section className="bg-nuit px-6 pt-28 pb-10 text-center md:px-10 md:pt-40">
         <Reveal><p className="eyebrow">{t("collection.eyebrow")}</p></Reveal>
         <Reveal delay={0.05}>
           <h1 className="display mt-4 text-6xl md:text-8xl">{t("collection.title")}</h1>
@@ -23,7 +23,7 @@ export default function KolekcjaPage() {
         </Reveal>
       </section>
 
-      <section className="bg-nuit px-6 pb-28 md:px-10">
+      <section className="bg-nuit px-6 pb-20 md:px-10">
         <div className="mx-auto grid max-w-[1400px] grid-cols-2 gap-x-5 gap-y-14 md:grid-cols-3 md:gap-x-8 lg:grid-cols-4">
           {shopProducts.map((p, i) => (
             <Reveal key={p.slug} delay={(i % 4) * 0.06}>
