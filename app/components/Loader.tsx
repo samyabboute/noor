@@ -9,14 +9,16 @@ import { useStore } from "../lib/store";
 /**
  * The opening scene of the Noor world — not a loading screen, a curtain-raiser.
  *
- * A deep-emerald gateway that stages itself in four beats before opening onto
- * the luminous cream homepage:
- *   1. the نور calligraphy sweeps in from the bottom-right as a gold ribbon,
- *   2. the gold Noor logo rises from behind a clip at the centre,
- *   3. a second ribbon answers from the top-left, framing the mark diagonally,
- *   4. a quiet line of welcome settles beneath it,
- * then a warm cream light blooms from the centre and the dark surface lifts
- * away — a soft dissolve into the light (nūr = light), never a hard cut.
+ * Two acts:
+ *   Act I — compose. The نور calligraphy sweeps in from the bottom-right as a
+ *   gold ribbon; the gold Noor logo rises from behind a clip at the centre; a
+ *   mirrored ribbon answers from the top-left, framing the mark diagonally.
+ *   Act II — the line. Every element then leaves the way it arrived, in reverse,
+ *   while a single line of welcome takes the centre — larger, in an elegant
+ *   Cormorant italic, unblurring into place slowly. When the line stands alone,
+ *   the dark surface fades and the luminous cream homepage crossfades in.
+ *
+ * A soft dissolve into the light (nūr = light), never a hard cut.
  *
  * Brand assets, used directly as SVG:
  *   /brand/noor-logo.svg              — the primary logo (the hero)
@@ -24,12 +26,13 @@ import { useStore } from "../lib/store";
  * If either fails to load it falls back to the house wordmark, so the loader is
  * never broken.
  *
- * GPU-friendly (transform / opacity / clip-path only), one framer timeline,
- * once per session, reduced-motion aware.
+ * GPU-friendly (transform / opacity / clip-path / filter), one framer timeline
+ * driven by a phase, once per session, reduced-motion aware.
  */
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const HOLD = 4.3; // full timeline before the curtain lifts
-const EXIT = 1.15; // gentle dissolve into the homepage
+const PHASE2_AT = 2.7; // when the elements reverse out and the line takes over
+const HOLD = 5.4; // full timeline before the curtain fades
+const EXIT = 1.05; // crossfade into the homepage
 
 const LOGO_SRC = "/brand/noor-logo.svg";
 const ART_SRC = "/brand/noor-arabic-background.svg";
@@ -39,6 +42,7 @@ export default function Loader() {
   const reduce = useReducedMotion();
   const pathname = usePathname();
   const [show, setShow] = useState(false);
+  const [phase, setPhase] = useState(0); // 0 = compose, 1 = the line takes over
   const [logoErr, setLogoErr] = useState(false);
   const [artErr, setArtErr] = useState(false);
 
@@ -50,21 +54,29 @@ export default function Loader() {
     const release = () => {
       if (!document.body.dataset.noorGate) document.body.style.overflow = "";
     };
-    const t = setTimeout(
+    const p2 = setTimeout(() => setPhase(1), (reduce ? 1.1 : PHASE2_AT) * 1000);
+    const end = setTimeout(
       () => {
         setShow(false);
         sessionStorage.setItem("noor.entered", "1");
         release();
       },
-      (reduce ? 1.5 : HOLD) * 1000,
+      (reduce ? 2.4 : HOLD) * 1000,
     );
     return () => {
-      clearTimeout(t);
+      clearTimeout(p2);
+      clearTimeout(end);
       release();
     };
   }, [reduce]);
 
-  const welcome = lang === "pl" ? "Witaj w świecie Noor" : "Enjoy the experience";
+  const line = lang === "pl" ? "Witaj w świetle" : "Enjoy the experience";
+
+  // Ribbon: wipes in left→right in Act I, un-wipes on the way out in Act II.
+  const ribbon = (o: number) => ({
+    initial: { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" },
+    animate: phase === 0 ? { opacity: o, clipPath: "inset(0% 0% 0% 0%)" } : { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" },
+  });
 
   return (
     <AnimatePresence>
@@ -76,7 +88,7 @@ export default function Loader() {
           exit={{ opacity: 0 }}
           transition={{ duration: reduce ? 0.6 : EXIT, ease: EASE }}
         >
-          {/* Warm pool of light gathering at the centre */}
+          {/* Warm pool of light at the centre — a halo the line rests upon */}
           {!reduce && (
             <motion.div
               aria-hidden
@@ -88,43 +100,49 @@ export default function Loader() {
             />
           )}
 
-          {/* Beat 1 — the bottom-right ribbon sweeps in first */}
-          {!reduce &&
-            !artErr && (
-              <motion.img
-                src={ART_SRC}
-                alt=""
-                aria-hidden
-                draggable={false}
-                onError={() => setArtErr(true)}
-                className="pointer-events-none absolute -bottom-[6%] -right-[8%] w-[min(120vw,1180px)] max-w-none select-none portrait:w-[190vw]"
-                initial={{ opacity: 0, clipPath: "inset(0% 100% 0% 0%)" }}
-                animate={{ opacity: 0.22, clipPath: "inset(0% 0% 0% 0%)" }}
-                transition={{ delay: 0.1, duration: 1.3, ease: EASE }}
-              />
-            )}
+          {/* Beat 1 — the bottom-right ribbon (leaves last-in / first-out feel) */}
+          {!reduce && !artErr && (
+            <motion.img
+              src={ART_SRC}
+              alt=""
+              aria-hidden
+              draggable={false}
+              onError={() => setArtErr(true)}
+              className="pointer-events-none absolute -bottom-[6%] -right-[8%] w-[min(120vw,1180px)] max-w-none select-none portrait:w-[190vw]"
+              {...ribbon(0.22)}
+              transition={phase === 0 ? { delay: 0.1, duration: 1.2, ease: EASE } : { duration: 0.9, ease: EASE }}
+            />
+          )}
 
-          {/* Beat 3 — the top-left ribbon answers, framing the mark */}
-          {!reduce &&
-            !artErr && (
-              <motion.img
-                src={ART_SRC}
-                alt=""
-                aria-hidden
-                draggable={false}
-                className="pointer-events-none absolute -top-[6%] -left-[8%] w-[min(120vw,1180px)] max-w-none rotate-180 select-none portrait:w-[190vw]"
-                initial={{ opacity: 0, clipPath: "inset(0% 100% 0% 0%)" }}
-                animate={{ opacity: 0.16, clipPath: "inset(0% 0% 0% 0%)" }}
-                transition={{ delay: 1.4, duration: 1.3, ease: EASE }}
-              />
-            )}
+          {/* Beat 3 — the top-left ribbon, mirrored */}
+          {!reduce && !artErr && (
+            <motion.img
+              src={ART_SRC}
+              alt=""
+              aria-hidden
+              draggable={false}
+              className="pointer-events-none absolute -top-[6%] -left-[8%] w-[min(120vw,1180px)] max-w-none rotate-180 select-none portrait:w-[190vw]"
+              {...ribbon(0.16)}
+              transition={phase === 0 ? { delay: 1.25, duration: 1.2, ease: EASE } : { duration: 0.9, ease: EASE }}
+            />
+          )}
 
-          {/* Beat 2 — the logo rises from behind a clip at the centre */}
+          {/* Beat 2 — the logo rises, then sinks back the way it came */}
           <motion.div
-            className="relative z-10 flex items-center justify-center will-change-transform"
+            className="absolute inset-0 z-10 flex items-center justify-center will-change-transform"
             initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18, clipPath: "inset(100% 0% 0% 0%)" }}
-            animate={reduce ? { opacity: 1 } : { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)" }}
-            transition={{ duration: reduce ? 0.5 : 1.1, delay: reduce ? 0 : 0.7, ease: EASE }}
+            animate={
+              reduce
+                ? { opacity: phase === 0 ? 1 : 0 }
+                : phase === 0
+                  ? { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)" }
+                  : { opacity: 0, y: 22, clipPath: "inset(100% 0% 0% 0%)" }
+            }
+            transition={
+              phase === 0
+                ? { duration: reduce ? 0.5 : 1.0, delay: reduce ? 0 : 0.6, ease: EASE }
+                : { duration: reduce ? 0.4 : 0.9, ease: EASE }
+            }
           >
             {logoErr ? (
               <div className="scale-125">
@@ -142,27 +160,20 @@ export default function Loader() {
             )}
           </motion.div>
 
-          {/* Beat 4 — a quiet line of welcome settles beneath the mark */}
-          <motion.p
-            className="absolute left-1/2 bottom-[24%] z-10 -translate-x-1/2 whitespace-nowrap px-6 text-center font-sans text-[10px] uppercase tracking-[0.42em] text-champagne/80 md:text-[11px]"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: reduce ? 0.55 : 2.55, duration: reduce ? 0.5 : 0.85, ease: EASE }}
-          >
-            {welcome}
-          </motion.p>
-
-          {/* The curtain lift — a cream light blooms from the centre on exit,
-              bridging the deep green to the luminous cream homepage. */}
+          {/* Act II — the line takes the centre, larger, elegant, unhurried */}
           <motion.div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmax] w-[70vmax] -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ background: "radial-gradient(closest-side, #FFFDF7 0%, #FCFBF8 45%, rgba(252,251,248,0) 72%)" }}
-            initial={{ opacity: 0, scale: 0.2 }}
-            animate={{ opacity: 0, scale: 0.2 }}
-            exit={{ opacity: 1, scale: 3 }}
-            transition={{ duration: reduce ? 0.6 : EXIT, ease: EASE }}
-          />
+            className="absolute inset-0 z-20 flex items-center justify-center px-6"
+            initial={{ opacity: 0, scale: 0.96, y: 10, filter: "blur(7px)" }}
+            animate={phase === 1 ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.96, y: 10, filter: "blur(7px)" }}
+            transition={{ duration: reduce ? 0.7 : 1.8, ease: EASE }}
+          >
+            <p
+              className="display max-w-[86vw] text-center font-serif font-light italic text-champagne"
+              style={{ fontSize: "clamp(30px, 5.4vw, 64px)", letterSpacing: "0.01em" }}
+            >
+              {line}
+            </p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
