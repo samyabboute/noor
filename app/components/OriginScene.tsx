@@ -57,30 +57,19 @@ export default function OriginScene() {
           <path d="M0,220 C280,120 520,200 760,180 C1040,150 1220,240 1440,190 L1440,400 L0,400 Z" fill="#0c261d" opacity="0.85" />
         </motion.svg>
 
-        {/* Palms silhouette on the horizon */}
-        <motion.div className="absolute inset-x-0 bottom-[30%] flex justify-center gap-16 opacity-80" style={{ y: duneBack }}>
-          {[0, 1, 2].map((i) => (
-            <svg key={i} viewBox="0 0 60 90" className={`h-[14vmin] w-auto ${i === 1 ? "translate-y-3 scale-110" : "opacity-70"}`}>
-              <path d="M30 90 L30 40" stroke="#081a13" strokeWidth="2.5" fill="none" />
-              {[-60, -30, 0, 30, 60, 100, 140].map((a, k) => (
-                <path
-                  key={k}
-                  d={`M30 40 Q ${30 + Math.cos((a * Math.PI) / 180) * 20} ${40 - 14 - Math.abs(Math.sin((a * Math.PI) / 180)) * 6} ${30 + Math.cos((a * Math.PI) / 180) * 34} ${40 - Math.sin((a * Math.PI) / 180) * 20}`}
-                  stroke="#081a13" strokeWidth="2" fill="none" strokeLinecap="round"
-                />
-              ))}
-            </svg>
-          ))}
-        </motion.div>
-
-        {/* Dunes — front */}
-        <motion.svg
-          viewBox="0 0 1440 300" preserveAspectRatio="none"
-          className="absolute inset-x-0 bottom-0 h-[30%] w-full"
+        {/* Oasis of Tozeur — a hand-drawn engraving on the horizon */}
+        <motion.div
+          className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-center"
           style={{ y: duneFront }}
         >
-          <path d="M0,180 C320,80 560,160 820,140 C1080,120 1260,200 1440,150 L1440,300 L0,300 Z" fill="#050f0b" />
-        </motion.svg>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/origin-oasis.svg"
+            alt="Oaza Tozeur — palmy daktylowe"
+            draggable={false}
+            className="w-[min(116%,1320px)] max-w-none select-none opacity-[0.82]"
+          />
+        </motion.div>
 
         {/* Text */}
         <motion.div className="relative z-10 px-6 text-center" style={{ y: textY }}>
