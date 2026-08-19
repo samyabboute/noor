@@ -18,28 +18,21 @@ export function NoorMark({ className, stroke = "currentColor" }: { className?: s
 
 type LogoSize = "sm" | "md" | "lg";
 
-const NOOR: Record<LogoSize, string> = {
-  sm: "text-[22px] md:text-[24px]",
-  md: "text-[30px] md:text-[34px]",
-  lg: "text-[52px] md:text-[64px]",
-};
-const ARABIC: Record<LogoSize, string> = {
-  sm: "text-[15px] md:text-[16px] -mb-[7px] md:-mb-[8px]",
-  md: "text-[20px] md:text-[22px] -mb-[9px] md:-mb-[10px]",
-  lg: "text-[34px] md:text-[40px] -mb-[15px] md:-mb-[18px]",
+// The official gold lockup (نور over "noor"). Responsive widths per usage.
+const WIDTH: Record<LogoSize, string> = {
+  sm: "w-[84px] md:w-[94px]",
+  md: "w-[116px] md:w-[130px]",
+  lg: "w-[clamp(170px,20vw,224px)]",
 };
 
 /**
- * The house wordmark: the calligraphic نور (nûr — "light") resting above the
- * lower-case serif "noor". One ink by default (`mono`), or with the نور in gold
- * for the signature Vert & Or lockup. Recolours with the surrounding text
- * colour, so it works on cream, on emerald, or embossed in gold.
+ * The Maison Noor wordmark — the official brand SVG (`/brand/noor-logo.svg`),
+ * used directly, never recreated. Sized responsively per placement. The `mono`
+ * prop is kept for API compatibility but the mark is the brand gold everywhere.
  */
 export function Logo({
   className,
   size = "sm",
-  mono = false,
-  // Back-compat with earlier call sites.
   compact = false,
 }: {
   className?: string;
@@ -49,21 +42,12 @@ export function Logo({
 }) {
   const s: LogoSize = compact ? "sm" : size;
   return (
-    <span
-      className={clsx("inline-flex select-none flex-col items-center leading-none", className)}
-      aria-label="Maison Noor"
-    >
-      <span
-        lang="ar"
-        dir="rtl"
-        aria-hidden="true"
-        className={clsx("font-arabic font-normal leading-none", ARABIC[s], mono ? "text-current" : "text-or")}
-      >
-        نور
-      </span>
-      <span className={clsx("font-serif font-bold lowercase leading-none tracking-[0.01em]", NOOR[s])}>
-        noor
-      </span>
-    </span>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/brand/noor-logo.svg"
+      alt="Maison Noor"
+      draggable={false}
+      className={clsx("block h-auto select-none", WIDTH[s], className)}
+    />
   );
 }

@@ -37,15 +37,22 @@ export default function Hero() {
         transition={{ duration: 2.6, ease: [0.16, 1, 0.3, 1] }}
       />
 
-      {/* Oversized نور watermark — the brand, ghosted into the canvas */}
+      {/* The نور calligraphy — the brand signature, ghosted behind the date */}
       <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
+        initial={{ opacity: 0, scale: 1.06 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.4, duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span className="select-none font-arabic text-[46vw] leading-none text-nuit/[0.045] md:text-[32vw] md:text-nuit/[0.06]">نور</span>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/brand/noor-arabic-background.svg"
+          alt=""
+          aria-hidden="true"
+          draggable={false}
+          className="w-[min(82vw,620px)] max-w-none select-none opacity-[0.10] md:w-[min(58vw,700px)]"
+        />
       </motion.div>
 
       {/* Editorial masthead marks (desktop) */}
