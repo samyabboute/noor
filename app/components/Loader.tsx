@@ -8,16 +8,17 @@ import { Logo } from "./Logo";
 /**
  * The opening scene of the Noor world — not a loading screen.
  *
- * On a calm cream canvas the Arabic نور calligraphy writes itself across as a
- * large, bleeding gold signature; a soft pool of light warms the centre; and
- * the full Noor logo rises from behind a clip. It holds a beat, then the whole
- * surface recedes and fades into the homepage (cream → cream) as one entrance.
+ * A deep-emerald gateway: the Arabic نور calligraphy writes itself across in
+ * gold as a large, bleeding signature; a pool of warm light gathers at the
+ * centre; and the gold Noor logo rises from behind a clip. It holds a beat,
+ * then the dark surface recedes and dissolves — opening into the luminous cream
+ * homepage. A golden doorway that opens onto the light (nūr = light).
  *
  * Brand assets, used directly as SVG:
  *   /brand/noor-logo.svg              — the primary logo (the hero)
  *   /brand/noor-arabic-background.svg — the Arabic calligraphy (the signature)
- * If either ever fails to load, it falls back invisibly to the house wordmark,
- * so the loader is never broken.
+ * If either fails to load it falls back to the house wordmark, so the loader is
+ * never broken.
  *
  * GPU-friendly (transform / opacity / clip-path only), one framer timeline,
  * once per session, ~2.3s, reduced-motion aware.
@@ -61,24 +62,26 @@ export default function Loader() {
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden bg-paper"
+          className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden text-ivoire"
+          style={{ background: "radial-gradient(120% 90% at 50% 42%, #123227 0%, #0a1f18 55%, #05130e 100%)" }}
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: reduce ? 1 : 1.03 }}
-          transition={{ duration: reduce ? 0.5 : 0.85, ease: EASE }}
+          exit={{ opacity: 0, scale: reduce ? 1 : 1.04 }}
+          transition={{ duration: reduce ? 0.5 : 0.9, ease: EASE }}
         >
-          {/* Soft pool of light — the gold, lifted */}
+          {/* Warm pool of light gathering at the centre */}
           {!reduce && (
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[75vmin] w-[75vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{ background: "radial-gradient(closest-side, rgba(194,162,90,0.15), transparent 70%)" }}
-              initial={{ opacity: 0, scale: 0.7 }}
+              className="pointer-events-none absolute left-1/2 top-1/2 h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{ background: "radial-gradient(closest-side, rgba(216,190,126,0.22), rgba(194,162,90,0.06), transparent 72%)" }}
+              initial={{ opacity: 0, scale: 0.65 }}
               animate={{ opacity: 1, scale: 1.05 }}
+              exit={{ opacity: 0, scale: 1.6 }}
               transition={{ duration: 2.2, ease: EASE }}
             />
           )}
 
-          {/* Arabic calligraphy — writes itself across, a large bleeding signature */}
+          {/* Arabic calligraphy — a large bleeding gold signature that writes across */}
           {!reduce &&
             (artErr ? null : (
               <motion.img
@@ -89,7 +92,7 @@ export default function Loader() {
                 onError={() => setArtErr(true)}
                 className="pointer-events-none absolute left-1/2 top-1/2 w-[min(185vw,1650px)] max-w-none -translate-x-1/2 -translate-y-1/2 select-none portrait:w-[270vw]"
                 initial={{ opacity: 0, scale: 1.08, clipPath: "inset(0% 100% 0% 0%)" }}
-                animate={{ opacity: 0.14, scale: 1, clipPath: "inset(0% 0% 0% 0%)" }}
+                animate={{ opacity: 0.16, scale: 1, clipPath: "inset(0% 0% 0% 0%)" }}
                 transition={{ duration: 2, ease: EASE }}
               />
             ))}
@@ -103,7 +106,7 @@ export default function Loader() {
           >
             {logoErr ? (
               <div className="scale-125">
-                <Logo size="lg" className="text-ink" />
+                <Logo size="lg" className="text-ivoire" />
               </div>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
