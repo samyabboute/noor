@@ -36,7 +36,7 @@ const WIDTH: Record<LogoSize, string> = {
 export function Logo({
   className,
   size = "sm",
-  variant = "light",
+  variant = "gold",
   compact = false,
 }: {
   className?: string;
