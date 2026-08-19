@@ -106,7 +106,7 @@ export default function Loader() {
           >
             {logoErr ? (
               <div className="scale-125">
-                <Logo size="lg" className="text-ivoire" />
+                <Logo size="lg" variant="gold" />
               </div>
             ) : (
               // eslint-disable-next-line @next/next/no-img-element

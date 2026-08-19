@@ -26,25 +26,31 @@ const WIDTH: Record<LogoSize, string> = {
 };
 
 /**
- * The Maison Noor wordmark — the official brand SVG (`/brand/noor-logo.svg`),
- * used directly, never recreated. Sized responsively per placement. The `mono`
- * prop is kept for API compatibility but the mark is the brand gold everywhere.
+ * The Maison Noor wordmark — the official brand SVG, used directly, never
+ * recreated. Two colourways from the same artwork (shapes untouched):
+ *   "light" — "noor" in deep green + the نور calligraphy in gold (for cream
+ *             surfaces: nav, checkout, account, welcome). The default.
+ *   "gold"  — the all-gold mark, for the dark green surfaces (footer).
+ * Sized responsively per placement. `mono` is kept for API compatibility.
  */
 export function Logo({
   className,
   size = "sm",
+  variant = "light",
   compact = false,
 }: {
   className?: string;
   size?: LogoSize;
+  variant?: "light" | "gold";
   mono?: boolean;
   compact?: boolean;
 }) {
   const s: LogoSize = compact ? "sm" : size;
+  const src = variant === "gold" ? "/brand/noor-logo.svg" : "/brand/noor-logo-light.svg";
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src="/brand/noor-logo.svg"
+      src={src}
       alt="Maison Noor"
       draggable={false}
       className={clsx("block h-auto select-none", WIDTH[s], className)}
