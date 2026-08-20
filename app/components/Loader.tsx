@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { Logo } from "./Logo";
+import { NoorLogoArt, NoorArabicArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 /**
@@ -20,11 +20,9 @@ import { useStore } from "../lib/store";
  *
  * A soft dissolve into the light (nūr = light), never a hard cut.
  *
- * Brand assets, used directly as SVG:
- *   /brand/noor-logo.svg              — the primary logo (the hero)
- *   /brand/noor-arabic-background.svg — the Arabic calligraphy (the ribbons)
- * If either fails to load it falls back to the house wordmark, so the loader is
- * never broken.
+ * The logo and the نور ribbons are rendered from INLINE SVG (see BrandArt) —
+ * never fetched over the network — so the loader's first paint can't be broken
+ * by a cold CDN edge, a mid-deploy asset, or a dropped connection.
  *
  * GPU-friendly (transform / opacity / clip-path / filter), one framer timeline
  * driven by a phase, once per session, reduced-motion aware.
@@ -34,17 +32,12 @@ const PHASE2_AT = 2.7; // when the elements reverse out and the line takes over
 const HOLD = 5.4; // full timeline before the curtain fades
 const EXIT = 1.05; // crossfade into the homepage
 
-const LOGO_SRC = "/brand/noor-logo.svg";
-const ART_SRC = "/brand/noor-arabic-background.svg";
-
 export default function Loader() {
   const { lang } = useStore();
   const reduce = useReducedMotion();
   const pathname = usePathname();
   const [show, setShow] = useState(false);
   const [phase, setPhase] = useState(0); // 0 = compose, 1 = the line takes over
-  const [logoErr, setLogoErr] = useState(false);
-  const [artErr, setArtErr] = useState(false);
 
   useEffect(() => {
     if (pathname?.startsWith("/admin")) return;
@@ -101,30 +94,27 @@ export default function Loader() {
           )}
 
           {/* Beat 1 — the bottom-right ribbon (leaves last-in / first-out feel) */}
-          {!reduce && !artErr && (
-            <motion.img
-              src={ART_SRC}
-              alt=""
+          {!reduce && (
+            <motion.div
               aria-hidden
-              draggable={false}
-              onError={() => setArtErr(true)}
               className="pointer-events-none absolute -bottom-[6%] -right-[8%] w-[min(120vw,1180px)] max-w-none select-none portrait:w-[190vw]"
               {...ribbon(0.22)}
               transition={phase === 0 ? { delay: 0.1, duration: 1.2, ease: EASE } : { duration: 0.9, ease: EASE }}
-            />
+            >
+              <NoorArabicArt className="block w-full" />
+            </motion.div>
           )}
 
           {/* Beat 3 — the top-left ribbon, mirrored */}
-          {!reduce && !artErr && (
-            <motion.img
-              src={ART_SRC}
-              alt=""
+          {!reduce && (
+            <motion.div
               aria-hidden
-              draggable={false}
               className="pointer-events-none absolute -top-[6%] -left-[8%] w-[min(120vw,1180px)] max-w-none rotate-180 select-none portrait:w-[190vw]"
               {...ribbon(0.16)}
               transition={phase === 0 ? { delay: 1.25, duration: 1.2, ease: EASE } : { duration: 0.9, ease: EASE }}
-            />
+            >
+              <NoorArabicArt className="block w-full" />
+            </motion.div>
           )}
 
           {/* Beat 2 — the logo rises, then sinks back the way it came */}
@@ -144,20 +134,7 @@ export default function Loader() {
                 : { duration: reduce ? 0.4 : 0.9, ease: EASE }
             }
           >
-            {logoErr ? (
-              <div className="scale-125">
-                <Logo size="lg" variant="gold" />
-              </div>
-            ) : (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={LOGO_SRC}
-                alt="Maison Noor"
-                draggable={false}
-                onError={() => setLogoErr(true)}
-                className="block h-auto w-[clamp(190px,30vw,380px)]"
-              />
-            )}
+            <NoorLogoArt className="block w-[clamp(190px,30vw,380px)]" />
           </motion.div>
 
           {/* Act II — the line takes the centre, larger, elegant, unhurried */}

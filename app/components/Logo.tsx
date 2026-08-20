@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { NoorLogoArt } from "./BrandArt";
 
 /**
  * The Maison Noor mark: a four-point radiance — a single point of light.
@@ -46,14 +47,7 @@ export function Logo({
   compact?: boolean;
 }) {
   const s: LogoSize = compact ? "sm" : size;
-  const src = variant === "gold" ? "/brand/noor-logo.svg" : "/brand/noor-logo-light.svg";
-  return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={src}
-      alt="Maison Noor"
-      draggable={false}
-      className={clsx("block h-auto select-none", WIDTH[s], className)}
-    />
-  );
+  // Rendered from inline SVG (BrandArt) so the mark can never show a broken
+  // image if the static asset is slow or momentarily unavailable on the edge.
+  return <NoorLogoArt className={clsx("block h-auto select-none", WIDTH[s], className)} />;
 }

@@ -5,6 +5,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { useRef } from "react";
 import Photo from "./Photo";
 import NoorPattern from "./NoorPattern";
+import { NoorArabicArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 export default function Hero() {
@@ -45,14 +46,7 @@ export default function Hero() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.4, duration: 2.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/brand/noor-arabic-background.svg"
-          alt=""
-          aria-hidden="true"
-          draggable={false}
-          className="w-[min(82vw,620px)] max-w-none select-none opacity-[0.10] md:w-[min(58vw,700px)]"
-        />
+        <NoorArabicArt className="block w-[min(82vw,620px)] max-w-none select-none opacity-[0.10] md:w-[min(58vw,700px)]" />
       </motion.div>
 
       {/* Editorial masthead marks (desktop) */}
