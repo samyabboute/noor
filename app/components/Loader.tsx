@@ -26,8 +26,8 @@ import { useStore } from "../lib/store";
  */
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]; // settle
 const LIFT: [number, number, number, number] = [0.7, 0, 0.2, 1]; // weighted curtain
-const HOLD = 6.5; // full sequence before the curtain lifts
-const EXIT = 1.25; // curtain lift
+const HOLD = 4.3; // full sequence before the curtain lifts
+const EXIT = 1.05; // curtain lift
 
 // Fine film grain — a texture layer, not an effect. Tiled SVG turbulence.
 const GRAIN =
@@ -53,7 +53,7 @@ export default function Loader() {
         sessionStorage.setItem("noor.entered", "1");
         release();
       },
-      (reduce ? 1.8 : HOLD) * 1000,
+      (reduce ? 1.6 : HOLD) * 1000,
     );
     return () => {
       clearTimeout(end);
@@ -88,7 +88,7 @@ export default function Loader() {
               style={{ backgroundImage: GRAIN, backgroundRepeat: "repeat" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.11 }}
-              transition={{ duration: 1.6, ease: EASE }}
+              transition={{ duration: 1.0, ease: EASE }}
             />
           )}
 
@@ -101,7 +101,7 @@ export default function Loader() {
               style={{ filter: "blur(3px)" }}
               initial={{ opacity: 0, clipPath: "inset(0% 100% 0% 0%)", scale: 1.12 }}
               animate={{ opacity: 0.06, clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
-              transition={{ delay: 0.5, duration: 2.1, ease: EASE }}
+              transition={{ delay: 0.2, duration: 1.5, ease: EASE }}
             >
               <NoorArabicArt className="block w-full" />
             </motion.div>
@@ -114,8 +114,8 @@ export default function Loader() {
               aria-hidden
               className="pointer-events-none absolute -bottom-[12%] -right-[14%] w-[min(116vw,1240px)] select-none portrait:-bottom-[6%] portrait:-right-[34%] portrait:w-[208vw]"
               initial={{ opacity: 0, clipPath: "inset(0% 0% 0% 100%)", scale: 1.06 }}
-              animate={{ opacity: 0.17, clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
-              transition={{ delay: 1.0, duration: 2.0, ease: EASE }}
+              animate={{ opacity: 0.19, clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+              transition={{ delay: 0.5, duration: 1.6, ease: EASE }}
             >
               <NoorArabicArt className="block w-full" />
             </motion.div>
@@ -128,7 +128,7 @@ export default function Loader() {
               className="will-change-transform"
               initial={reduce ? { opacity: 0 } : { opacity: 0, clipPath: "inset(100% 0% 0% 0%)", scale: 1.03, y: 12 }}
               animate={reduce ? { opacity: 1 } : { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", scale: 1, y: 0 }}
-              transition={{ delay: reduce ? 0 : 2.7, duration: reduce ? 0.5 : 1.25, ease: EASE }}
+              transition={{ delay: reduce ? 0 : 1.5, duration: reduce ? 0.5 : 1.0, ease: EASE }}
             >
               <NoorLogoArt className="block w-[clamp(178px,27vw,352px)]" />
             </motion.div>
@@ -143,7 +143,7 @@ export default function Loader() {
                     className="inline-block"
                     initial={reduce ? { opacity: 0 } : { y: "118%" }}
                     animate={reduce ? { opacity: 1 } : { y: 0 }}
-                    transition={{ delay: (reduce ? 0.6 : 4.4) + i * 0.14, duration: reduce ? 0.5 : 1.05, ease: EASE }}
+                    transition={{ delay: (reduce ? 0.5 : 2.7) + i * 0.11, duration: reduce ? 0.5 : 0.85, ease: EASE }}
                   >
                     {w}
                   </motion.span>
