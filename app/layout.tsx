@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s — Maison Noor",
   },
   description:
-    "Maison Noor — dom luksusu, którego dziełem jest daktyl. Ręcznie komponowane daktyle Deglet Nour premium z oaz Tozeur, szkatułki prezentowe i prezenty firmowe. Wysyłka w 24 h w całej Polsce.",
+    "Maison Noor — dom luksusu, którego dziełem jest daktyl. Ręcznie komponowane daktyle Deglet Nour premium z algierskich oaz Tolga, szkatułki prezentowe i prezenty firmowe. Wysyłka w 24 h w całej Polsce.",
   keywords: [
     "luksusowe daktyle",
     "daktyle premium",

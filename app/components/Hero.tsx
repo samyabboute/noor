@@ -57,7 +57,7 @@ export default function Hero() {
       </div>
       <div className="pointer-events-none absolute right-4 top-1/2 z-10 hidden -translate-y-1/2 md:block">
         <span className="block rotate-90 whitespace-nowrap font-sans text-[10px] uppercase tracking-luxe text-ink/30">
-          Tozeur — Tunisie
+          Biskra — Algérie
         </span>
       </div>
 

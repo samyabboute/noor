@@ -18,7 +18,7 @@ export function NoorArabicArt({ className }: { className?: string }) {
   return <span className={className} aria-hidden="true" dangerouslySetInnerHTML={{ __html: ARABIC }} />;
 }
 
-/** The Tozeur oasis engraving, rendered inline (decorative). */
+/** The Algerian oasis engraving, rendered inline (decorative). */
 export function NoorOasisArt({ className }: { className?: string }) {
   return <span className={className} aria-hidden="true" dangerouslySetInnerHTML={{ __html: OASIS }} />;
 }

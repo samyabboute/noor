@@ -31,7 +31,7 @@ export const products: Product[] = [
       en: "Our signature. Deglet Nour in its purest form.",
     },
     variety: { pl: "Daktyle Deglet Nour", en: "Deglet Nour dates" },
-    origin: { pl: "Oazy Tozeur, Tunezja", en: "Tozeur oasis, Tunisia" },
+    origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
       pl: "Karmel, miód i nuta toffi. Głęboka, ale nigdy przesłodzona.",
       en: "Caramel, honey and a whisper of toffee. Deep, never cloying.",
@@ -60,7 +60,7 @@ export const products: Product[] = [
       en: "The stuffed date. A heart hidden inside the fruit.",
     },
     variety: { pl: "Deglet Nour · migdał · orzech", en: "Deglet Nour · almond · walnut" },
-    origin: { pl: "Oazy Tozeur, Tunezja · Piemont", en: "Tozeur oasis, Tunisia · Piedmont" },
+    origin: { pl: "Oazy Tolga, Algieria · Piemont", en: "Tolga oasis, Algeria · Piedmont" },
     taste: {
       pl: "Prażony migdał spotyka karmel daktyla. Kontrast, który uzależnia.",
       en: "Roasted almond meets the date's caramel. An addictive contrast.",
@@ -88,7 +88,7 @@ export const products: Product[] = [
       en: "The date in dark chocolate. A sensual ritual.",
     },
     variety: { pl: "Deglet Nour · czekolada 70%", en: "Deglet Nour · 70% dark" },
-    origin: { pl: "Oazy Tozeur, Tunezja · Grand Cru", en: "Tozeur oasis, Tunisia · Grand Cru" },
+    origin: { pl: "Oazy Tolga, Algieria · Grand Cru", en: "Tolga oasis, Algeria · Grand Cru" },
     taste: {
       pl: "Gorzka czekolada, płatek soli morskiej, słodycz owocu.",
       en: "Bitter chocolate, a flake of sea salt, the sweetness of the fruit.",
@@ -117,7 +117,7 @@ export const products: Product[] = [
       en: "Three signatures in one case. A journey through taste.",
     },
     variety: { pl: "Selekcja domu", en: "House selection" },
-    origin: { pl: "Oazy Tozeur, Tunezja", en: "Tozeur oasis, Tunisia" },
+    origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
       pl: "Nasza sygnatura, Cœur de Noor i Noir Cacao — komplet.",
       en: "Our signature, Cœur de Noor and Noir Cacao — the complete set.",
@@ -147,7 +147,7 @@ export const products: Product[] = [
       en: "Our most lavish gesture. For the moments that matter.",
     },
     variety: { pl: "Wielka selekcja + akcesoria", en: "Grand selection + accessories" },
-    origin: { pl: "Oazy Tozeur, Tunezja", en: "Tozeur oasis, Tunisia" },
+    origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
       pl: "Pełna kolekcja domu, podwojona, w drewnianej szkatule.",
       en: "The full house collection, doubled, in a wooden case.",
@@ -177,7 +177,7 @@ export const products: Product[] = [
       en: "Your brand, our craft. Corporate gifting with grace.",
     },
     variety: { pl: "Personalizacja · grawer · wstążka", en: "Personalised · engraved · ribboned" },
-    origin: { pl: "Oazy Tozeur, Tunezja", en: "Tozeur oasis, Tunisia" },
+    origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
       pl: "Selekcja dobierana do okazji i budżetu.",
       en: "A selection tailored to the occasion and budget.",

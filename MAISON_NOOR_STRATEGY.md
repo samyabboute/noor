@@ -20,7 +20,7 @@ Maison Noor transforme cette vérité botanique en signature de marque : **le da
 > élevé au rang de haute couture, à mi-chemin entre héritage moyen-oriental, luxe français et minimalisme européen.
 
 ### Territoire
-`Middle Eastern heritage × French maison × contemporary European minimalism`
+`North African (Algerian) heritage × French maison × contemporary European minimalism`
 Vendable à Varsovie, Paris, Londres ou Dubaï sans jamais paraître kitsch. Zéro folklore. Le seul emprunt
 culturel assumé est **le geste** (l'hospitalité, la générosité), jamais le décor.
 

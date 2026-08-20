@@ -27,7 +27,7 @@ export function TheDate() {
           </Reveal>
           <Reveal delay={0.15}>
             <p className="mt-4 text-center font-sans text-[11px] uppercase tracking-wide2 text-ink/40">
-              Deglet Nour · Jumbo · Oazy Tozeur, Tunezja
+              Deglet Nour · Jumbo · Oazy Tolga, Algieria
             </p>
           </Reveal>
         </div>
@@ -80,10 +80,10 @@ export function Craftsmanship() {
           <figure className="mx-auto mb-16 max-w-sm md:mb-24">
             <Photo
               src="/products/deglet-branch.webp"
-              alt="Kiść daktyli Deglet Nour prosto z palmy — oazy Tozeur"
+              alt="Kiść daktyli Deglet Nour prosto z palmy — oazy Tolga"
               className="aspect-[4/5]"
             />
-            <figcaption className="mt-4 text-center section-index">Prosto z palmy · Oazy Tozeur</figcaption>
+            <figcaption className="mt-4 text-center section-index">Prosto z palmy · Oazy Tolga</figcaption>
           </figure>
         </Reveal>
 
