@@ -7,37 +7,37 @@ import { NoorLogoArt, NoorArabicArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 /**
- * The opening scene of the Noor world — not a loading screen, a curtain-raiser.
+ * NOOR — the opening scene. Not a loading screen: a short brand film that runs
+ * once per session and then opens onto the homepage.
  *
- * Two acts:
- *   Act I — compose. The نور calligraphy sweeps in from the bottom-right as a
- *   gold ribbon; the gold Noor logo rises from behind a clip at the centre; a
- *   mirrored ribbon answers from the top-left, framing the mark diagonally.
- *   Act II — the line. Every element then leaves the way it arrived, in reverse,
- *   while a single line of welcome takes the centre — larger, in an elegant
- *   Cormorant italic, unblurring into place slowly. When the line stands alone,
- *   the dark surface fades and the luminous cream homepage crossfades in.
+ * Art direction — "Ink, then Light". A dim, warm-emerald room. The نور
+ * calligraphy is discovered in depth rather than displayed: a deep, out-of-focus
+ * layer drifts in first, then a sharp layer draws itself across from the right
+ * (the direction the pen travels) and bleeds off the lower corner — cropped,
+ * asymmetric, tone-on-tone. The gold mark then resolves at the centre as the
+ * destination of the sequence. After a held beat, a signature line rises word by
+ * word from behind a mask. Finally the dark surface lifts away like a curtain,
+ * revealing the cream homepage beneath — a continuation, not a cut.
  *
- * A soft dissolve into the light (nūr = light), never a hard cut.
- *
- * The logo and the نور ribbons are rendered from INLINE SVG (see BrandArt) —
- * never fetched over the network — so the loader's first paint can't be broken
- * by a cold CDN edge, a mid-deploy asset, or a dropped connection.
- *
- * GPU-friendly (transform / opacity / clip-path / filter), one framer timeline
- * driven by a phase, once per session, reduced-motion aware.
+ * Depth is built from layering, a vignette and fine film grain — never a glow.
+ * All brand artwork is inline SVG (BrandArt), so the first paint never depends
+ * on a network fetch. GPU-only (opacity / transform / clip-path), reduced-motion
+ * aware, with an intentionally simpler mobile composition.
  */
-const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
-const PHASE2_AT = 2.7; // when the elements reverse out and the line takes over
-const HOLD = 5.4; // full timeline before the curtain fades
-const EXIT = 1.05; // crossfade into the homepage
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]; // settle
+const LIFT: [number, number, number, number] = [0.7, 0, 0.2, 1]; // weighted curtain
+const HOLD = 6.5; // full sequence before the curtain lifts
+const EXIT = 1.25; // curtain lift
+
+// Fine film grain — a texture layer, not an effect. Tiled SVG turbulence.
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 export default function Loader() {
   const { lang } = useStore();
   const reduce = useReducedMotion();
   const pathname = usePathname();
   const [show, setShow] = useState(false);
-  const [phase, setPhase] = useState(0); // 0 = compose, 1 = the line takes over
 
   useEffect(() => {
     if (pathname?.startsWith("/admin")) return;
@@ -47,110 +47,120 @@ export default function Loader() {
     const release = () => {
       if (!document.body.dataset.noorGate) document.body.style.overflow = "";
     };
-    const p2 = setTimeout(() => setPhase(1), (reduce ? 1.1 : PHASE2_AT) * 1000);
     const end = setTimeout(
       () => {
         setShow(false);
         sessionStorage.setItem("noor.entered", "1");
         release();
       },
-      (reduce ? 2.4 : HOLD) * 1000,
+      (reduce ? 1.8 : HOLD) * 1000,
     );
     return () => {
-      clearTimeout(p2);
       clearTimeout(end);
       release();
     };
   }, [reduce]);
 
-  const line = lang === "pl" ? "Witaj w świetle" : "Enjoy the experience";
-
-  // Ribbon: wipes in left→right in Act I, un-wipes on the way out in Act II.
-  const ribbon = (o: number) => ({
-    initial: { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" },
-    animate: phase === 0 ? { opacity: o, clipPath: "inset(0% 0% 0% 0%)" } : { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" },
-  });
+  const words = (lang === "pl" ? "Witaj w świetle" : "Enjoy the experience").split(" ");
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[200] flex items-center justify-center overflow-hidden text-ivoire"
-          style={{ background: "radial-gradient(120% 90% at 50% 42%, #123227 0%, #0a1f18 55%, #05130e 100%)" }}
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: reduce ? 0.6 : EXIT, ease: EASE }}
+          className="fixed inset-0 z-[200] overflow-hidden text-ivoire"
+          style={{ background: "linear-gradient(178deg, #0b241b 0%, #082019 32%, #061a14 64%, #04100a 100%)" }}
+          initial={{ y: 0, opacity: 1 }}
+          exit={reduce ? { opacity: 0 } : { y: "-100%" }}
+          transition={{ duration: reduce ? 0.6 : EXIT, ease: reduce ? EASE : LIFT }}
         >
-          {/* Warm pool of light at the centre — a halo the line rests upon */}
+          {/* Atmosphere — a vignette carries the depth the old glow faked */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0"
+            style={{ background: "radial-gradient(125% 105% at 50% 40%, transparent 42%, rgba(0,0,0,0.42) 100%)" }}
+          />
+
+          {/* Fine film grain — texture, settled in, not animated */}
           {!reduce && (
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute left-1/2 top-1/2 h-[80vmin] w-[80vmin] -translate-x-1/2 -translate-y-1/2 rounded-full"
-              style={{ background: "radial-gradient(closest-side, rgba(216,190,126,0.22), rgba(194,162,90,0.06), transparent 72%)" }}
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1.05 }}
-              transition={{ duration: 2.6, ease: EASE }}
+              className="pointer-events-none absolute inset-0 mix-blend-soft-light"
+              style={{ backgroundImage: GRAIN, backgroundRepeat: "repeat" }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.11 }}
+              transition={{ duration: 1.6, ease: EASE }}
             />
           )}
 
-          {/* Beat 1 — the bottom-right ribbon (leaves last-in / first-out feel) */}
+          {/* Depth layer — an out-of-focus fragment of the calligraphy, top-left,
+              heavily cropped. Establishes the room before anything is legible. */}
           {!reduce && (
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute -bottom-[6%] -right-[8%] w-[min(120vw,1180px)] max-w-none select-none portrait:w-[190vw]"
-              {...ribbon(0.22)}
-              transition={phase === 0 ? { delay: 0.1, duration: 1.2, ease: EASE } : { duration: 0.9, ease: EASE }}
+              className="pointer-events-none absolute -left-[24%] -top-[20%] w-[min(150vw,1560px)] rotate-180 select-none portrait:hidden"
+              style={{ filter: "blur(3px)" }}
+              initial={{ opacity: 0, clipPath: "inset(0% 100% 0% 0%)", scale: 1.12 }}
+              animate={{ opacity: 0.06, clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+              transition={{ delay: 0.5, duration: 2.1, ease: EASE }}
             >
               <NoorArabicArt className="block w-full" />
             </motion.div>
           )}
 
-          {/* Beat 3 — the top-left ribbon, mirrored */}
+          {/* Discovery layer — the sharp calligraphy draws itself in from the
+              right (pen direction) and bleeds off the lower corner. */}
           {!reduce && (
             <motion.div
               aria-hidden
-              className="pointer-events-none absolute -top-[6%] -left-[8%] w-[min(120vw,1180px)] max-w-none rotate-180 select-none portrait:w-[190vw]"
-              {...ribbon(0.16)}
-              transition={phase === 0 ? { delay: 1.25, duration: 1.2, ease: EASE } : { duration: 0.9, ease: EASE }}
+              className="pointer-events-none absolute -bottom-[12%] -right-[14%] w-[min(116vw,1240px)] select-none portrait:-bottom-[6%] portrait:-right-[34%] portrait:w-[208vw]"
+              initial={{ opacity: 0, clipPath: "inset(0% 0% 0% 100%)", scale: 1.06 }}
+              animate={{ opacity: 0.17, clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}
+              transition={{ delay: 1.0, duration: 2.0, ease: EASE }}
             >
               <NoorArabicArt className="block w-full" />
             </motion.div>
           )}
 
-          {/* Beat 2 — the logo rises, then sinks back the way it came */}
-          <motion.div
-            className="absolute inset-0 z-10 flex items-center justify-center will-change-transform"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 18, clipPath: "inset(100% 0% 0% 0%)" }}
-            animate={
-              reduce
-                ? { opacity: phase === 0 ? 1 : 0 }
-                : phase === 0
-                  ? { opacity: 1, y: 0, clipPath: "inset(0% 0% 0% 0%)" }
-                  : { opacity: 0, y: 22, clipPath: "inset(100% 0% 0% 0%)" }
-            }
-            transition={
-              phase === 0
-                ? { duration: reduce ? 0.5 : 1.0, delay: reduce ? 0 : 0.6, ease: EASE }
-                : { duration: reduce ? 0.4 : 0.9, ease: EASE }
-            }
-          >
-            <NoorLogoArt className="block w-[clamp(190px,30vw,380px)]" />
-          </motion.div>
+          {/* Brand block — the logo resolves as the destination; the line rises
+              word by word after a held beat. */}
+          <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
+            <motion.div
+              className="will-change-transform"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, clipPath: "inset(100% 0% 0% 0%)", scale: 1.03, y: 12 }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", scale: 1, y: 0 }}
+              transition={{ delay: reduce ? 0 : 2.7, duration: reduce ? 0.5 : 1.25, ease: EASE }}
+            >
+              <NoorLogoArt className="block w-[clamp(178px,27vw,352px)]" />
+            </motion.div>
 
-          {/* Act II — the line takes the centre, larger, elegant, unhurried */}
-          <motion.div
-            className="absolute inset-0 z-20 flex items-center justify-center px-6"
-            initial={{ opacity: 0, scale: 0.96, y: 10, filter: "blur(7px)" }}
-            animate={phase === 1 ? { opacity: 1, scale: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, scale: 0.96, y: 10, filter: "blur(7px)" }}
-            transition={{ duration: reduce ? 0.7 : 1.8, ease: EASE }}
-          >
             <p
-              className="display max-w-[86vw] text-center font-serif font-light italic text-champagne"
-              style={{ fontSize: "clamp(30px, 5.4vw, 64px)", letterSpacing: "0.01em" }}
+              className="mt-9 flex flex-wrap justify-center gap-x-[0.3em] font-serif font-light italic text-champagne md:mt-11"
+              style={{ fontSize: "clamp(19px, 2.7vw, 32px)", letterSpacing: "0.01em" }}
             >
-              {line}
+              {words.map((w, i) => (
+                <span key={i} className="inline-block overflow-hidden pb-[0.16em] -mb-[0.16em]">
+                  <motion.span
+                    className="inline-block"
+                    initial={reduce ? { opacity: 0 } : { y: "118%" }}
+                    animate={reduce ? { opacity: 1 } : { y: 0 }}
+                    transition={{ delay: (reduce ? 0.6 : 4.4) + i * 0.14, duration: reduce ? 0.5 : 1.05, ease: EASE }}
+                  >
+                    {w}
+                  </motion.span>
+                </span>
+              ))}
             </p>
-          </motion.div>
+          </div>
+
+          {/* Leading shadow — as the curtain lifts, its bottom edge casts a soft
+              shadow over the homepage revealed beneath. */}
+          {!reduce && (
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 bottom-0 h-28"
+              style={{ background: "linear-gradient(to top, rgba(0,0,0,0.28), transparent)" }}
+            />
+          )}
         </motion.div>
       )}
     </AnimatePresence>
