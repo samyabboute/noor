@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import NoorPattern from "./NoorPattern";
+import { NoorOasisArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 /**
@@ -62,13 +63,7 @@ export default function OriginScene() {
           className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-center"
           style={{ y: duneFront }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/brand/origin-oasis.svg"
-            alt="Oaza Tozeur — palmy daktylowe"
-            draggable={false}
-            className="w-[min(116%,1320px)] max-w-none select-none opacity-[0.82]"
-          />
+          <NoorOasisArt className="block w-[min(116%,1320px)] max-w-none select-none opacity-[0.82]" />
         </motion.div>
 
         {/* Text */}
