@@ -1,87 +1,86 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import NoorPattern from "./NoorPattern";
+import Reveal from "./Reveal";
 import { NoorOasisArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 /**
- * ACT II — Origin. The Ziban oasis at the edge of night, held with restraint:
- * a deep sky warming to a low ember horizon (no sun disc, no glow), the palm
- * grove drawn as an engraving on the horizon, and a single dominant line with
- * one accurate origin detail. Scroll drives a slow parallax. Depth comes from
- * layering and a vignette, never a decorative light.
+ * ACT II — Origin. The Ziban oasis at the edge of night, treated as an editorial
+ * plate: the hand-drawn grove sits as a low horizon of palms and draws itself in
+ * — left to right, an ink line finding the page — the first time the section is
+ * reached. The typography lives in the clear sky above it, never over the
+ * drawing. Depth comes from grain and a vignette, never a decorative light. One
+ * dominant line, one accurate origin detail.
  */
+const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
+const GRAIN =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
+
 export default function OriginScene() {
   const { lang } = useStore();
   const reduce = useReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
-  const duneBack = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [40, -20]);
-  const duneFront = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [70, -34]);
-  const textY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [56, -56]);
+  // The grove draws itself in — left to right — once, when the section arrives.
+  const grove: Variants = {
+    hidden: reduce ? { opacity: 0 } : { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" },
+    show: reduce
+      ? { opacity: 0.82, transition: { duration: 0.6 } }
+      : { opacity: 0.82, clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.8, ease: EASE } },
+  };
 
   return (
-    <section id="origin" ref={ref} className="relative h-[150vh] overflow-hidden bg-nuit">
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
-        {/* Sky — night warming to a restrained ember horizon, no sun disc */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(180deg, #05130e 0%, #0a1f18 46%, #0f2a20 72%, #21301b 90%, #33301d 100%)" }}
-        />
+    <section id="origin" className="relative flex h-screen min-h-[640px] items-center overflow-hidden bg-nuit">
+      {/* Sky — night warming to a restrained ember horizon, no sun disc */}
+      <div
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(180deg, #05130e 0%, #0a1f18 46%, #0f2a20 72%, #21301b 90%, #33301d 100%)" }}
+      />
 
-        {/* Heritage arabesque, whispered from the margins */}
-        <NoorPattern placement="edges" opacity={0.05} scale={128} color="#D8BE7E" className="!z-0" />
+      {/* Heritage arabesque, whispered from the margins */}
+      <NoorPattern placement="edges" opacity={0.045} scale={128} color="#D8BE7E" className="!z-0" />
 
-        {/* Dunes — back */}
-        <motion.svg
-          viewBox="0 0 1440 400" preserveAspectRatio="none"
-          className="absolute inset-x-0 bottom-0 h-[42%] w-full"
-          style={{ y: duneBack }}
-        >
-          <path d="M0,220 C280,120 520,200 760,180 C1040,150 1220,240 1440,190 L1440,400 L0,400 Z" fill="#0c261d" opacity="0.85" />
-        </motion.svg>
+      {/* The Ziban grove — a low horizon of palms that draws itself in; most of
+          the engraving stays below the fold. */}
+      <motion.div
+        aria-hidden
+        variants={grove}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
+        className="pointer-events-none absolute inset-x-0 top-[55%] flex justify-center select-none portrait:top-[63%]"
+      >
+        <NoorOasisArt className="block w-[min(126%,1460px)] max-w-none portrait:w-[220%]" />
+      </motion.div>
 
-        {/* The Ziban grove — a hand-drawn engraving on the horizon */}
-        <motion.div
-          className="pointer-events-none absolute inset-x-0 bottom-0 flex items-end justify-center"
-          style={{ y: duneFront }}
-        >
-          <NoorOasisArt className="block w-[min(116%,1320px)] max-w-none select-none opacity-[0.8]" />
-        </motion.div>
+      {/* Film grain — materiality, consistent with the opening */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-soft-light"
+        style={{ backgroundImage: GRAIN, backgroundRepeat: "repeat" }}
+      />
 
-        {/* Text — one dominant line, one accurate origin detail */}
-        <motion.div className="relative z-10 px-6 text-center" style={{ y: textY }}>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 1 }}
-            className="eyebrow text-orclair"
-          >
-            {lang === "pl" ? "02 — Pochodzenie" : "02 — Origin"}
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 26 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 1.1, delay: 0.1 }}
-            className="display mt-4 text-5xl text-ivoire md:text-8xl"
-          >
+      {/* Vignette — depth at the edges */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{ background: "radial-gradient(125% 105% at 50% 30%, transparent 50%, rgba(0,0,0,0.42) 100%)" }}
+      />
+
+      {/* Text — in the clear sky, biased above the horizon, never over the art */}
+      <div className="relative z-10 w-full -translate-y-[15vh] px-6 text-center portrait:-translate-y-[20vh]">
+        <Reveal className="eyebrow text-orclair">
+          {lang === "pl" ? "02 — Pochodzenie" : "02 — Origin"}
+        </Reveal>
+        <Reveal variant="mask" className="mt-5">
+          <h2 className="display text-5xl text-ivoire md:text-7xl">
             {lang === "pl" ? "Zrodzony ze słońca." : "Born under the sun."}
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }} transition={{ duration: 1.1, delay: 0.25 }}
-            className="mt-6 font-serif text-lg italic text-champagne md:text-xl"
-          >
-            {lang === "pl" ? "Z oaz Ziban w Algierii." : "From the Ziban oases of Algeria."}
-          </motion.p>
-        </motion.div>
-
-        {/* Vignette — depth at the edges */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(125% 100% at 50% 32%, transparent 52%, rgba(0,0,0,0.34) 100%)" }}
-        />
+          </h2>
+        </Reveal>
+        <Reveal delay={0.15} className="mt-6 font-serif text-lg italic text-champagne md:text-xl">
+          {lang === "pl" ? "Z oaz Ziban w Algierii." : "From the Ziban oases of Algeria."}
+        </Reveal>
       </div>
     </section>
   );
