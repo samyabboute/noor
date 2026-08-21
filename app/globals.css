@@ -67,6 +67,15 @@ html.lenis body {
     @apply font-sans text-[11px] uppercase tracking-wide2 text-ink/40;
   }
 
+  /* Section vertical rhythm — fluid, so mobile stays tight and desktop breathes
+     without cavernous gaps. pad-y for standard sections, pad-y-lg for chapters. */
+  .pad-y {
+    @apply py-[clamp(3.5rem,6.5vw,6rem)];
+  }
+  .pad-y-lg {
+    @apply py-[clamp(4.5rem,8vw,7rem)];
+  }
+
   /* Display headings */
   .display {
     @apply font-serif font-light leading-[1.02] tracking-[-0.01em];

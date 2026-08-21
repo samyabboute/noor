@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Reveal from "./Reveal";
+import SectionIndex from "./SectionIndex";
 import ProductVisual from "./ProductVisual";
 import Photo from "./Photo";
 import MacroDate from "./MacroDate";
@@ -18,7 +19,7 @@ export function TheDate() {
     { k: "date.f4.k", v: "date.f4.v" },
   ];
   return (
-    <section id="daktyl" className="bg-paper py-16 text-ink md:py-36">
+    <section id="daktyl" className="bg-paper pad-y text-ink">
       <div className="mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Reveal>
@@ -33,7 +34,7 @@ export function TheDate() {
         </div>
 
         <div>
-          <Reveal><p className="section-index">{t("date.index")}</p></Reveal>
+          <Reveal><SectionIndex>{t("date.index")}</SectionIndex></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("date.eyebrow")}</p></Reveal>
           <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-4xl md:text-6xl">{t("date.title")}</h2></Reveal>
           <Reveal delay={0.15}>
@@ -67,10 +68,10 @@ export function Craftsmanship() {
     { k: "craft.s4.k", v: "craft.s4.v" },
   ];
   return (
-    <section id="rzemioslo" className="bg-paper2 py-16 text-ink md:py-36">
+    <section id="rzemioslo" className="bg-paper2 pad-y text-ink">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
-          <Reveal><p className="section-index">{t("craft.index")}</p></Reveal>
+          <Reveal><SectionIndex>{t("craft.index")}</SectionIndex></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("craft.eyebrow")}</p></Reveal>
           <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-7xl">{t("craft.title")}</h2></Reveal>
         </div>
@@ -112,14 +113,14 @@ export function Craftsmanship() {
 export function GiftCollection() {
   const { t } = useStore();
   return (
-    <section id="prezenty" className="relative overflow-hidden bg-paper py-16 text-ink md:py-40">
+    <section id="prezenty" className="relative overflow-hidden bg-paper pad-y text-ink">
       <div
         className="pointer-events-none absolute inset-0"
         style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(228,199,132,0.12), transparent 60%)" }}
       />
       <div className="relative mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-2">
         <div>
-          <Reveal><p className="section-index">{t("gift.index")}</p></Reveal>
+          <Reveal><SectionIndex>{t("gift.index")}</SectionIndex></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("gift.eyebrow")}</p></Reveal>
           <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-7xl">{t("gift.title")}</h2></Reveal>
           <Reveal delay={0.15}>
@@ -146,11 +147,11 @@ export function Corporate() {
   const { t } = useStore();
   const bullets = ["corp.b1", "corp.b2", "corp.b3"];
   return (
-    <section id="dla-firm" className="bg-paper2 py-16 text-ink md:py-36">
+    <section id="dla-firm" className="bg-paper2 pad-y text-ink">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <div>
-            <Reveal><p className="section-index">{t("corp.index")}</p></Reveal>
+            <Reveal><SectionIndex>{t("corp.index")}</SectionIndex></Reveal>
             <Reveal delay={0.05}><p className="eyebrow mt-5">{t("corp.eyebrow")}</p></Reveal>
             <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-6xl">{t("corp.title")}</h2></Reveal>
             <Reveal delay={0.15}>
@@ -182,10 +183,10 @@ export function Corporate() {
 export function Story() {
   const { t } = useStore();
   return (
-    <section id="dom-noor" className="relative isolate overflow-hidden bg-nuit py-20 text-ivoire md:py-44">
+    <section id="dom-noor" className="relative isolate overflow-hidden bg-nuit pad-y-lg text-ivoire">
       <NoorPattern placement="edges" opacity={0.05} scale={132} />
       <div className="relative mx-auto max-w-4xl px-6 text-center">
-        <Reveal><p className="section-index text-ivoire/40">{t("story.index")}</p></Reveal>
+        <Reveal><SectionIndex className="text-ivoire/40">{t("story.index")}</SectionIndex></Reveal>
         <Reveal delay={0.05}><p className="eyebrow mt-6">{t("story.eyebrow")}</p></Reveal>
         <Reveal delay={0.1} variant="mask">
           <h2 className="display mt-6 text-4xl italic md:text-6xl">“{t("story.title")}”</h2>

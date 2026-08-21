@@ -63,7 +63,7 @@ export default function Nav() {
           className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-paper/80 via-paper/30 to-transparent"
         />
       )}
-      <nav className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-4 md:px-10 h-[64px] md:h-[68px]">
+      <nav className="mx-auto flex max-w-[1440px] items-center justify-between gap-2 px-4 md:px-10 h-[72px] md:h-[84px]">
         {/* Left: mobile menu toggle */}
         <button
           className="-ml-1 flex items-center gap-2.5 p-1 lg:hidden"
@@ -76,19 +76,19 @@ export default function Nav() {
             <span className={clsx("block h-px w-5 bg-current transition-all duration-300", menuOpen && "opacity-0")} />
             <span className={clsx("block h-px w-5 bg-current transition-transform duration-300", menuOpen && "-translate-y-[3px] -rotate-45")} />
           </span>
-          <span className="hidden font-sans text-[11px] uppercase tracking-wide2 sm:inline">{menuOpen ? t("common.close") : "Menu"}</span>
+          <span className="hidden font-sans text-[11.5px] uppercase tracking-[0.14em] opacity-75 sm:inline">{menuOpen ? t("common.close") : "Menu"}</span>
         </button>
 
         <Link href="/" className="lg:flex-none" aria-label="Maison Noor — home" onClick={() => setMenuOpen(false)}>
           <Logo />
         </Link>
 
-        <div className="hidden lg:flex items-center gap-8 xl:gap-10">
+        <div className="hidden lg:flex items-center gap-9 xl:gap-12">
           {links.map((l) => (
             <Link
               key={l.key}
               href={l.href}
-              className="group relative font-sans text-[12px] uppercase tracking-wide2 opacity-90 transition-opacity duration-300 hover:opacity-100"
+              className="group relative font-sans text-[13px] uppercase tracking-[0.13em] opacity-85 transition-opacity duration-300 hover:opacity-100"
             >
               {t(l.key)}
               <span
@@ -99,17 +99,17 @@ export default function Nav() {
           ))}
         </div>
 
-        <div className="flex items-center gap-3 md:gap-6">
+        <div className="flex items-center gap-4 md:gap-7">
           <CurrencySwitcher className="hidden sm:block" />
           <Link
             href="/konto"
-            className="hidden font-sans text-[11px] uppercase tracking-wide2 opacity-80 transition hover:opacity-100 lg:inline"
+            className="hidden font-sans text-[11.5px] uppercase tracking-[0.14em] opacity-75 transition hover:opacity-100 lg:inline"
           >
             {lang === "pl" ? "Konto" : "Account"}
           </Link>
           <button
             onClick={toggleLang}
-            className="hidden font-sans text-[11px] uppercase tracking-wide2 opacity-80 transition hover:opacity-100 sm:inline"
+            className="hidden font-sans text-[11.5px] uppercase tracking-[0.14em] opacity-75 transition hover:opacity-100 sm:inline"
             aria-label="Change language"
           >
             <span className={clsx(lang === "pl" && "text-or")}>PL</span>
@@ -122,7 +122,7 @@ export default function Nav() {
               setMenuOpen(false);
               setBagOpen(true);
             }}
-            className="relative font-sans text-[12px] uppercase tracking-wide2 opacity-90 hover:opacity-100 transition"
+            className="relative font-sans text-[12.5px] uppercase tracking-[0.13em] opacity-85 hover:opacity-100 transition"
             aria-label={t("nav.bag")}
           >
             {t("nav.bag")}

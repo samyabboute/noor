@@ -1,6 +1,7 @@
 "use client";
 
 import Reveal from "./Reveal";
+import SectionIndex from "./SectionIndex";
 import ProductVisual from "./ProductVisual";
 import { useStore } from "../lib/store";
 import { products } from "../lib/products";
@@ -41,10 +42,10 @@ function Stars() {
 export function Reviews() {
   const { t, lang } = useStore();
   return (
-    <section id="opinie" className="bg-paper py-16 md:py-32">
+    <section id="opinie" className="bg-paper pad-y">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
-          <Reveal><p className="section-index">{t("reviews.index")}</p></Reveal>
+          <Reveal><SectionIndex>{t("reviews.index")}</SectionIndex></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("reviews.eyebrow")}</p></Reveal>
           <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-4xl md:text-6xl">{t("reviews.title")}</h2></Reveal>
           <Reveal delay={0.15}>
@@ -85,7 +86,7 @@ export function Instagram() {
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-10 flex flex-col items-center justify-between gap-4 md:flex-row">
           <div>
-            <p className="section-index">{t("ig.index")}</p>
+            <SectionIndex>{t("ig.index")}</SectionIndex>
             <h2 className="display mt-2 text-3xl md:text-4xl">
               {t("ig.title")} <span className="text-or">{t("ig.eyebrow")}</span>
             </h2>

@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import ProductVisual from "./ProductVisual";
 import Reveal from "./Reveal";
+import SectionIndex from "./SectionIndex";
 import { useStore } from "../lib/store";
 
 export default function Discover() {
@@ -20,12 +21,12 @@ export default function Discover() {
   const caseScale = useTransform(scrollYProgress, [0, 0.6], [0.94, 1]);
 
   return (
-    <section id="poznaj" ref={ref} className="relative overflow-hidden bg-paper py-16 text-ink md:py-36">
+    <section id="poznaj" ref={ref} className="relative overflow-hidden bg-paper pad-y text-ink">
       <div className="mx-auto grid max-w-[1400px] items-center gap-14 px-6 md:px-10 lg:grid-cols-2 lg:gap-20">
         {/* Editorial column */}
         <div className="order-2 lg:order-1">
           <Reveal>
-            <p className="section-index">{t("discover.index")}</p>
+            <SectionIndex>{t("discover.index")}</SectionIndex>
           </Reveal>
           <Reveal delay={0.05}>
             <p className="eyebrow mt-6">{t("discover.eyebrow")}</p>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Reveal from "./Reveal";
+import SectionIndex from "./SectionIndex";
 import ProductCard from "./ProductCard";
 import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
@@ -12,14 +13,14 @@ export default function CollectionSection() {
   const featured = shopProducts.slice(0, 4);
 
   return (
-    <section id="kolekcja" className="relative isolate overflow-hidden bg-paper py-16 md:py-36">
+    <section id="kolekcja" className="relative isolate overflow-hidden bg-paper pad-y">
       {/* Arabesque, engraved into the cream — ink ton-sur-ton, barely there */}
       <NoorPattern placement="edges" color="#122A20" opacity={0.04} scale={140} />
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 flex flex-col items-start justify-between gap-6 md:mb-20 md:flex-row md:items-end">
           <div>
             <Reveal>
-              <p className="section-index">{t("collection.index")}</p>
+              <SectionIndex>{t("collection.index")}</SectionIndex>
             </Reveal>
             <Reveal delay={0.05}>
               <p className="eyebrow mt-5">{t("collection.eyebrow")}</p>

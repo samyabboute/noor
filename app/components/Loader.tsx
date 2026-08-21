@@ -28,8 +28,8 @@ import { useStore } from "../lib/store";
  */
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1]; // settle
 const LIFT: [number, number, number, number] = [0.7, 0, 0.2, 1]; // weighted curtain
-const HOLD = 4.3; // full sequence before the curtain lifts
-const EXIT = 1.05; // curtain lift
+const HOLD = 3.6; // full sequence before the curtain lifts
+const EXIT = 0.9; // curtain lift
 
 // Fine film grain — a texture layer, not an effect. Tiled SVG turbulence.
 const GRAIN =
@@ -45,6 +45,8 @@ export default function Loader() {
     if (pathname?.startsWith("/admin")) return;
     if (sessionStorage.getItem("noor.entered")) return;
     setShow(true);
+    // The first-paint cover has done its job; the loader now owns the screen.
+    document.getElementById("noor-gate")?.remove();
     document.body.style.overflow = "hidden";
     const release = () => {
       if (!document.body.dataset.noorGate) document.body.style.overflow = "";
@@ -70,25 +72,27 @@ export default function Loader() {
     hidden: { opacity: 0 },
     show: { opacity: 0.11, transition: { duration: 1.0, ease: EASE } },
   };
+  // The blurred depth layer fades only (no geometry change), so its blur is
+  // never re-rasterised mid-animation — cheap even on mobile.
   const deepV: Variants = {
-    hidden: { opacity: 0, clipPath: "inset(0% 100% 0% 0%)", scale: 1.12 },
-    show: { opacity: 0.06, clipPath: "inset(0% 0% 0% 0%)", scale: 1, transition: { delay: 0.2, duration: 1.5, ease: EASE } },
+    hidden: { opacity: 0 },
+    show: { opacity: 0.06, transition: { delay: 0.2, duration: 1.2, ease: EASE } },
   };
   const discV: Variants = {
-    hidden: { opacity: 0, clipPath: "inset(0% 0% 0% 100%)", scale: 1.06 },
-    show: { opacity: 0.19, clipPath: "inset(0% 0% 0% 0%)", scale: 1, transition: { delay: 0.5, duration: 1.6, ease: EASE } },
+    hidden: { opacity: 0, clipPath: "inset(0% 0% 0% 100%)" },
+    show: { opacity: 0.19, clipPath: "inset(0% 0% 0% 0%)", transition: { delay: 0.45, duration: 1.4, ease: EASE } },
   };
   const markV: Variants = {
     hidden: reduce ? { opacity: 0 } : { opacity: 0, clipPath: "inset(100% 0% 0% 0%)", scale: 1.03, y: 12 },
     show: reduce
       ? { opacity: 1, transition: { duration: 0.5 } }
-      : { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", scale: 1, y: 0, transition: { delay: 1.5, duration: 1.0, ease: EASE } },
+      : { opacity: 1, clipPath: "inset(0% 0% 0% 0%)", scale: 1, y: 0, transition: { delay: 1.2, duration: 0.95, ease: EASE } },
   };
   const wordV = (i: number): Variants => ({
     hidden: reduce ? { opacity: 0 } : { y: "118%" },
     show: reduce
-      ? { opacity: 1, transition: { delay: 0.5 } }
-      : { y: 0, transition: { delay: 2.7 + i * 0.11, duration: 0.85, ease: EASE } },
+      ? { opacity: 1, transition: { delay: 0.4 } }
+      : { y: 0, transition: { delay: 2.1 + i * 0.1, duration: 0.8, ease: EASE } },
   });
 
   return (

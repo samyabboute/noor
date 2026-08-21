@@ -3,6 +3,7 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import NoorPattern from "./NoorPattern";
 import Reveal from "./Reveal";
+import SectionIndex from "./SectionIndex";
 import { NoorOasisArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
@@ -70,8 +71,10 @@ export default function OriginScene() {
 
       {/* Text — in the clear sky, biased above the horizon, never over the art */}
       <div className="relative z-10 w-full -translate-y-[15vh] px-6 text-center portrait:-translate-y-[20vh]">
-        <Reveal className="eyebrow text-orclair">
-          {lang === "pl" ? "02 — Pochodzenie" : "02 — Origin"}
+        <Reveal>
+          <SectionIndex className="justify-center text-orclair">
+            {lang === "pl" ? "02 — Pochodzenie" : "02 — Origin"}
+          </SectionIndex>
         </Reveal>
         <Reveal variant="mask" className="mt-5">
           <h2 className="display text-5xl text-ivoire md:text-7xl">

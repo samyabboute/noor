@@ -65,8 +65,26 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Jost:wght@300;400;500&display=swap"
         />
+        {/* First-paint gate: a dark cover is server-rendered so the homepage
+            never flashes before the loader mounts. Returning visitors (and
+            /admin) skip it before paint via this synchronous check. */}
+        <style dangerouslySetInnerHTML={{ __html: "[data-noor-in] #noor-gate{display:none!important}" }} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(sessionStorage.getItem('noor.entered')||location.pathname.indexOf('/admin')===0){document.documentElement.setAttribute('data-noor-in','1')}}catch(e){}",
+          }}
+        />
+        <noscript>
+          <style dangerouslySetInnerHTML={{ __html: "#noor-gate{display:none!important}" }} />
+        </noscript>
       </head>
       <body className="grain">
+        <div
+          id="noor-gate"
+          aria-hidden
+          style={{ position: "fixed", inset: 0, zIndex: 190, background: "linear-gradient(178deg,#0b241b 0%,#082019 32%,#061a14 64%,#04100a 100%)" }}
+        />
         <AuthProvider>
         <StoreProvider>
           <SmoothScroll />
