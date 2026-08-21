@@ -21,8 +21,8 @@ type LogoSize = "sm" | "md" | "lg";
 
 // The official gold lockup (نور over "noor"). Responsive widths per usage.
 const WIDTH: Record<LogoSize, string> = {
-  sm: "w-[106px] md:w-[126px] lg:w-[142px]",
-  md: "w-[126px] md:w-[144px]",
+  sm: "w-[92px] md:w-[108px] lg:w-[122px]",
+  md: "w-[118px] md:w-[136px]",
   lg: "w-[clamp(178px,21vw,236px)]",
 };
 
