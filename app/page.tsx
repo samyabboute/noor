@@ -1,6 +1,6 @@
 import Hero from "./components/Hero";
 import TrustBar from "./components/TrustBar";
-import Showcase360 from "./components/Showcase360";
+import TheObject from "./components/TheObject";
 import Discover from "./components/Discover";
 import OriginScene from "./components/OriginScene";
 import CollectionSection from "./components/CollectionSection";
@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <Hero />
       <TrustBar />
-      <Showcase360 />
+      <TheObject />
       <Discover />
       <OriginScene />
       <CollectionSection />
