@@ -5,8 +5,8 @@ import Reveal from "./Reveal";
 import SectionIndex from "./SectionIndex";
 import ProductVisual from "./ProductVisual";
 import Photo from "./Photo";
+import { NoorArabicArt } from "./BrandArt";
 import MacroDate from "./MacroDate";
-import NoorPattern from "./NoorPattern";
 import { useStore } from "../lib/store";
 
 /* 03 — The Date : why Noor is different */
@@ -68,23 +68,27 @@ export function Craftsmanship() {
     { k: "craft.s4.k", v: "craft.s4.v" },
   ];
   return (
-    <section id="rzemioslo" className="bg-paper2 pad-y text-ink">
-      <div className="mx-auto max-w-[1400px] px-6 md:px-10">
+    <section id="rzemioslo" className="relative overflow-hidden bg-paper2 pad-y text-ink">
+      {/* نور signature — cropped off the left margin (mirroring The Object's right) */}
+      <div aria-hidden className="pointer-events-none absolute -left-[20%] top-[10%] hidden w-[min(46vw,660px)] rotate-180 select-none opacity-[0.045] md:block">
+        <NoorArabicArt className="block w-full" />
+      </div>
+      <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="mb-14 text-center">
           <Reveal><SectionIndex>{t("craft.index")}</SectionIndex></Reveal>
           <Reveal delay={0.05}><p className="eyebrow mt-5">{t("craft.eyebrow")}</p></Reveal>
           <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-7xl">{t("craft.title")}</h2></Reveal>
         </div>
 
-        {/* The raw harvest — a full cluster of Deglet Nour, straight from the palm. */}
+        {/* The harvest, gathered by hand */}
         <Reveal delay={0.05}>
           <figure className="mx-auto mb-16 max-w-sm md:mb-24">
             <Photo
-              src="/products/deglet-branch.webp"
-              alt="Kiść daktyli Deglet Nour prosto z palmy — oazy Tolga"
+              src="/products/deglet-trio.webp"
+              alt="Deglet Nour — kaliber Jumbo, oazy Tolga"
               className="aspect-[4/5]"
             />
-            <figcaption className="mt-4 text-center section-index">Prosto z palmy · Oazy Tolga</figcaption>
+            <figcaption className="mt-4 text-center section-index">Zbierane ręcznie · Oazy Tolga</figcaption>
           </figure>
         </Reveal>
 
@@ -114,9 +118,11 @@ export function GiftCollection() {
   const { t } = useStore();
   return (
     <section id="prezenty" className="relative overflow-hidden bg-paper pad-y text-ink">
+      {/* A warm tonal lean toward the gift, not a glowing circle */}
       <div
+        aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(80% 60% at 70% 40%, rgba(228,199,132,0.12), transparent 60%)" }}
+        style={{ background: "linear-gradient(105deg, rgba(252,251,248,0) 45%, rgba(242,236,222,0.55) 100%)" }}
       />
       <div className="relative mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-2">
         <div>
@@ -184,7 +190,11 @@ export function Story() {
   const { t } = useStore();
   return (
     <section id="dom-noor" className="relative isolate overflow-hidden bg-nuit pad-y-lg text-ivoire">
-      <NoorPattern placement="edges" opacity={0.05} scale={132} />
+      {/* A grand نور signature, emerging cropped from the top — the brand's own
+          calligraphy as a large-scale background detail on its story. */}
+      <div aria-hidden className="pointer-events-none absolute -top-[14%] left-1/2 w-[min(128vw,1240px)] -translate-x-1/2 select-none opacity-[0.06]">
+        <NoorArabicArt className="block w-full" />
+      </div>
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <Reveal><SectionIndex className="text-ivoire/40">{t("story.index")}</SectionIndex></Reveal>
         <Reveal delay={0.05}><p className="eyebrow mt-6">{t("story.eyebrow")}</p></Reveal>
