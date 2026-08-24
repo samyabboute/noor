@@ -1,19 +1,18 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import NoorPattern from "./NoorPattern";
+import { motion, useReducedMotion } from "framer-motion";
 import Reveal from "./Reveal";
-import SectionIndex from "./SectionIndex";
-import { NoorOasisArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 /**
- * ACT II — Origin. The Ziban oasis at the edge of night, treated as an editorial
- * plate: the hand-drawn grove sits as a low horizon of palms and draws itself in
- * — left to right, an ink line finding the page — the first time the section is
- * reached. The typography lives in the clear sky above it, never over the
- * drawing. Depth comes from grain and a vignette, never a decorative light. One
- * dominant line, one accurate origin detail.
+ * ORIGIN — a chapter, not a section. A dark, quiet interlude between the two
+ * lit sections around it, art-directed as the provenance page of a brand book.
+ *
+ * Concept: "Born under the sun." The focal point is the headline; typography
+ * carries the art direction, the story gives it substance, and a single gold
+ * hairline with a line of provenance are the only graphic marks. Depth comes
+ * from fine grain, a shadowed vignette and negative space — no illustration,
+ * no glow, no parallax. The eye goes straight to the words.
  */
 const EASE: [number, number, number, number] = [0.16, 1, 0.3, 1];
 const GRAIN =
@@ -22,67 +21,78 @@ const GRAIN =
 export default function OriginScene() {
   const { lang } = useStore();
   const reduce = useReducedMotion();
+  const pl = lang === "pl";
 
-  // The grove draws itself in — left to right — once, when the section arrives.
-  const grove: Variants = {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, clipPath: "inset(0% 100% 0% 0%)" },
-    show: reduce
-      ? { opacity: 0.82, transition: { duration: 0.6 } }
-      : { opacity: 0.82, clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 1.8, ease: EASE } },
-  };
+  const line1 = pl ? "Zrodzony" : "Born under";
+  const line2 = pl ? "ze słońca." : "the sun.";
+  const lede = pl
+    ? "Deglet Nour, daktyl światła. Dojrzewa na północnym skraju Sahary, w algierskich oazach Ziban — zbierany ręcznie, u źródła, w pełni słońca."
+    : "Deglet Nour, the date of light. Ripened at the northern edge of the Sahara, in the Ziban oases of Algeria, and gathered by hand at the source.";
+  const provenance = pl ? ["Tolga · Ziban", "Algieria", "34° Północy"] : ["Tolga · Ziban", "Algeria", "34° North"];
 
   return (
-    <section id="origin" className="relative flex h-screen min-h-[640px] items-center overflow-hidden bg-nuit">
-      {/* Sky — night warming to a restrained ember horizon, no sun disc */}
-      <div
-        className="absolute inset-0"
-        style={{ background: "linear-gradient(180deg, #05130e 0%, #0a1f18 46%, #0f2a20 72%, #21301b 90%, #33301d 100%)" }}
-      />
+    <section id="origin" className="relative flex min-h-screen items-center overflow-hidden bg-nuit py-[clamp(6rem,16vh,11rem)]">
+      {/* Ground — a near-flat deep green, a shade warmer toward the floor */}
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg,#06170f 0%,#0a1f16 55%,#0c2318 100%)" }} />
 
-      {/* Heritage arabesque, whispered from the margins */}
-      <NoorPattern placement="edges" opacity={0.045} scale={128} color="#D8BE7E" className="!z-0" />
-
-      {/* The Ziban grove — a low horizon of palms that draws itself in; most of
-          the engraving stays below the fold. */}
-      <motion.div
-        aria-hidden
-        variants={grove}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-15% 0px -10% 0px" }}
-        className="pointer-events-none absolute inset-x-0 top-[55%] flex justify-center select-none portrait:top-[63%]"
-      >
-        <NoorOasisArt className="block w-[min(126%,1460px)] max-w-none portrait:w-[220%]" />
-      </motion.div>
-
-      {/* Film grain — materiality, consistent with the opening */}
+      {/* Film grain — material, not effect */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-soft-light"
         style={{ backgroundImage: GRAIN, backgroundRepeat: "repeat" }}
       />
 
-      {/* Vignette — depth at the edges */}
+      {/* Vignette — depth from shadow at the edges */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0"
-        style={{ background: "radial-gradient(125% 105% at 50% 30%, transparent 50%, rgba(0,0,0,0.42) 100%)" }}
+        style={{ background: "radial-gradient(120% 100% at 50% 42%, transparent 55%, rgba(0,0,0,0.5) 100%)" }}
       />
 
-      {/* Text — in the clear sky, biased above the horizon, never over the art */}
-      <div className="relative z-10 w-full -translate-y-[15vh] px-6 text-center portrait:-translate-y-[20vh]">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1080px] flex-col items-center px-6 text-center">
         <Reveal>
-          <SectionIndex className="justify-center text-orclair">
-            {lang === "pl" ? "02 — Pochodzenie" : "02 — Origin"}
-          </SectionIndex>
+          <span className="font-sans text-[11px] uppercase tracking-[0.42em] text-champagne/60">
+            {pl ? "Pochodzenie" : "Origin"}
+          </span>
         </Reveal>
-        <Reveal variant="mask" className="mt-5">
-          <h2 className="display text-5xl text-ivoire md:text-7xl">
-            {lang === "pl" ? "Zrodzony ze słońca." : "Born under the sun."}
-          </h2>
+
+        <div className="mt-8 md:mt-11">
+          <Reveal variant="mask">
+            <h2 className="display text-ivoire" style={{ fontSize: "clamp(2.9rem,8.4vw,7rem)", lineHeight: 0.92 }}>
+              {line1}
+            </h2>
+          </Reveal>
+          <Reveal variant="mask" delay={0.08}>
+            <h2 className="display italic text-or" style={{ fontSize: "clamp(2.9rem,8.4vw,7rem)", lineHeight: 0.92 }}>
+              {line2}
+            </h2>
+          </Reveal>
+        </div>
+
+        {/* The single graphic mark — a gold hairline that draws itself in */}
+        <motion.div
+          aria-hidden
+          className="mt-10 h-px w-16 origin-center md:mt-12"
+          style={{ background: "linear-gradient(90deg,transparent,#C2A25A,transparent)" }}
+          initial={reduce ? { opacity: 1 } : { scaleX: 0, opacity: 0 }}
+          whileInView={{ scaleX: 1, opacity: 1 }}
+          viewport={{ once: true, margin: "-15% 0px" }}
+          transition={{ duration: 1.1, delay: 0.25, ease: EASE }}
+        />
+
+        <Reveal delay={0.12} className="mt-10 max-w-[36rem] md:mt-12">
+          <p className="font-serif text-[1.05rem] leading-relaxed text-ivoire/75 md:text-xl md:leading-relaxed">{lede}</p>
         </Reveal>
-        <Reveal delay={0.15} className="mt-6 font-serif text-lg italic text-champagne md:text-xl">
-          {lang === "pl" ? "Z oaz Ziban w Algierii." : "From the Ziban oases of Algeria."}
+
+        <Reveal delay={0.24} className="mt-11 md:mt-14">
+          <div className="flex flex-col items-center gap-y-3 font-sans text-[10.5px] uppercase tracking-[0.28em] text-ivoire/45 sm:flex-row sm:gap-x-5 md:text-[11px]">
+            {provenance.map((item, i) => (
+              <span key={item} className="flex items-center gap-x-5">
+                {i > 0 && <span aria-hidden className="hidden h-3 w-px bg-ivoire/20 sm:inline-block" />}
+                {item}
+              </span>
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>
