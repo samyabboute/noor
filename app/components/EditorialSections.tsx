@@ -3,7 +3,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
 import SectionIndex from "./SectionIndex";
-import ProductVisual from "./ProductVisual";
 import Photo from "./Photo";
 import { NoorArabicArt } from "./BrandArt";
 import MacroDate from "./MacroDate";
@@ -139,8 +138,13 @@ export function GiftCollection() {
           </Reveal>
         </div>
         <Reveal delay={0.1}>
-          <div className="relative mx-auto w-full max-w-[460px]">
-            <ProductVisual slug="royal-noor" className="aspect-square w-full drop-shadow-2xl" />
+          <div className="relative mx-auto w-full max-w-[500px]">
+            <Photo
+              src="/products/Coffret-Revelation-02.webp"
+              alt="Maison Noor — L'Écrin Noor"
+              className="aspect-square w-full"
+              fit="contain"
+            />
           </div>
         </Reveal>
       </div>

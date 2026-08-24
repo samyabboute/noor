@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import ProductVisual from "../../components/ProductVisual";
 import Photo from "../../components/Photo";
 import AddToBag from "../../components/AddToBag";
 import Reveal from "../../components/Reveal";
@@ -70,15 +69,13 @@ export default function ProductPage() {
   const isLimited = product.badge?.[lang]?.toLowerCase().includes("limit") || product.tier === "royal";
   const crossSell = shopProducts.filter((p) => p.slug !== product.slug).slice(0, 3);
 
-  // Gallery: the signature case (SVG) alongside real Deglet Nour photography.
-  type GalleryView =
-    | { kind: "svg"; variant: "case" | "macro" }
-    | { kind: "photo"; src: string; alt: string };
+  // Gallery: the product's own photograph, then real Deglet Nour context shots.
+  type GalleryView = { src: string; alt: string; fit: "cover" | "contain" };
   const views: GalleryView[] = [
-    { kind: "svg", variant: "case" },
-    { kind: "photo", src: "/products/deglet-trio.webp", alt: `${product.name} — daktyle Deglet Nour` },
-    { kind: "photo", src: "/products/deglet-single.webp", alt: `${product.name} — detal owocu` },
-    { kind: "svg", variant: "macro" },
+    { src: product.image, alt: product.name, fit: product.fit },
+    { src: "/products/deglet-single.webp", alt: `${product.name} — Deglet Nour`, fit: "cover" },
+    { src: "/products/deglet-trio.webp", alt: `${product.name} — Deglet Nour`, fit: "cover" },
+    { src: "/products/signature.webp", alt: `${product.name} — Maison Noor`, fit: "cover" },
   ];
   const current = views[view] ?? views[0];
 
@@ -88,12 +85,13 @@ export default function ProductPage() {
         <div className="mx-auto grid max-w-[1400px] gap-10 px-6 md:px-10 lg:grid-cols-2 lg:gap-16">
           {/* Gallery */}
           <div className="lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-sm bg-paper2">
-              {current.kind === "svg" ? (
-                <ProductVisual slug={product.slug} variant={current.variant} className="aspect-square w-full" />
-              ) : (
-                <Photo src={current.src} alt={current.alt} className="aspect-square w-full p-8" />
-              )}
+            <div className={`overflow-hidden rounded-sm ${current.fit === "contain" ? "bg-paper" : "bg-paper2"}`}>
+              <Photo
+                src={current.src}
+                alt={current.alt}
+                fit={current.fit}
+                className={`aspect-square w-full ${current.fit === "contain" ? "p-8" : ""}`}
+              />
             </div>
             <div className="mt-4 grid grid-cols-4 gap-3">
               {views.map((v, i) => (
@@ -101,15 +99,11 @@ export default function ProductPage() {
                   key={i}
                   onClick={() => setView(i)}
                   aria-label={`Widok ${i + 1}`}
-                  className={`aspect-square w-full overflow-hidden rounded-sm border-2 bg-paper2 transition ${
-                    view === i ? "border-or" : "border-transparent opacity-60"
-                  }`}
+                  className={`aspect-square w-full overflow-hidden rounded-sm border-2 transition ${
+                    v.fit === "contain" ? "bg-paper" : "bg-paper2"
+                  } ${view === i ? "border-or" : "border-transparent opacity-60"}`}
                 >
-                  {v.kind === "svg" ? (
-                    <ProductVisual slug={product.slug} variant={v.variant} className="h-full w-full" />
-                  ) : (
-                    <Photo src={v.src} alt="" glow={false} className="h-full w-full p-2" />
-                  )}
+                  <Photo src={v.src} alt="" glow={false} fit={v.fit} className={`h-full w-full ${v.fit === "contain" ? "p-2" : ""}`} />
                 </button>
               ))}
             </div>
@@ -240,10 +234,13 @@ export default function ProductPage() {
             {crossSell.map((p, i) => (
               <Reveal key={p.slug} delay={i * 0.08}>
                 <Link href={`/produkt/${p.slug}`} className="group block">
-                  <div className="aspect-[4/5] overflow-hidden rounded-sm bg-paper2">
-                    <ProductVisual
-                      slug={p.slug}
-                      className="h-full w-full transition-transform duration-[1200ms] ease-luxe group-hover:scale-105"
+                  <div className={`aspect-[4/5] overflow-hidden rounded-sm ${p.fit === "contain" ? "bg-paper" : "bg-paper2"}`}>
+                    <Photo
+                      src={p.image}
+                      alt={p.name}
+                      fit={p.fit}
+                      glow={p.fit === "cover"}
+                      className={`h-full w-full transition-transform duration-[1200ms] ease-luxe group-hover:scale-105 ${p.fit === "contain" ? "p-4" : ""}`}
                     />
                   </div>
                   <div className="mt-3 flex items-baseline justify-between">

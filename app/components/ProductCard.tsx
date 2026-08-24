@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 import ProductVisual from "./ProductVisual";
 import { useStore } from "../lib/store";
 import { CATEGORY_LABELS, type Product } from "../lib/products";
@@ -8,14 +9,31 @@ import { CATEGORY_LABELS, type Product } from "../lib/products";
 export default function ProductCard({ product }: { product: Product }) {
   const { t, lang, money } = useStore();
   const isCorporate = product.tier === "corporate";
+  const [broken, setBroken] = useState(false);
+  // A contained box photo wants a little breathing room; a cover shot fills edge to edge.
+  const isContain = product.fit === "contain";
 
   return (
     <Link href={isCorporate ? "/#dla-firm" : `/produkt/${product.slug}`} className="group block">
-      <div className="relative aspect-[4/5] overflow-hidden rounded-sm bg-paper2">
-        <ProductVisual
-          slug={product.slug}
-          className="h-full w-full transition-transform duration-[1400ms] ease-luxe group-hover:scale-[1.06]"
-        />
+      <div className={`relative aspect-[4/5] overflow-hidden rounded-sm ${isContain ? "bg-paper" : "bg-paper2"}`}>
+        {broken ? (
+          <ProductVisual
+            slug={product.slug}
+            className="h-full w-full transition-transform duration-[1400ms] ease-luxe group-hover:scale-[1.06]"
+          />
+        ) : (
+          /* eslint-disable-next-line @next/next/no-img-element */
+          <img
+            src={product.image}
+            alt={product.name}
+            loading="lazy"
+            decoding="async"
+            onError={() => setBroken(true)}
+            className={`h-full w-full transition-transform duration-[1400ms] ease-luxe group-hover:scale-[1.05] ${
+              isContain ? "object-contain p-5 sm:p-7" : "object-cover"
+            }`}
+          />
+        )}
         {product.badge && (
           <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] truncate rounded-full bg-nuit/95 px-2.5 py-1 font-sans text-[9px] uppercase tracking-[0.1em] text-ivoire sm:left-4 sm:top-4 sm:px-3 sm:text-[10px] sm:tracking-wide2">
             {product.badge[lang]}
