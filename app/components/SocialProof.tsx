@@ -14,8 +14,8 @@ const reviews: { pl: string; en: string; who: string; city: string }[] = [
     city: "Warszawa",
   },
   {
-    pl: "Najlepsze daktyle, jakie jadłem. Cœur de Noor z migdałem to poziom najlepszej czekoladerni.",
-    en: "The best dates I have ever eaten. Cœur de Noor with almond is on the level of the finest chocolatier.",
+    pl: "Najlepsze daktyle, jakie jadłem. Cœur d'Amande to poziom najlepszej czekoladerni.",
+    en: "The best dates I have ever eaten. Cœur d'Amande is on the level of the finest chocolatier.",
     who: "Michał R.",
     city: "Kraków",
   },

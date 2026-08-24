@@ -1,8 +1,12 @@
 export type Lang = "pl" | "en";
 
+// The three houses of the catalogue. Every product belongs to exactly one.
+export type Category = "coffret" | "enrobee" | "nature";
+
 export interface Product {
   slug: string;
   name: string;
+  category: Category;
   tier: "signature" | "collection" | "royal" | "gift" | "corporate";
   // Localised marketing copy
   tagline: Record<Lang, string>;
@@ -20,17 +24,35 @@ export interface Product {
   bestFor: Array<"gift" | "self" | "corporate">;
 }
 
-// Prices in PLN. Positioned as a luxury house — premium but credible for the Polish market.
+// Display labels for the catalogue filter, in reading order.
+export const CATEGORY_LABELS: Record<Category, Record<Lang, string>> = {
+  coffret: { pl: "Coffrets", en: "Coffrets" },
+  enrobee: { pl: "Daktyle Enrobées", en: "Enrobées Dates" },
+  nature: { pl: "Daktyle Nature", en: "Nature Dates" },
+};
+
+export const CATEGORY_ORDER: Category[] = ["coffret", "enrobee", "nature"];
+
+/**
+ * THE MAISON NOOR CATALOGUE — three coherent houses, each with its own
+ * naming register:
+ *   · NATURE   — terroir & light: Lumière de Tolga, Grande Récolte, Réserve du Ziban
+ *   · ENROBÉES — the sensual, worked date: Cœur d'Amande, Perle de Pistache, Noir Cacao
+ *   · COFFRETS — the écrin, the gift: L'Écrin Noor, Le Grand Écrin
+ * Prices in PLN. Positioned as a luxury house — premium but credible for the Polish market.
+ */
 export const products: Product[] = [
+  /* ─────────────────────────  NATURE  ───────────────────────── */
   {
     slug: "noor-signature",
-    name: "Noor Signature",
+    name: "Lumière de Tolga",
+    category: "nature",
     tier: "signature",
     tagline: {
       pl: "Nasza sygnatura. Deglet Nour w najczystszej postaci.",
       en: "Our signature. Deglet Nour in its purest form.",
     },
-    variety: { pl: "Daktyle Deglet Nour", en: "Deglet Nour dates" },
+    variety: { pl: "Deglet Nour · kaliber Jumbo", en: "Deglet Nour · Jumbo grade" },
     origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
       pl: "Karmel, miód i nuta toffi. Głęboka, ale nigdy przesłodzona.",
@@ -41,8 +63,8 @@ export const products: Product[] = [
       en: "Velvet, moist, melting on the tongue.",
     },
     story: {
-      pl: "Owoce zbierane ręcznie w fazie pełnej dojrzałości, selekcjonowane sztuka po sztuce. Tylko najwięksi, najgładsi.",
-      en: "Hand-harvested at full maturity, selected one by one. Only the largest, the smoothest.",
+      pl: "Owoce zbierane ręcznie w fazie pełnej dojrzałości, selekcjonowane sztuka po sztuce. Tylko najwięksi, najgładsi — owoc światła z oaz Tolga.",
+      en: "Hand-harvested at full maturity, selected one by one. Only the largest, the smoothest — the fruit of light from the Tolga oases.",
     },
     price: 89,
     weight: "250 g",
@@ -52,14 +74,76 @@ export const products: Product[] = [
     bestFor: ["gift", "self"],
   },
   {
-    slug: "coeur-de-noor",
-    name: "Cœur de Noor",
+    slug: "grande-recolte",
+    name: "Grande Récolte",
+    category: "nature",
+    tier: "signature",
+    tagline: {
+      pl: "Hojna kiść z pierwszego zbioru sezonu.",
+      en: "A generous branch from the season's first harvest.",
+    },
+    variety: { pl: "Deglet Nour · na gałązce", en: "Deglet Nour · on the branch" },
+    origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
+    taste: {
+      pl: "Świeży miód i jasny karmel, prosto z palmy.",
+      en: "Fresh honey and bright caramel, straight from the palm.",
+    },
+    texture: {
+      pl: "Jędrna, mięsista, pełna słońca.",
+      en: "Firm, fleshy, full of sun.",
+    },
+    story: {
+      pl: "Zbierane całą kiścią, tak jak rosły — najbardziej naturalna postać daktyla, do dzielenia przy stole.",
+      en: "Gathered whole on the branch, just as they grew — the date in its most natural form, to share at the table.",
+    },
+    price: 79,
+    weight: "300 g",
+    pieces: "na gałązce",
+    accent: "#CBA662",
+    bestFor: ["self", "gift"],
+  },
+  {
+    slug: "reserve-ziban",
+    name: "Réserve du Ziban",
+    category: "nature",
     tier: "collection",
     tagline: {
-      pl: "Daktyl nadziewany. Serce ukryte w owocu.",
-      en: "The stuffed date. A heart hidden inside the fruit.",
+      pl: "Rzadka selekcja z serca oaz Ziban.",
+      en: "A rare selection from the heart of the Ziban.",
     },
-    variety: { pl: "Deglet Nour · migdał · orzech", en: "Deglet Nour · almond · walnut" },
+    variety: { pl: "Deglet Nour · selekcja numerowana", en: "Deglet Nour · numbered selection" },
+    origin: { pl: "Oazy Ziban, Algieria", en: "Ziban oases, Algeria" },
+    taste: {
+      pl: "Skoncentrowany karmel i suszona morela. Intensywna, dostojna.",
+      en: "Concentrated caramel and dried apricot. Intense, stately.",
+    },
+    texture: {
+      pl: "Gęsta, prawie kremowa.",
+      en: "Dense, almost creamy.",
+    },
+    story: {
+      pl: "Zaledwie kilka palm daje owoc tej klasy. Zbiór ograniczony, każda partia numerowana.",
+      en: "Only a handful of palms bear fruit of this grade. A limited harvest, each batch numbered.",
+    },
+    price: 129,
+    weight: "250 g",
+    pieces: "≈ 12",
+    accent: "#BF9A54",
+    badge: { pl: "Rzadka partia", en: "Rare batch" },
+    bestFor: ["gift", "self"],
+  },
+
+  /* ─────────────────────────  ENROBÉES  ───────────────────────── */
+  {
+    slug: "coeur-de-noor",
+    name: "Cœur d'Amande",
+    category: "enrobee",
+    tier: "collection",
+    tagline: {
+      pl: "Daktyl nadziewany migdałem. Serce ukryte w owocu.",
+      en: "The date filled with almond. A heart hidden inside the fruit.",
+    },
+    variety: { pl: "Deglet Nour · prażony migdał", en: "Deglet Nour · roasted almond" },
     origin: { pl: "Oazy Tolga, Algieria · Piemont", en: "Tolga oasis, Algeria · Piedmont" },
     taste: {
       pl: "Prażony migdał spotyka karmel daktyla. Kontrast, który uzależnia.",
@@ -80,8 +164,38 @@ export const products: Product[] = [
     bestFor: ["gift", "self"],
   },
   {
+    slug: "perle-pistache",
+    name: "Perle de Pistache",
+    category: "enrobee",
+    tier: "collection",
+    tagline: {
+      pl: "Daktyl nadziewany zieloną pistacją. Zmysłowa perła.",
+      en: "The date filled with green pistachio. A sensual pearl.",
+    },
+    variety: { pl: "Deglet Nour · pistacja z Bronte", en: "Deglet Nour · Bronte pistachio" },
+    origin: { pl: "Oazy Tolga, Algieria · Sycylia", en: "Tolga oasis, Algeria · Sicily" },
+    taste: {
+      pl: "Maślana pistacja, kwiat pomarańczy, głęboki karmel.",
+      en: "Buttery pistachio, orange blossom, deep caramel.",
+    },
+    texture: {
+      pl: "Jedwabiste wnętrze, delikatna ziarnistość pistacji.",
+      en: "A silken centre, the fine grain of pistachio.",
+    },
+    story: {
+      pl: "Zielona pistacja z Bronte, ucierana na pastę i nadziewana ręcznie w każdy owoc. Nasza najbardziej zmysłowa sygnatura.",
+      en: "Green Bronte pistachio, ground to a paste and piped by hand into each fruit. Our most sensual signature.",
+    },
+    price: 129,
+    weight: "300 g",
+    pieces: "≈ 16",
+    accent: "#A6A25C",
+    bestFor: ["gift", "self"],
+  },
+  {
     slug: "noir-cacao",
     name: "Noir Cacao",
+    category: "enrobee",
     tier: "collection",
     tagline: {
       pl: "Daktyl w ciemnej czekoladzie. Zmysłowy rytuał.",
@@ -108,19 +222,22 @@ export const products: Product[] = [
     badge: { pl: "Edycja limitowana", en: "Limited edition" },
     bestFor: ["gift", "self"],
   },
+
+  /* ─────────────────────────  COFFRETS  ───────────────────────── */
   {
     slug: "collection-noor",
-    name: "The Noor Collection",
+    name: "L'Écrin Noor",
+    category: "coffret",
     tier: "royal",
     tagline: {
       pl: "Trzy sygnatury w jednej szkatule. Podróż przez smaki.",
-      en: "Three signatures in one case. A journey through taste.",
+      en: "Three signatures in one écrin. A journey through taste.",
     },
     variety: { pl: "Selekcja domu", en: "House selection" },
     origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
-      pl: "Nasza sygnatura, Cœur de Noor i Noir Cacao — komplet.",
-      en: "Our signature, Cœur de Noor and Noir Cacao — the complete set.",
+      pl: "Lumière de Tolga, Cœur d'Amande i Noir Cacao — komplet.",
+      en: "Lumière de Tolga, Cœur d'Amande and Noir Cacao — the complete set.",
     },
     texture: {
       pl: "Cały repertuar tekstur domu Noor.",
@@ -128,7 +245,7 @@ export const products: Product[] = [
     },
     story: {
       pl: "Szkatuła obleczona lnem, wstążka w kolorze światła, karta z odręcznym życzeniem. Cadeau w najczystszej formie.",
-      en: "A linen-wrapped case, a ribbon the colour of light, a card for a handwritten wish. The gift in its purest form.",
+      en: "A linen-wrapped écrin, a ribbon the colour of light, a card for a handwritten wish. The gift in its purest form.",
     },
     price: 289,
     compareAt: 347,
@@ -140,7 +257,8 @@ export const products: Product[] = [
   },
   {
     slug: "royal-noor",
-    name: "The Royal Collection",
+    name: "Le Grand Écrin",
+    category: "coffret",
     tier: "royal",
     tagline: {
       pl: "Nasz najbardziej okazały gest. Dla chwil, które się liczą.",
@@ -150,7 +268,7 @@ export const products: Product[] = [
     origin: { pl: "Oazy Tolga, Algieria", en: "Tolga oasis, Algeria" },
     taste: {
       pl: "Pełna kolekcja domu, podwojona, w drewnianej szkatule.",
-      en: "The full house collection, doubled, in a wooden case.",
+      en: "The full house collection, doubled, in a wooden écrin.",
     },
     texture: {
       pl: "Wszystko, co Noor potrafi.",
@@ -158,7 +276,7 @@ export const products: Product[] = [
     },
     story: {
       pl: "Ręcznie wykończona szkatuła z drewna, srebrne szczypce, karta pochodzenia z numerem serii. Prezent, który się pamięta.",
-      en: "A hand-finished wooden case, silver tongs, a numbered certificate of origin. A gift that is remembered.",
+      en: "A hand-finished wooden écrin, silver tongs, a numbered certificate of origin. A gift that is remembered.",
     },
     price: 549,
     compareAt: 640,
@@ -168,9 +286,12 @@ export const products: Product[] = [
     badge: { pl: "Sygnatura domu", en: "House signature" },
     bestFor: ["gift", "corporate"],
   },
+
+  /* ─────────────────────────  CORPORATE (hidden from shop grid)  ───────────────────────── */
   {
     slug: "corporate-noor",
     name: "Maison Noor · Corporate",
+    category: "coffret",
     tier: "corporate",
     tagline: {
       pl: "Twoja marka, nasze rzemiosło. Prezenty firmowe z klasą.",
