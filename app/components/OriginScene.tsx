@@ -1,7 +1,9 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Reveal from "./Reveal";
+import { NoorArabicArt } from "./BrandArt";
 import { useStore } from "../lib/store";
 
 /**
@@ -22,6 +24,15 @@ export default function OriginScene() {
   const { lang } = useStore();
   const reduce = useReducedMotion();
   const pl = lang === "pl";
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
+
+  // The نور calligraphy breathes behind the words — slow, atmospheric, barely there.
+  const markScale = useTransform(scrollYProgress, [0, 1], reduce ? [1, 1] : [1.02, 1.16]);
+  const markY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [34, -34]);
+  const markOpacity = useTransform(scrollYProgress, [0, 0.5, 1], reduce ? [0.06, 0.06, 0.06] : [0.03, 0.08, 0.045]);
+  // The floor warms as the eye descends — dawn entering, bridging into the light below.
+  const dawn = useTransform(scrollYProgress, [0.4, 1], [0, reduce ? 0.6 : 1]);
 
   const line1 = pl ? "Zrodzony" : "Born under";
   const line2 = pl ? "ze słońca." : "the sun.";
@@ -31,14 +42,23 @@ export default function OriginScene() {
   const provenance = pl ? ["Tolga · Ziban", "Algieria", "34° Północy"] : ["Tolga · Ziban", "Algeria", "34° North"];
 
   return (
-    <section id="origin" className="relative flex min-h-screen items-center overflow-hidden bg-nuit py-[clamp(6rem,16vh,11rem)]">
+    <section ref={ref} id="origin" className="relative flex min-h-screen items-center overflow-hidden bg-nuit py-[clamp(6rem,16vh,11rem)]">
       {/* Ground — a near-flat deep green, a shade warmer toward the floor */}
       <div className="absolute inset-0" style={{ background: "linear-gradient(180deg,#06170f 0%,#0a1f16 55%,#0c2318 100%)" }} />
+
+      {/* The نور calligraphy — the brand's own hand, breathing behind the words */}
+      <motion.div
+        aria-hidden
+        style={{ scale: markScale, y: markY, opacity: markOpacity }}
+        className="pointer-events-none absolute left-1/2 top-1/2 z-0 w-[min(130vw,1150px)] max-w-none -translate-x-1/2 -translate-y-1/2 select-none"
+      >
+        <NoorArabicArt className="block w-full" />
+      </motion.div>
 
       {/* Film grain — material, not effect */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 opacity-[0.08] mix-blend-soft-light"
+        className="pointer-events-none absolute inset-0 z-[1] opacity-[0.08] mix-blend-soft-light"
         style={{ backgroundImage: GRAIN, backgroundRepeat: "repeat" }}
       />
 
@@ -48,6 +68,19 @@ export default function OriginScene() {
         className="pointer-events-none absolute inset-0"
         style={{ background: "radial-gradient(120% 100% at 50% 42%, transparent 55%, rgba(0,0,0,0.5) 100%)" }}
       />
+
+      {/* Dawn — the floor warms and lifts toward the light of the next chapter,
+          so the cream section below feels like it emerges rather than begins. */}
+      <motion.div
+        aria-hidden
+        style={{ opacity: dawn }}
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[42vh]"
+      >
+        <div
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(180deg, transparent 0%, rgba(120,86,38,0.28) 46%, rgba(214,178,110,0.5) 74%, #F4ECDB 100%)" }}
+        />
+      </motion.div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1080px] flex-col items-center px-6 text-center">
         <Reveal>
