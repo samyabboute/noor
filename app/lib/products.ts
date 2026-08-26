@@ -145,6 +145,38 @@ export const products: Product[] = [
 
   /* ─────────────────────────  ENROBÉES  ───────────────────────── */
   {
+    slug: "perle-pistache",
+    name: "Perle de Pistache",
+    category: "enrobee",
+    tier: "collection",
+    image: "/products/DATTE_ENROBEE_INDIVIDUELLE_POUR_SITE_6.webp",
+    fit: "cover",
+    tagline: {
+      pl: "Daktyl w ciemnej czekoladzie, wieńczony zieloną pistacją.",
+      en: "A date in dark chocolate, crowned with green pistachio.",
+    },
+    variety: { pl: "Deglet Nour · pistacja · czekolada 70%", en: "Deglet Nour · pistachio · 70% dark" },
+    origin: { pl: "Oazy Tolga, Algieria · Sycylia", en: "Tolga oasis, Algeria · Sicily" },
+    taste: {
+      pl: "Maślana pistacja, gorzka czekolada, głęboki karmel owocu.",
+      en: "Buttery pistachio, bitter chocolate, the fruit's deep caramel.",
+    },
+    texture: {
+      pl: "Chrupiąca skorupa, kruszona pistacja, jedwabiste wnętrze.",
+      en: "A crisp shell, crushed pistachio, a silken centre.",
+    },
+    story: {
+      pl: "Oblewane czekoladą Grand Cru i wieńczone ręcznie zieloną pistacją z Bronte. Nasza najbardziej zmysłowa sygnatura.",
+      en: "Enrobed in Grand Cru couverture and crowned by hand with green Bronte pistachio. Our most sensual signature.",
+    },
+    price: 139,
+    weight: "280 g",
+    pieces: "≈ 15",
+    accent: "#6F7A3C",
+    badge: { pl: "Nowość", en: "New" },
+    bestFor: ["gift", "self"],
+  },
+  {
     slug: "coeur-de-noor",
     name: "Cœur d'Amande",
     category: "enrobee",

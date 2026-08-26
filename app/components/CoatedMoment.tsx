@@ -16,24 +16,27 @@ import { useStore } from "../lib/store";
 
 /**
  * L'INSTANT ENROBÉ — the signature "wow" of the homepage, directed as a silent
- * film in one continuous take.
+ * film in one continuous take, built around three coated-date frames.
  *
- * The sequence, on smoothed scroll:
- *   DISCOVERY  a fragment — the coated surface, cropped tight behind the word.
- *   CURIOSITY  the crop pulls back, the date expands into its full form.
- *   DESIRE     the word lifts away; the نور signature breathes in behind.
- *   REVEAL     the photograph reaches its composition, completely still.
- *   STILLNESS  a held beat — nothing moves, the product speaks.
- *   CONTINUITY the first detail wipes upward and, from underneath, the second
- *              expands into place — frames of one campaign, never a slideshow.
+ * The sequence, on spring-smoothed scroll:
+ *   FIRST CONTACT  (11) a milk-chocolate fragment opens from a slot behind the
+ *                  word — curiosity, nothing given away.
+ *   DISCOVERY      (12) the SAME date, tighter — revealed OVER the first through
+ *                  a growing slot, so it reads as a continuous push-in, not a cut.
+ *   THE WOW        (pistachio) the dark, distinct hero grows from an extreme crop
+ *                  into its full composition, taking the stage as the word lifts.
+ *   STILLNESS      a held beat — nothing moves, the product speaks.
+ *   TRANSITION     the نور signature and warm ground carry the eye into the shop.
  *
- * Everything is transform / opacity / clip-path, driven by a single spring, so
- * motion feels weighted, not literal, and stays at 60fps. Reduced-motion
- * collapses the whole thing to a clean, fully-revealed still.
+ * Mechanic: each frame is stacked above the previous and revealed by a clip-path
+ * that GROWS — so the earlier photograph stays visible beneath until covered.
+ * No crossfades, no slideshow. Everything is transform / opacity / clip-path on a
+ * single spring: weighted, 60fps, and it collapses cleanly under reduced-motion.
  */
 
-const ORANGE = "/products/15_1479b91a-a8fb-475c-8647-64b258e99c37.webp";
-const FRAMBOISE = "/products/6_b0440c01-07cd-4720-9990-d70398687871.webp";
+const FRAME_1 = "/products/11_6b3e95ba-c26c-46f4-aea0-7f816530104f.webp"; // milk · wider
+const FRAME_2 = "/products/12_ea8c6ce5-87b3-4b45-a18f-08619fbeb22b.webp"; // milk · tighter (same date)
+const HERO = "/products/DATTE_ENROBEE_INDIVIDUELLE_POUR_SITE_6.webp"; // dark · pistachio
 
 export default function CoatedMoment() {
   const { lang } = useStore();
@@ -45,41 +48,43 @@ export default function CoatedMoment() {
   // Weighted scrubbing — the scroll drives a spring, not the values directly.
   const s = useSpring(scrollYProgress, { stiffness: 80, damping: 26, mass: 0.35 });
 
+  /* ── Frame 1 — first contact: a fragment opening from a slot ── */
+  const t1 = useTransform(s, [0, 0.26], [reduce ? 0 : 44, 0]);
+  const clip1 = useMotionTemplate`inset(${t1}% 0% ${t1}% 0%)`;
+  const scale1 = useTransform(s, [0, 0.3], [reduce ? 1 : 1.22, 1.04]);
+
+  /* ── Frame 2 — discovery: the same date, revealed OVER the first (push-in) ── */
+  const t2 = useTransform(s, [0.3, 0.5], [reduce ? 0 : 50, 0]);
+  const clip2 = useMotionTemplate`inset(${t2}% 0% ${t2}% 0%)`;
+  const scale2 = useTransform(s, [0.3, 0.52], [reduce ? 1 : 1.1, 1.0]);
+
+  /* ── Hero — pistachio: extreme crop expanding into the full composition ── */
+  const th = useTransform(s, [0.58, 0.8], [reduce ? 0 : 50, 0]);
+  const clipH = useMotionTemplate`inset(${th}% ${th}% ${th}% ${th}%)`;
+  const scaleH = useTransform(s, [0.58, 0.8, 0.9, 1], [reduce ? 1 : 1.28, 1.03, 1.03, reduce ? 1 : 1.06]);
+
   /* ── The display word: the image passes BEHIND it, then it lifts away ── */
-  const wordOpacity = useTransform(s, [0, 0.05, 0.3], [0, 1, reduce ? 1 : 0]);
-  const wordY = useTransform(s, [0, 0.32], [reduce ? 0 : 12, reduce ? 0 : -64]);
-  const wordScale = useTransform(s, [0, 0.32], [1, reduce ? 1 : 1.14]);
-
-  /* ── Detail A — candied orange: fragment → full form → holds → wipes away ── */
-  const aTop = useTransform(s, [0, 0.4], [reduce ? 0 : 44, 0]);
-  const aBottom = useTransform(s, [0, 0.4, 0.62, 0.82], [reduce ? 0 : 44, 0, 0, 100]);
-  const clipA = useMotionTemplate`inset(${aTop}% 0% ${aBottom}% 0%)`;
-  const scaleA = useTransform(s, [0, 0.4, 0.6, 0.82], [reduce ? 1 : 1.26, 1.03, 1.03, reduce ? 1 : 1.12]);
-
-  /* ── Detail B — raspberry: revealed underneath, expands into place ── */
-  const bTop = useTransform(s, [0.62, 0.88], [reduce ? 0 : 26, 0]);
-  const bBottom = useTransform(s, [0.62, 0.88], [reduce ? 0 : 26, 0]);
-  const clipB = useMotionTemplate`inset(${bTop}% 0% ${bBottom}% 0%)`;
-  const scaleB = useTransform(s, [0.62, 0.9], [reduce ? 1 : 1.16, 1]);
-  const bOpacity = useTransform(s, [0.6, 0.66], [0, 1]);
+  const wordOpacity = useTransform(s, [0, 0.05, 0.32], [0, 1, reduce ? 1 : 0]);
+  const wordY = useTransform(s, [0, 0.34], [reduce ? 0 : 12, reduce ? 0 : -64]);
+  const wordScale = useTransform(s, [0, 0.34], [1, reduce ? 1 : 1.14]);
 
   /* ── The نور signature — discovered at the peak, never imposed ── */
-  const markOpacity = useTransform(s, [0.34, 0.52, 0.9, 1], [0, 0.06, 0.05, 0.02]);
-  const markScale = useTransform(s, [0.34, 1], [reduce ? 1 : 1.0, reduce ? 1 : 1.14]);
+  const markOpacity = useTransform(s, [0.56, 0.74, 1], [0, 0.06, 0.04]);
+  const markScale = useTransform(s, [0.56, 1], [reduce ? 1 : 1.0, reduce ? 1 : 1.12]);
 
   /* ── The background evolves at exactly the right moment ── */
-  const warmth = useTransform(s, [0.28, 0.5, 0.72], [0, 0.5, 0.16]);
+  const warmth = useTransform(s, [0.5, 0.72, 0.92], [0, 0.42, 0.14]);
 
-  /* ── Captions cross the handoff ── */
-  const capA = useTransform(s, [0.4, 0.48, 0.58, 0.66], [0, 1, 1, 0]);
-  const capB = useTransform(s, [0.88, 0.96], [0, 1]);
-  const eyebrow = useTransform(s, [0.08, 0.18, 0.34, 0.42], [0, 1, 1, 0]);
+  /* ── Captions bridge the acts ── */
+  const capMilk = useTransform(s, [0.36, 0.44, 0.52, 0.58], [0, 1, 1, 0]);
+  const capHero = useTransform(s, [0.82, 0.92], [0, 1]);
+  const eyebrow = useTransform(s, [0.08, 0.18, 0.3, 0.38], [0, 1, 1, 0]);
 
   /* ── A whisper of depth on the whole plate ── */
-  const plateY = useTransform(s, [0, 1], [reduce ? 0 : 20, reduce ? 0 : -20]);
+  const plateY = useTransform(s, [0, 1], [reduce ? 0 : 18, reduce ? 0 : -18]);
 
   return (
-    <section ref={ref} id="enrobe" className="relative h-[230vh] bg-paper text-ink md:h-[280vh]">
+    <section ref={ref} id="enrobe" className="relative h-[240vh] bg-paper text-ink md:h-[300vh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
         {/* Warm ground — near-white at centre so the field is seamless */}
         <div
@@ -88,11 +93,7 @@ export default function CoatedMoment() {
           style={{ background: "radial-gradient(125% 92% at 50% 44%, #FFFFFF 0%, #FEFCF7 40%, #F7EFDF 78%, #F0E6D2 100%)" }}
         />
         {/* Warmth that swells at the reveal, then settles */}
-        <motion.div
-          aria-hidden
-          style={{ opacity: warmth }}
-          className="pointer-events-none absolute inset-0"
-        >
+        <motion.div aria-hidden style={{ opacity: warmth }} className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0" style={{ background: "radial-gradient(90% 70% at 50% 52%, rgba(214,178,110,0.34), transparent 68%)" }} />
         </motion.div>
 
@@ -124,36 +125,38 @@ export default function CoatedMoment() {
         <motion.div
           aria-hidden
           style={{ opacity: wordOpacity, y: wordY, scale: wordScale }}
-          className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center"
+          className="pointer-events-none absolute inset-0 z-40 flex items-center justify-center"
         >
           <span className="display text-[22vw] leading-[0.82] text-or/[0.16] md:text-[16rem]">Enrobé</span>
         </motion.div>
 
-        {/* THE PLATE — a single coated date, given the stage */}
-        <motion.div style={{ y: plateY }} className="relative z-10 h-[50svh] w-[min(82vw,500px)] md:h-[62svh] md:w-[min(46vw,540px)]">
+        {/* THE PLATE — the coated date, given the stage */}
+        <motion.div style={{ y: plateY }} className="relative z-10 h-[52svh] w-[min(84vw,500px)] md:h-[64svh] md:w-[min(46vw,560px)]">
           {/* contact shadow grounding the object */}
           <div
             aria-hidden
             className="absolute inset-x-[14%] bottom-[9%] h-[9%] rounded-[50%] blur-2xl"
-            style={{ background: "rgba(80,50,20,0.22)" }}
+            style={{ background: "rgba(70,45,18,0.22)" }}
           />
-          {/* B sits underneath; A rides in front and wipes away to reveal it */}
-          <Detail src={FRAMBOISE} clip={clipB} scale={scaleB} opacity={bOpacity} z={10} />
-          <Detail src={ORANGE} clip={clipA} scale={scaleA} z={20} priority />
+          {/* stacked frames — each revealed OVER the last by a growing clip */}
+          <Detail src={FRAME_1} clip={clip1} scale={scale1} z={10} priority />
+          <Detail src={FRAME_2} clip={clip2} scale={scale2} z={20} />
+          <Detail src={HERO} clip={clipH} scale={scaleH} z={30} />
         </motion.div>
 
-        {/* Caption A — the candied-orange detail */}
+        {/* Caption — the milk-chocolate discovery */}
         <Caption
-          style={{ opacity: capA }}
-          name="Zeste Noir"
-          line={pl ? "Gorzka czekolada, słońce kandyzowanej pomarańczy." : "Bitter chocolate, the sun of candied orange."}
+          style={{ opacity: capMilk }}
+          name="Lait Praliné"
+          line={pl ? "Mleczna czekolada, orzechowe praliné, jedwabista skóra." : "Milk chocolate, hazelnut praliné, a silken skin."}
         />
-        {/* Caption B — the raspberry detail, with the exit CTA */}
+        {/* Caption — the pistachio hero, with the exit CTA to its page */}
         <Caption
-          style={{ opacity: capB }}
-          name="Noir Framboise"
-          line={pl ? "Ciemna czekolada, kwaskowa malina, głęboki owoc." : "Dark chocolate, tart raspberry, the deep fruit."}
-          cta={pl ? "Zobacz kolekcję enrobées" : "Discover the enrobées"}
+          style={{ opacity: capHero }}
+          name="Perle de Pistache"
+          line={pl ? "Ciemna czekolada, zielona pistacja z Bronte, głęboki owoc." : "Dark chocolate, green Bronte pistachio, the deep fruit."}
+          cta={pl ? "Odkryj tę sygnaturę" : "Discover this signature"}
+          href="/produkt/perle-pistache"
         />
       </div>
     </section>
@@ -164,14 +167,12 @@ function Detail({
   src,
   clip,
   scale,
-  opacity,
   z,
   priority,
 }: {
   src: string;
   clip: MotionValue<string>;
   scale: MotionValue<number>;
-  opacity?: MotionValue<number>;
   z: number;
   priority?: boolean;
 }) {
@@ -185,7 +186,6 @@ function Detail({
         clipPath: clip,
         WebkitClipPath: clip,
         scale,
-        ...(opacity ? { opacity } : {}),
         zIndex: z,
         filter: "drop-shadow(0 30px 48px rgba(60,35,15,0.3))",
         willChange: "transform, clip-path",
@@ -199,22 +199,24 @@ function Caption({
   name,
   line,
   cta,
+  href = "/kolekcja",
   style,
 }: {
   name: string;
   line: string;
   cta?: string;
+  href?: string;
   style: { opacity: MotionValue<number> };
 }) {
   return (
     <motion.div
       style={style}
-      className="absolute bottom-[8svh] left-1/2 z-40 w-[min(90vw,520px)] -translate-x-1/2 text-center"
+      className="absolute bottom-[8svh] left-1/2 z-50 w-[min(90vw,520px)] -translate-x-1/2 text-center"
     >
       <h3 className="display text-3xl md:text-4xl">{name}</h3>
       <p className="mx-auto mt-3 max-w-sm font-sans text-[13.5px] leading-[1.8] text-ink/60">{line}</p>
       {cta && (
-        <Link href="/kolekcja" className="btn-line mt-6 text-ink">
+        <Link href={href} className="btn-line mt-6 text-ink">
           {cta}
         </Link>
       )}
