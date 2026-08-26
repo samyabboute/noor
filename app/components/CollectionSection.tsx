@@ -17,20 +17,22 @@ export default function CollectionSection() {
       {/* Arabesque, engraved into the cream — ink ton-sur-ton, barely there */}
       <NoorPattern placement="edges" color="#122A20" opacity={0.04} scale={140} />
       <div className="relative mx-auto max-w-[1400px] px-6 md:px-10">
-        <div className="mb-14 flex flex-col items-start justify-between gap-6 md:mb-20 md:flex-row md:items-end">
-          <div>
-            <Reveal>
-              <SectionIndex>{t("collection.index")}</SectionIndex>
-            </Reveal>
-            <Reveal delay={0.05}>
-              <p className="eyebrow mt-5">{t("collection.eyebrow")}</p>
-            </Reveal>
-            <Reveal delay={0.1} variant="mask">
-              <h2 className="display mt-3 text-5xl md:text-7xl">{t("collection.title")}</h2>
-            </Reveal>
-          </div>
-          <Reveal delay={0.15}>
-            <p className="max-w-sm font-sans text-[14px] leading-[1.9] text-ink/60">{t("collection.body")}</p>
+        {/* The overture — the collection is introduced, not dropped into a grid */}
+        <div className="mx-auto mb-16 max-w-2xl text-center md:mb-24">
+          <Reveal>
+            <SectionIndex>{t("collection.index")}</SectionIndex>
+          </Reveal>
+          <Reveal delay={0.05}>
+            <p className="eyebrow mt-6">{t("collection.eyebrow")}</p>
+          </Reveal>
+          <Reveal delay={0.1} variant="mask">
+            <h2 className="display mt-4 text-6xl leading-[0.98] md:text-8xl">{t("collection.title")}</h2>
+          </Reveal>
+          <Reveal delay={0.18}>
+            <div className="mx-auto mt-8 h-px w-16 bg-or/40" />
+          </Reveal>
+          <Reveal delay={0.22}>
+            <p className="mx-auto mt-8 max-w-md font-sans text-[14.5px] leading-[1.9] text-ink/60">{t("collection.body")}</p>
           </Reveal>
         </div>
 

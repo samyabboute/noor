@@ -3,7 +3,7 @@ import TrustBar from "./components/TrustBar";
 import TheObject from "./components/TheObject";
 import Discover from "./components/Discover";
 import OriginScene from "./components/OriginScene";
-import SignatureBand from "./components/SignatureBand";
+import CoatedMoment from "./components/CoatedMoment";
 import CollectionSection from "./components/CollectionSection";
 import { TheDate, Craftsmanship, GiftCollection, Corporate, Story } from "./components/EditorialSections";
 import DecisionsCounter from "./components/DecisionsCounter";
@@ -19,7 +19,7 @@ export default function Home() {
       <TheObject />
       <Discover />
       <OriginScene />
-      <SignatureBand />
+      <CoatedMoment />
       <CollectionSection />
       <TheDate />
       <DecisionsCounter />
