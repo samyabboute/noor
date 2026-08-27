@@ -186,20 +186,27 @@ export default function CoatedMoment() {
             ))}
             {/* the progress fill, drawn from the top down */}
             <motion.span className="absolute left-0 top-0 w-px origin-top bg-or" style={{ height: cueFill }} />
-            {/* the travelling head */}
+            {/* a comet of light that glides DOWN the rail — the directional
+                invitation to scroll, present only until the journey begins */}
+            <motion.span aria-hidden style={{ opacity: cueInvite }} className="absolute inset-0">
+              <motion.span
+                className="absolute left-1/2 block h-[30%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-or to-transparent"
+                animate={reduce ? { top: "35%", opacity: 0.5 } : { top: ["-6%", "100%"], opacity: [0, 1, 1, 0] }}
+                transition={reduce ? undefined : { duration: 2.1, repeat: Infinity, ease: "easeInOut", times: [0, 0.18, 0.7, 1], repeatDelay: 0.5 }}
+              />
+            </motion.span>
+            {/* the travelling head — the scroll-linked progress marker */}
             <motion.span
-              className="absolute left-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-or bg-paper"
+              className="absolute left-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-or bg-paper shadow-[0_0_8px_rgba(194,162,90,0.55)]"
               style={{ top: cueFill }}
-              animate={reduce ? undefined : { opacity: [0.7, 1, 0.7] }}
-              transition={reduce ? undefined : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
           {/* the invitation — a quiet word, gone the moment the sequence reacts */}
           <motion.span
             style={{ opacity: cueInvite }}
-            className="mt-4 font-sans text-[10px] uppercase tracking-[0.34em] text-ink/45 md:mt-5"
+            className="mt-4 font-sans text-[10.5px] uppercase tracking-[0.34em] text-ink/60 md:mt-5"
           >
-            {pl ? "Ciąg dalszy" : "It continues"}
+            {pl ? "Przewiń, by odkryć" : "Scroll to reveal"}
           </motion.span>
         </motion.div>
 
