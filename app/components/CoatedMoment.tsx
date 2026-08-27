@@ -173,7 +173,7 @@ export default function CoatedMoment() {
           style={{ opacity: cueRail }}
           className="pointer-events-none absolute bottom-[7svh] left-1/2 z-40 flex -translate-x-1/2 flex-col items-center md:bottom-auto md:left-auto md:right-9 md:top-1/2 md:-translate-x-0 md:-translate-y-1/2"
         >
-          <div className="relative h-[14svh] w-px bg-ink/12 md:h-[38svh]">
+          <div className="relative h-[15svh] w-px bg-ink/[0.16] md:h-[40svh]">
             {/* the three frames as nodes — each lights as the head arrives */}
             {NODES.map((n) => (
               <span key={n.top} className="absolute left-1/2 -translate-x-1/2" style={{ top: `${n.top}%` }}>
@@ -190,21 +190,21 @@ export default function CoatedMoment() {
                 invitation to scroll, present only until the journey begins */}
             <motion.span aria-hidden style={{ opacity: cueInvite }} className="absolute inset-0">
               <motion.span
-                className="absolute left-1/2 block h-[30%] w-px -translate-x-1/2 bg-gradient-to-b from-transparent via-or to-transparent"
-                animate={reduce ? { top: "35%", opacity: 0.5 } : { top: ["-6%", "100%"], opacity: [0, 1, 1, 0] }}
-                transition={reduce ? undefined : { duration: 2.1, repeat: Infinity, ease: "easeInOut", times: [0, 0.18, 0.7, 1], repeatDelay: 0.5 }}
+                className="absolute left-1/2 block h-[36%] w-[1.5px] -translate-x-1/2 bg-gradient-to-b from-transparent via-orclair to-transparent shadow-[0_0_7px_rgba(216,190,126,0.85)]"
+                animate={reduce ? { top: "34%", opacity: 0.55 } : { top: ["-8%", "100%"], opacity: [0, 1, 1, 0] }}
+                transition={reduce ? undefined : { duration: 2.4, repeat: Infinity, ease: "easeInOut", times: [0, 0.2, 0.68, 1], repeatDelay: 0.35 }}
               />
             </motion.span>
             {/* the travelling head — the scroll-linked progress marker */}
             <motion.span
-              className="absolute left-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-or bg-paper shadow-[0_0_8px_rgba(194,162,90,0.55)]"
+              className="absolute left-1/2 h-[9px] w-[9px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-or bg-paper shadow-[0_0_10px_rgba(194,162,90,0.7)]"
               style={{ top: cueFill }}
             />
           </div>
           {/* the invitation — a quiet word, gone the moment the sequence reacts */}
           <motion.span
             style={{ opacity: cueInvite }}
-            className="mt-4 font-sans text-[10.5px] uppercase tracking-[0.34em] text-ink/60 md:mt-5"
+            className="mt-4 font-sans text-[11px] uppercase tracking-[0.36em] text-ink/70 md:mt-5"
           >
             {pl ? "Przewiń, by odkryć" : "Scroll to reveal"}
           </motion.span>
