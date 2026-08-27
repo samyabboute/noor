@@ -83,6 +83,15 @@ export default function CoatedMoment() {
   /* ── A whisper of depth on the whole plate ── */
   const plateY = useTransform(s, [0, 1], [reduce ? 0 : 18, reduce ? 0 : -18]);
 
+  /* ── The Noor scroll cue — an invitation that becomes a progress rail ── */
+  const cuePct = useTransform(s, [0, 1], [0, 100]);
+  const cueFill = useMotionTemplate`${cuePct}%`;
+  const cueInvite = useTransform(s, [0, 0.05, 0.12], [1, 1, 0]); // the words, only while uncertain
+  const cueRail = useTransform(s, [0.86, 0.99], [1, 0]); // the rail retires at the end
+
+  // The hero CTA only accepts clicks once its caption is actually on screen.
+  const heroPE = useTransform(s, [0.8, 0.82], ["none", "auto"]);
+
   return (
     <section ref={ref} id="enrobe" className="relative h-[240vh] bg-paper text-ink md:h-[300vh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
@@ -130,8 +139,9 @@ export default function CoatedMoment() {
           <span className="display text-[22vw] leading-[0.82] text-or/[0.16] md:text-[16rem]">Enrobé</span>
         </motion.div>
 
-        {/* THE PLATE — the coated date, given the stage */}
-        <motion.div style={{ y: plateY }} className="relative z-10 h-[52svh] w-[min(84vw,500px)] md:h-[64svh] md:w-[min(46vw,560px)]">
+        {/* THE PLATE — the coated date, given the stage. pointer-events-none so it
+            never reads as a button; the journey is scroll-driven, not a click. */}
+        <motion.div style={{ y: plateY }} className="pointer-events-none relative z-10 h-[52svh] w-[min(84vw,500px)] md:h-[64svh] md:w-[min(46vw,560px)]">
           {/* contact shadow grounding the object */}
           <div
             aria-hidden
@@ -144,15 +154,57 @@ export default function CoatedMoment() {
           <Detail src={HERO} clip={clipH} scale={scaleH} z={30} />
         </motion.div>
 
-        {/* Caption — the milk-chocolate discovery */}
+        {/* THE NOOR SCROLL CUE — a quiet vertical rail on the right margin: three
+            nodes for the three frames, a gold head that travels with the scroll,
+            and an invitation that retires once the journey has begun. */}
+        <motion.div
+          aria-hidden
+          style={{ opacity: cueRail }}
+          className="pointer-events-none absolute right-5 top-1/2 z-40 flex -translate-y-1/2 flex-col items-center md:right-9"
+        >
+          <div className="relative h-[38svh] w-px bg-ink/12">
+            {/* the three frames as faint nodes */}
+            {[6, 46, 84].map((topPct) => (
+              <span
+                key={topPct}
+                className="absolute left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-ink/20"
+                style={{ top: `${topPct}%` }}
+              />
+            ))}
+            {/* the progress fill, drawn from the top down */}
+            <motion.span className="absolute left-0 top-0 w-px origin-top bg-or" style={{ height: cueFill }} />
+            {/* the travelling head */}
+            <motion.span
+              className="absolute left-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-or bg-paper"
+              style={{ top: cueFill }}
+              animate={reduce ? undefined : { opacity: [0.65, 1, 0.65] }}
+              transition={reduce ? undefined : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
+            />
+          </div>
+          {/* the invitation — a quiet word, gone the moment the sequence reacts */}
+          <motion.span
+            style={{ opacity: cueInvite }}
+            className="mt-5 font-sans text-[9.5px] uppercase tracking-[0.34em] text-ink/45 [writing-mode:vertical-rl] md:hidden"
+          >
+            {pl ? "Odkryj" : "Reveal"}
+          </motion.span>
+          <motion.span
+            style={{ opacity: cueInvite }}
+            className="mt-5 hidden font-sans text-[10px] uppercase tracking-[0.34em] text-ink/45 md:inline"
+          >
+            {pl ? "Ciąg dalszy" : "It continues"}
+          </motion.span>
+        </motion.div>
+
+        {/* Caption — the milk-chocolate discovery (decorative, no interaction) */}
         <Caption
-          style={{ opacity: capMilk }}
+          style={{ opacity: capMilk, pointerEvents: "none" }}
           name="Lait Praliné"
           line={pl ? "Mleczna czekolada, orzechowe praliné, jedwabista skóra." : "Milk chocolate, hazelnut praliné, a silken skin."}
         />
         {/* Caption — the pistachio hero, with the exit CTA to its page */}
         <Caption
-          style={{ opacity: capHero }}
+          style={{ opacity: capHero, pointerEvents: heroPE }}
           name="Perle de Pistache"
           line={pl ? "Ciemna czekolada, zielona pistacja z Bronte, głęboki owoc." : "Dark chocolate, green Bronte pistachio, the deep fruit."}
           cta={pl ? "Odkryj tę sygnaturę" : "Discover this signature"}
@@ -206,7 +258,7 @@ function Caption({
   line: string;
   cta?: string;
   href?: string;
-  style: { opacity: MotionValue<number> };
+  style: { opacity: MotionValue<number>; pointerEvents?: MotionValue<string> | "none" };
 }) {
   return (
     <motion.div
