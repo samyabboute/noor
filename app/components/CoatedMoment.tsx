@@ -92,6 +92,17 @@ export default function CoatedMoment() {
   // The hero CTA only accepts clicks once its caption is actually on screen.
   const heroPE = useTransform(s, [0.8, 0.82], ["none", "auto"]);
 
+  // Each node lights up in gold exactly as the travelling head arrives at it —
+  // aligned to the three reveals (first contact ≈ 5%, discovery ≈ 42%, hero ≈ 85%).
+  const nodeA = useTransform(s, [0, 0.05, 0.18], [1, 1, 0.16]);
+  const nodeB = useTransform(s, [0.3, 0.42, 0.56], [0.16, 1, 0.16]);
+  const nodeC = useTransform(s, [0.72, 0.85, 0.96], [0.16, 1, 0.7]);
+  const NODES: { top: number; glow: MotionValue<number> }[] = [
+    { top: 5, glow: nodeA },
+    { top: 42, glow: nodeB },
+    { top: 85, glow: nodeC },
+  ];
+
   return (
     <section ref={ref} id="enrobe" className="relative h-[240vh] bg-paper text-ink md:h-[300vh]">
       <div className="sticky top-0 flex h-[100svh] items-center justify-center overflow-hidden">
@@ -160,16 +171,18 @@ export default function CoatedMoment() {
         <motion.div
           aria-hidden
           style={{ opacity: cueRail }}
-          className="pointer-events-none absolute right-5 top-1/2 z-40 flex -translate-y-1/2 flex-col items-center md:right-9"
+          className="pointer-events-none absolute bottom-[7svh] left-1/2 z-40 flex -translate-x-1/2 flex-col items-center md:bottom-auto md:left-auto md:right-9 md:top-1/2 md:-translate-x-0 md:-translate-y-1/2"
         >
-          <div className="relative h-[38svh] w-px bg-ink/12">
-            {/* the three frames as faint nodes */}
-            {[6, 46, 84].map((topPct) => (
-              <span
-                key={topPct}
-                className="absolute left-1/2 h-[3px] w-[3px] -translate-x-1/2 rounded-full bg-ink/20"
-                style={{ top: `${topPct}%` }}
-              />
+          <div className="relative h-[14svh] w-px bg-ink/12 md:h-[38svh]">
+            {/* the three frames as nodes — each lights as the head arrives */}
+            {NODES.map((n) => (
+              <span key={n.top} className="absolute left-1/2 -translate-x-1/2" style={{ top: `${n.top}%` }}>
+                <span className="block h-[3px] w-[3px] -translate-y-1/2 rounded-full bg-ink/20" />
+                <motion.span
+                  style={{ opacity: n.glow }}
+                  className="absolute left-0 top-0 block h-[3px] w-[3px] -translate-y-1/2 rounded-full bg-or shadow-[0_0_6px_rgba(194,162,90,0.9)]"
+                />
+              </span>
             ))}
             {/* the progress fill, drawn from the top down */}
             <motion.span className="absolute left-0 top-0 w-px origin-top bg-or" style={{ height: cueFill }} />
@@ -177,20 +190,14 @@ export default function CoatedMoment() {
             <motion.span
               className="absolute left-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-or bg-paper"
               style={{ top: cueFill }}
-              animate={reduce ? undefined : { opacity: [0.65, 1, 0.65] }}
+              animate={reduce ? undefined : { opacity: [0.7, 1, 0.7] }}
               transition={reduce ? undefined : { duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
             />
           </div>
           {/* the invitation — a quiet word, gone the moment the sequence reacts */}
           <motion.span
             style={{ opacity: cueInvite }}
-            className="mt-5 font-sans text-[9.5px] uppercase tracking-[0.34em] text-ink/45 [writing-mode:vertical-rl] md:hidden"
-          >
-            {pl ? "Odkryj" : "Reveal"}
-          </motion.span>
-          <motion.span
-            style={{ opacity: cueInvite }}
-            className="mt-5 hidden font-sans text-[10px] uppercase tracking-[0.34em] text-ink/45 md:inline"
+            className="mt-4 font-sans text-[10px] uppercase tracking-[0.34em] text-ink/45 md:mt-5"
           >
             {pl ? "Ciąg dalszy" : "It continues"}
           </motion.span>
