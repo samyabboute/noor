@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default async function RequestsPage({ searchParams }: { searchParams: { tab?: string } }) {
   await requirePageUser("monitoring");
-  const r = repo();
+  const r = await repo();
   const cards = r
     .requests()
     .filter((q) => q.status !== "cancelled")

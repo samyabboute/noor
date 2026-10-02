@@ -1,5 +1,5 @@
 import { requirePageUser } from "@/server/auth";
-import { isDemoMode } from "@/server/config";
+import { authMode, isDemoMode } from "@/server/config";
 import { WorkspaceShell } from "@/components/shell/workspace-shell";
 
 export const dynamic = "force-dynamic";
@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const user = await requirePageUser("management");
   return (
-    <WorkspaceShell user={user} demo={isDemoMode()}>
+    <WorkspaceShell user={user} demo={isDemoMode()} sso={authMode() === "entra"}>
       {children}
     </WorkspaceShell>
   );

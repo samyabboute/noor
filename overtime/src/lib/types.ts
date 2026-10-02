@@ -6,7 +6,8 @@
 
 export type Role = "agent" | "monitoring" | "management";
 export type Language = "en" | "fr" | "de" | "it" | "pl";
-export type TeamId = "rbc" | "rsm" | "bm";
+/** Team ids are lowercase team codes (rbc, rsm, bm, ovh…), derived from the org unit on import. */
+export type TeamId = string;
 
 export interface Team {
   id: TeamId;
@@ -25,13 +26,19 @@ export interface User {
   title: string;
   /** Regular end of shift, HH:mm — used to suggest the coverage start time. */
   shiftEnd: string;
+  /** Access-code mode: scrypt hash of the personal PIN chosen at first sign-in. Never sent to clients. */
+  pinHash?: string | null;
+  pinFailures?: number;
+  pinLockedUntil?: string | null;
+  /** Org unit as written in the Exchange directory, e.g. SCS-B2C-CUC-OTM-2-OTM-RSM-KRA (EXT). */
+  orgUnit?: string;
 }
 
 export interface DistributionList {
   id: string;
   name: string; // "DL RBC KRK"
-  address: string; // the DL mailbox
-  teamId: TeamId;
+  address: string; // the DL mailbox ("" when unknown — announcements then BCC each agent)
+  teamId: TeamId | null; // the team the list is named after, when there is one
   memberIds: string[];
 }
 
@@ -115,7 +122,13 @@ export type AuditAction =
   | "EMAIL_OPENED"
   | "TEMPLATE_UPDATED"
   | "GROUP_CREATED"
-  | "GROUP_DELETED";
+  | "GROUP_DELETED"
+  | "LIST_IMPORTED"
+  | "LIST_DELETED"
+  | "PERSON_ADDED"
+  | "PERSON_REMOVED"
+  | "PIN_RESET"
+  | "SIGNED_IN";
 
 export interface AuditLog {
   id: string;

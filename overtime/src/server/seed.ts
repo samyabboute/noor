@@ -198,82 +198,7 @@ export function buildSeed(now = new Date()): SeedState {
     },
   ];
 
-  // ── Templates ──────────────────────────────────────────────────────────
-  const tplAt = new Date(now.getTime() - 9 * 86400e3).toISOString();
-  const templates: EmailTemplate[] = [
-    {
-      id: "tpl-req-standard",
-      name: "Standard overtime",
-      kind: "request",
-      language: "en",
-      isDefault: true,
-      subject: "Overtime coverage — {{date}}",
-      body:
-        "Hello everyone,\n\nDue to increased call volume and customer waiting times, we are looking for additional voluntary coverage today.\n\nDate: {{date}}\nTime: {{start_time}} → {{end_time}}\n\nPlease confirm your availability through Overtime — it takes one click.\n\nThank you,\n{{request_owner}}\nReal-Time Monitoring",
-      updatedAt: tplAt,
-      updatedBy: "u-mon-bartlomiej",
-    },
-    {
-      id: "tpl-req-peak",
-      name: "Peak alert",
-      kind: "request",
-      language: "en",
-      isDefault: false,
-      subject: "Help us cover the peak — {{start_time}} → {{end_time}}",
-      body:
-        "Hi team,\n\nQueues are building and customers are waiting longer than we'd like. If you can stay {{duration}} today, it makes a real difference.\n\nOne click in Overtime is all it takes.\n\nThanks,\n{{request_owner}}",
-      updatedAt: tplAt,
-      updatedBy: "u-mon-katarzyna",
-    },
-    {
-      id: "tpl-req-fr",
-      name: "Heures supplémentaires (FR)",
-      kind: "request",
-      language: "fr",
-      isDefault: false,
-      subject: "Heures supplémentaires — {{date}}",
-      body:
-        "Bonjour à tous,\n\nNous observons une augmentation du volume d'appels et des temps d'attente élevés pour nos clients.\n\nSi vous pouvez rester un peu plus longtemps aujourd'hui ({{start_time}} → {{end_time}}), confirmez simplement dans Overtime — en un clic.\n\nMerci beaucoup,\n{{request_owner}}",
-      updatedAt: tplAt,
-      updatedBy: "u-mon-julien",
-    },
-    {
-      id: "tpl-conf-en",
-      name: "Confirmation",
-      kind: "confirmation",
-      language: "en",
-      isDefault: true,
-      subject: "Overtime confirmation – {{agent_name}} – {{end_time}}",
-      body:
-        "Hello,\n\nI confirm that I am available for overtime today.\n\nAgent: {{agent_name}}\nTeam: {{team}}\nAdditional time: {{duration}}\nNew logout time: {{end_time}}\nRequest: {{request_id}}\n\nThank you.\n\nBest regards,\n{{agent_name}}",
-      updatedAt: tplAt,
-      updatedBy: "u-mon-bartlomiej",
-    },
-    {
-      id: "tpl-conf-fr",
-      name: "Confirmation (FR)",
-      kind: "confirmation",
-      language: "fr",
-      isDefault: true,
-      subject: "Confirmation heures supplémentaires – {{agent_name}} – {{end_time}}",
-      body:
-        "Bonjour,\n\nJe confirme ma disponibilité pour des heures supplémentaires aujourd'hui.\n\nAgent : {{agent_name}}\nÉquipe : {{team}}\nTemps additionnel : {{duration}}\nNouvelle heure de déconnexion : {{end_time}}\nDemande : {{request_id}}\n\nMerci.\n\nMeilleures salutations,\n{{agent_name}}",
-      updatedAt: tplAt,
-      updatedBy: "u-mon-julien",
-    },
-    {
-      id: "tpl-conf-de",
-      name: "Bestätigung (DE)",
-      kind: "confirmation",
-      language: "de",
-      isDefault: true,
-      subject: "Bestätigung Überstunden – {{agent_name}} – {{end_time}}",
-      body:
-        "Hallo,\n\nich bestätige, dass ich heute für Überstunden verfügbar bin.\n\nAgent: {{agent_name}}\nTeam: {{team}}\nZusätzliche Zeit: {{duration}}\nNeue Abmeldezeit: {{end_time}}\nAnfrage: {{request_id}}\n\nDanke.\n\nFreundliche Grüsse\n{{agent_name}}",
-      updatedAt: tplAt,
-      updatedBy: "u-mon-marco",
-    },
-  ];
+  const templates = defaultTemplates(now);
 
   // ── History ────────────────────────────────────────────────────────────
   const requests: OvertimeRequest[] = [];
@@ -498,4 +423,99 @@ export function buildSeed(now = new Date()): SeedState {
 
   audit.sort((a, b) => a.at.localeCompare(b.at));
   return { teams: TEAMS, users, dls, groups, templates, requests, recipients, audit, sim, seq: { request: reqSeq, id: idSeq } };
+}
+
+/** The templates every workspace starts with (EN request + FR/DE/EN confirmations). */
+export function defaultTemplates(now = new Date(), by = "system"): EmailTemplate[] {
+  const tplAt = new Date(now.getTime() - 9 * 86400e3).toISOString();
+  return [
+    {
+      id: "tpl-req-standard",
+      name: "Standard overtime",
+      kind: "request",
+      language: "en",
+      isDefault: true,
+      subject: "Overtime coverage — {{date}}",
+      body:
+        "Hello everyone,\n\nDue to increased call volume and customer waiting times, we are looking for additional voluntary coverage today.\n\nDate: {{date}}\nTime: {{start_time}} → {{end_time}}\n\nPlease confirm your availability through Overtime — it takes one click.\n\nThank you,\n{{request_owner}}\nReal-Time Monitoring",
+      updatedAt: tplAt,
+      updatedBy: by,
+    },
+    {
+      id: "tpl-req-peak",
+      name: "Peak alert",
+      kind: "request",
+      language: "en",
+      isDefault: false,
+      subject: "Help us cover the peak — {{start_time}} → {{end_time}}",
+      body:
+        "Hi team,\n\nQueues are building and customers are waiting longer than we'd like. If you can stay {{duration}} today, it makes a real difference.\n\nOne click in Overtime is all it takes.\n\nThanks,\n{{request_owner}}",
+      updatedAt: tplAt,
+      updatedBy: by,
+    },
+    {
+      id: "tpl-req-fr",
+      name: "Heures supplémentaires (FR)",
+      kind: "request",
+      language: "fr",
+      isDefault: false,
+      subject: "Heures supplémentaires — {{date}}",
+      body:
+        "Bonjour à tous,\n\nNous observons une augmentation du volume d'appels et des temps d'attente élevés pour nos clients.\n\nSi vous pouvez rester un peu plus longtemps aujourd'hui ({{start_time}} → {{end_time}}), confirmez simplement dans Overtime — en un clic.\n\nMerci beaucoup,\n{{request_owner}}",
+      updatedAt: tplAt,
+      updatedBy: by,
+    },
+    {
+      id: "tpl-conf-en",
+      name: "Confirmation",
+      kind: "confirmation",
+      language: "en",
+      isDefault: true,
+      subject: "Overtime confirmation – {{agent_name}} – {{end_time}}",
+      body:
+        "Hello,\n\nI confirm that I am available for overtime today.\n\nAgent: {{agent_name}}\nTeam: {{team}}\nAdditional time: {{duration}}\nNew logout time: {{end_time}}\nRequest: {{request_id}}\n\nThank you.\n\nBest regards,\n{{agent_name}}",
+      updatedAt: tplAt,
+      updatedBy: by,
+    },
+    {
+      id: "tpl-conf-fr",
+      name: "Confirmation (FR)",
+      kind: "confirmation",
+      language: "fr",
+      isDefault: true,
+      subject: "Confirmation heures supplémentaires – {{agent_name}} – {{end_time}}",
+      body:
+        "Bonjour,\n\nJe confirme ma disponibilité pour des heures supplémentaires aujourd'hui.\n\nAgent : {{agent_name}}\nÉquipe : {{team}}\nTemps additionnel : {{duration}}\nNouvelle heure de déconnexion : {{end_time}}\nDemande : {{request_id}}\n\nMerci.\n\nMeilleures salutations,\n{{agent_name}}",
+      updatedAt: tplAt,
+      updatedBy: by,
+    },
+    {
+      id: "tpl-conf-de",
+      name: "Bestätigung (DE)",
+      kind: "confirmation",
+      language: "de",
+      isDefault: true,
+      subject: "Bestätigung Überstunden – {{agent_name}} – {{end_time}}",
+      body:
+        "Hallo,\n\nich bestätige, dass ich heute für Überstunden verfügbar bin.\n\nAgent: {{agent_name}}\nTeam: {{team}}\nZusätzliche Zeit: {{duration}}\nNeue Abmeldezeit: {{end_time}}\nAnfrage: {{request_id}}\n\nDanke.\n\nFreundliche Grüsse\n{{agent_name}}",
+      updatedAt: tplAt,
+      updatedBy: by,
+    },
+  ];
+}
+
+/** A real workspace: no people yet — Monitoring imports its DLs on first sign-in. */
+export function emptyState(now = new Date()): SeedState {
+  return {
+    teams: [],
+    users: [],
+    dls: [],
+    groups: [],
+    templates: defaultTemplates(now),
+    requests: [],
+    recipients: [],
+    audit: [],
+    sim: [],
+    seq: { request: 1000, id: 1 },
+  };
 }

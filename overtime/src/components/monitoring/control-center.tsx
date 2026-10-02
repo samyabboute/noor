@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight, FileText, Plus, Users } from "lucide-react";
+import { ArrowRight, ArrowUpRight, FileText, Plus, Upload, Users } from "lucide-react";
 import type { ActivityItem, RequestCard } from "@/server/views";
 import { formatClock, formatDateShort, formatDuration } from "@/lib/time";
 import { useLiveRefresh } from "@/lib/use-live";
@@ -22,6 +22,7 @@ interface Overview {
   lists: { id: string; name: string; teamCode: string; count: number }[];
   groups: { id: string; name: string; count: number }[];
   activity: ActivityItem[];
+  setupNeeded: boolean;
 }
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -65,6 +66,18 @@ export function ControlCenter({ data, firstName }: { data: Overview; firstName: 
           </Button>
         </Magnetic>
       </div>
+
+      {data.setupNeeded && (
+        <section className="on-dark grain relative mt-10 overflow-hidden rounded-2xl bg-ink-900 p-7 text-white sm:p-9" aria-labelledby="setup">
+          <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(227,18,43,0.25),transparent)]" />
+          <p className="relative text-[11px] font-medium uppercase tracking-eyebrow text-white/40">First step</p>
+          <h2 id="setup" className="relative mt-3 text-[1.75rem] font-semibold tracking-[-0.03em]">Bring your team in.</h2>
+          <p className="relative mt-2 max-w-lg text-white/60">Import DL RBC KRK, DL RSM KRK and DL BM KRK from Outlook. Agents can sign in with the agent code as soon as they’re on a list.</p>
+          <Button href="/monitoring/lists" variant="inverse" size="lg" className="relative mt-6" icon={<Upload size={16} />}>
+            Import distribution lists
+          </Button>
+        </section>
+      )}
 
       {/* Today strip */}
       <section aria-label="Today" className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-ink-900/[0.07] shadow-card ring-1 ring-ink-900/[0.07] lg:grid-cols-5">

@@ -10,17 +10,14 @@ import type { SessionUser } from "@/lib/types";
 import { cn } from "@/lib/cn";
 import { ROLE_LABEL } from "./nav";
 
-export async function doSignOut(demo: boolean, router: ReturnType<typeof useRouter>) {
-  if (demo) {
-    await fetch("/api/auth/logout", { method: "POST" });
-    router.push("/login");
-    router.refresh();
-  } else {
-    await signOut({ callbackUrl: "/login" });
-  }
+export async function doSignOut(sso: boolean, router: ReturnType<typeof useRouter>) {
+  if (sso) return signOut({ callbackUrl: "/login" });
+  await fetch("/api/auth/logout", { method: "POST" });
+  router.push("/login");
+  router.refresh();
 }
 
-export function UserMenu({ user, demo, compact, align = "up" }: { user: SessionUser; demo: boolean; compact?: boolean; align?: "up" | "down" }) {
+export function UserMenu({ user, demo, sso = false, compact, align = "up" }: { user: SessionUser; demo: boolean; sso?: boolean; compact?: boolean; align?: "up" | "down" }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
@@ -79,7 +76,7 @@ export function UserMenu({ user, demo, compact, align = "up" }: { user: SessionU
                 <Repeat2 size={15} /> Switch persona
               </button>
             )}
-            <button role="menuitem" onClick={() => doSignOut(demo, router)} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] text-ink-700 hover:bg-ink-50">
+            <button role="menuitem" onClick={() => doSignOut(sso, router)} className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] text-ink-700 hover:bg-ink-50">
               <LogOut size={15} /> Sign out
             </button>
           </motion.div>

@@ -123,15 +123,15 @@ export function activity(r: Repo, entries: AuditLog[]): ActivityItem[] {
       requestId: e.requestId,
       requestTitle: req?.title,
       minutes: typeof meta.minutes === "number" ? meta.minutes : undefined,
-      detail: typeof meta.template === "string" ? meta.template : typeof meta.group === "string" ? meta.group : typeof meta.kind === "string" ? meta.kind : undefined,
+      detail: typeof meta.list === "string" ? meta.list : typeof meta.template === "string" ? meta.template : typeof meta.group === "string" ? meta.group : typeof meta.kind === "string" ? meta.kind : undefined,
     };
   });
 }
 
 // ── Monitoring ─────────────────────────────────────────────────────────────
 
-export function monitoringOverview() {
-  const r = repo();
+export async function monitoringOverview() {
+  const r = await repo();
   const today = todayISO();
   const todays = r.requests().filter((q) => q.date === today && (q.status === "live" || q.status === "completed"));
   const live = r.requests().filter((q) => q.status === "live").sort((a, b) => (a.sentAt || "").localeCompare(b.sentAt || "")).reverse();
@@ -153,9 +153,10 @@ export function monitoringOverview() {
     },
     live: live.map((q) => requestCard(r, q)),
     drafts: r.requests().filter((q) => q.status === "draft").map((q) => requestCard(r, q)),
-    lists: r.dls().map((d) => ({ id: d.id, name: d.name, teamCode: d.teamId.toUpperCase(), count: d.memberIds.filter((m) => users.find((u) => u.id === m)?.active).length })),
+    lists: r.dls().map((d) => ({ id: d.id, name: d.name, teamCode: (d.teamId || "").toUpperCase(), count: d.memberIds.filter((m) => users.find((u) => u.id === m)?.active).length })),
     groups: r.groups().map((g) => ({ id: g.id, name: g.name, count: g.memberIds.length })),
-    activity: activity(r, r.audit().filter((a) => a.action !== "REQUEST_VIEWED").slice(-14).reverse()),
+    activity: activity(r, r.audit().filter((a) => a.action !== "REQUEST_VIEWED" && a.action !== "SIGNED_IN").slice(-14).reverse()),
+    setupNeeded: r.dls().length === 0,
   };
 }
 
@@ -175,8 +176,8 @@ export interface RecipientRow {
   emailPrepared: boolean;
 }
 
-export function requestDetail(id: string) {
-  const r = repo();
+export async function requestDetail(id: string) {
+  const r = await repo();
   const req = r.request(id);
   if (!req || req.status === "cancelled") return null;
   const recs = r.recipientsFor(id);
@@ -235,8 +236,8 @@ export function announcementDraft(r: Repo, req: OvertimeRequest): EmailDraft {
   };
 }
 
-export function pendingNudgeDraft(id: string): EmailDraft | null {
-  const r = repo();
+export async function pendingNudgeDraft(id: string): Promise<EmailDraft | null> {
+  const r = await repo();
   const req = r.request(id);
   if (!req) return null;
   const pending = r.recipientsFor(id).filter((x) => x.status === "sent" || x.status === "opened");
@@ -306,8 +307,8 @@ export function agentOffer(r: Repo, req: OvertimeRequest, rec: OvertimeRecipient
   };
 }
 
-export function agentHome(userId: string) {
-  const r = repo();
+export async function agentHome(userId: string) {
+  const r = await repo();
   const mine = r.recipients().filter((x) => x.userId === userId);
   const offers: AgentOffer[] = [];
   const history: (AgentOffer & { requestStatus: OvertimeRequest["status"] })[] = [];
@@ -334,15 +335,15 @@ export function agentHome(userId: string) {
   };
 }
 
-export function monitoringDirectory() {
-  const r = repo();
+export async function monitoringDirectory() {
+  const r = await repo();
   return {
     agents: r
       .users()
       .filter((u) => u.role === "agent")
       .map((u) => ({ id: u.id, name: u.name, teamCode: (u.teamId || "").toUpperCase(), active: u.active }))
       .sort((a, b) => a.name.localeCompare(b.name)),
-    lists: r.dls().map((d) => ({ id: d.id, name: d.name, teamCode: d.teamId.toUpperCase(), memberIds: d.memberIds, address: d.address })),
+    lists: r.dls().map((d) => ({ id: d.id, name: d.name, teamCode: (d.teamId || "").toUpperCase(), memberIds: d.memberIds, address: d.address })),
     groups: r.groups().map((g) => ({ id: g.id, name: g.name, memberIds: g.memberIds })),
     templates: r.templates(),
     monitoringTeam: r.users().filter((u) => u.role === "monitoring" && u.active).map((u) => ({ id: u.id, name: u.name })),
@@ -350,13 +351,13 @@ export function monitoringDirectory() {
 }
 
 /** Per-agent participation for Monitoring's directory (operational, last 30 days). */
-export function agentDirectory() {
-  const r = repo();
+export async function agentDirectory() {
+  const r = await repo();
   const since = new Date(Date.now() - 30 * 86400e3).toISOString().slice(0, 10);
   const reqDate = new Map(r.requests().map((q) => [q.id, q.date]));
   return r
     .users()
-    .filter((u) => u.role === "agent")
+    .filter((u) => u.role === "agent" && u.active)
     .map((u) => {
       const recs = r.recipients().filter((x) => x.userId === u.id && (reqDate.get(x.requestId) || "") >= since && r.request(x.requestId)?.status !== "draft");
       const confirmed = recs.filter((x) => x.status === "confirmed");
@@ -375,6 +376,7 @@ export function agentDirectory() {
         minutes: confirmed.reduce((s, x) => s + (x.minutes || 0), 0),
         rate: recs.length ? confirmed.length / recs.length : 0,
         lastResponse: last?.respondedAt || null,
+        hasPin: Boolean(u.pinHash),
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name));

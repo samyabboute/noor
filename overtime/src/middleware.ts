@@ -11,15 +11,16 @@ export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const entra =
     process.env.AUTH_MODE === "entra" ||
-    (process.env.AUTH_MODE !== "demo" && !!process.env.AZURE_AD_CLIENT_ID && !!process.env.AZURE_AD_CLIENT_SECRET && !!process.env.AZURE_AD_TENANT_ID);
+    (!process.env.AUTH_MODE && !!process.env.AZURE_AD_CLIENT_ID && !!process.env.AZURE_AD_CLIENT_SECRET && !!process.env.AZURE_AD_TENANT_ID);
 
   let role: Role | undefined;
   if (entra) {
     const token = await getToken({ req, secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET });
     role = (token as { role?: Role } | null)?.role;
   } else {
-    const secret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "overtime-demo-only-secret-change-me";
-    role = (await verifySession(req.cookies.get(SESSION_COOKIE)?.value, secret))?.role;
+    // Demo and access-code sessions share the signed cookie. Outside demo, AUTH_SECRET is mandatory.
+    const secret = process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || (process.env.ACCESS_CODE_AGENT ? "" : "overtime-demo-only-secret-change-me");
+    role = secret ? (await verifySession(req.cookies.get(SESSION_COOKIE)?.value, secret))?.role : undefined;
   }
 
   if (pathname === "/" || pathname === "/login") {

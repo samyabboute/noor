@@ -16,7 +16,7 @@ import { CommandPalette } from "./command-palette";
  * Monitoring & Management shell: a slim sidebar that stays out of the way,
  * a compact top bar + bottom tabs on mobile.
  */
-export function WorkspaceShell({ user, demo, children }: { user: SessionUser; demo: boolean; children: React.ReactNode }) {
+export function WorkspaceShell({ user, demo, sso = false, children }: { user: SessionUser; demo: boolean; sso?: boolean; children: React.ReactNode }) {
   const pathname = usePathname();
   const nav = NAV[user.role];
   const area = user.role === "monitoring" ? "Control center" : "Insights";
@@ -71,7 +71,7 @@ export function WorkspaceShell({ user, demo, children }: { user: SessionUser; de
           <Kbd>⌘K</Kbd>
         </button>
         <div className="mt-auto border-t border-ink-900/[0.06] pt-3">
-          <UserMenu user={user} demo={demo} />
+          <UserMenu user={user} demo={demo} sso={sso} />
         </div>
       </aside>
 
@@ -86,7 +86,7 @@ export function WorkspaceShell({ user, demo, children }: { user: SessionUser; de
           <button aria-label="Search" onClick={() => window.dispatchEvent(new Event("open-command-palette"))} className="grid h-9 w-9 place-items-center rounded-full text-ink-500 hover:bg-ink-900/5">
             <Search size={17} />
           </button>
-          <UserMenu user={user} demo={demo} compact align="down" />
+          <UserMenu user={user} demo={demo} sso={sso} compact align="down" />
         </div>
       </header>
 
@@ -115,7 +115,7 @@ export function WorkspaceShell({ user, demo, children }: { user: SessionUser; de
         </div>
       </nav>
 
-      <CommandPalette role={user.role} demo={demo} />
+      <CommandPalette role={user.role} demo={demo} sso={sso} />
     </div>
   );
 }

@@ -8,5 +8,5 @@ export const dynamic = "force-dynamic";
 
 export default async function MonitoringPage() {
   const user = await requirePageUser("monitoring");
-  return <ControlCenter data={monitoringOverview()} firstName={user.name.split(" ")[0]} />;
+  return <ControlCenter data={await monitoringOverview()} firstName={user.name.split(" ")[0]} />;
 }

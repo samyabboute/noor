@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AgentPage() {
   const user = await requirePageUser("agent");
-  const home = agentHome(user.id);
+  const home = await agentHome(user.id);
   return (
     <AgentHome
       firstName={user.name.split(" ")[0]}

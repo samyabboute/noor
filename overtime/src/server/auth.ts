@@ -21,24 +21,24 @@ export class AuthError extends Error {
 export async function getSessionUser(): Promise<SessionUser | null> {
   let uid: string | undefined;
   let role: Role | undefined;
-  if (authMode() === "demo") {
+  if (authMode() !== "entra") {
     const payload = await verifySession(cookies().get(SESSION_COOKIE)?.value, sessionSecret());
     uid = payload?.uid;
     role = payload?.role;
   } else {
     const session = await getServerSession(authOptions);
     const email = session?.user?.email;
-    const user = email ? repo().userByEmail(email) : undefined;
+    const user = email ? (await repo()).userByEmail(email) : undefined;
     uid = user?.id;
     role = (session?.user as { role?: Role } | undefined)?.role;
   }
   if (!uid) return null;
-  const user = repo().user(uid);
+  const user = (await repo()).user(uid);
   if (!user || !user.active) return null;
   // Demo: the directory decides the role, a cookie can't escalate it.
   // Entra: the role comes from the user's Entra security groups (the IdP is authoritative).
   const effective: Role = authMode() === "entra" && role ? role : user.role;
-  if (authMode() === "demo" && role !== user.role) return null;
+  if (authMode() !== "entra" && role !== user.role) return null;
   return { id: user.id, name: user.name, email: user.email, role: effective, teamId: user.teamId, language: user.language };
 }
 

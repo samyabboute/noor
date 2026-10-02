@@ -1,4 +1,4 @@
-import { Check, Mail, Minus, Plus, Send, Sparkles, X, Eye, FileText, Users, Flag, Undo2, Pencil } from "lucide-react";
+import { Check, Mail, Minus, Plus, Send, Sparkles, X, Eye, FileText, Users, Flag, Undo2, Pencil, Upload, KeyRound, LogIn, UserPlus, UserMinus, ListX } from "lucide-react";
 import type { AuditAction } from "@/lib/types";
 import { cn } from "@/lib/cn";
 import { relativeTime } from "@/lib/time";
@@ -31,6 +31,12 @@ const meta: Record<AuditAction, { icon: React.ReactNode; tone: string; text: (i:
   TEMPLATE_UPDATED: { icon: <FileText size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> updated template {i.detail ? <span className="text-ink-500">“{i.detail}”</span> : null}</> },
   GROUP_CREATED: { icon: <Users size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> created group {i.detail ? <span className="text-ink-500">“{i.detail}”</span> : null}</> },
   GROUP_DELETED: { icon: <Users size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> deleted group {i.detail ? <span className="text-ink-500">“{i.detail}”</span> : null}</> },
+  LIST_IMPORTED: { icon: <Upload size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> updated {i.detail ? <span className="text-ink-500">{i.detail}</span> : "a distribution list"}</> },
+  LIST_DELETED: { icon: <ListX size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> removed {i.detail ? <span className="text-ink-500">{i.detail}</span> : "a distribution list"}</> },
+  PERSON_ADDED: { icon: <UserPlus size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> added {i.targetName} to the team</> },
+  PERSON_REMOVED: { icon: <UserMinus size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> removed {i.targetName}</> },
+  PIN_RESET: { icon: <KeyRound size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> reset {i.targetName}’s PIN</> },
+  SIGNED_IN: { icon: <LogIn size={13} />, tone: "bg-ink-100 text-ink-600", text: (i) => <><b>{i.actorName}</b> signed in</> },
 };
 
 export function Timeline({ items, className, showRequest }: { items: TimelineItem[]; className?: string; showRequest?: boolean }) {

@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export default async function TemplatesPage() {
   const user = await requirePageUser("monitoring");
-  const r = repo();
+  const r = await repo();
   const templates = r.templates().map((t) => ({ ...t, updatedByName: r.user(t.updatedBy)?.name || "—" }));
   return <TemplatesView templates={templates} me={user.name} />;
 }

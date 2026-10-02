@@ -8,5 +8,5 @@ export const dynamic = "force-dynamic";
 
 export default async function ReportsPage() {
   await requirePageUser("management");
-  return <ReportsView week={analytics({ range: 7 })} month={analytics({ range: 30 })} quarter={analytics({ range: 90 })} />;
+  return <ReportsView week={await analytics({ range: 7 })} month={await analytics({ range: 30 })} quarter={await analytics({ range: 90 })} />;
 }

@@ -1,6 +1,6 @@
 import { requireUser } from "@/server/auth";
 import { body, route } from "@/server/http";
-import { repo, ValidationError } from "@/server/store";
+import { mutate, ValidationError } from "@/server/store";
 import { agentOffer } from "@/server/views";
 
 type Ctx = { params: { id: string } };
@@ -10,7 +10,9 @@ export const POST = route<Ctx>(async (req, { params }) => {
   const user = await requireUser("agent");
   const { decision, minutes } = await body<{ decision?: string; minutes?: number }>(req);
   if (decision !== "confirm" && decision !== "decline" && decision !== "withdraw") throw new ValidationError("Unknown response.");
-  const r = repo();
-  const rec = r.respond(user.id, params.id, decision, typeof minutes === "number" ? minutes : undefined);
-  return { offer: agentOffer(r, r.request(params.id)!, rec) };
+  const offer = await mutate((r) => {
+    const rec = r.respond(user.id, params.id, decision, typeof minutes === "number" ? minutes : undefined);
+    return agentOffer(r, r.request(params.id)!, rec);
+  });
+  return { offer };
 });

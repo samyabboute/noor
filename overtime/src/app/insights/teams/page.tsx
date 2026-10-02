@@ -12,8 +12,8 @@ export const dynamic = "force-dynamic";
 
 export default async function TeamsPage() {
   await requirePageUser("management");
-  const a = analytics({ range: 30 });
-  const r = repo();
+  const a = await analytics({ range: 30 });
+  const r = await repo();
   return (
     <div>
       <SectionTitle eyebrow="Teams · last 30 days" title="How each team shows up." description="Aggregate response by team. Individual contact details stay with Monitoring." />

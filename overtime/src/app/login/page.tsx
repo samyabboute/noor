@@ -7,9 +7,9 @@ import { LoginView } from "@/components/auth/login-view";
 export const metadata: Metadata = { title: "Sign in" };
 export const dynamic = "force-dynamic";
 
-export default function LoginPage() {
+export default async function LoginPage() {
   const mode = authMode();
-  const r = repo();
+  const r = await repo();
   const agents = mode === "demo" ? r.users().filter((u) => u.role === "agent" && u.active).map((u) => ({ id: u.id, name: u.name, team: (u.teamId || "").toUpperCase() })) : [];
   const personas =
     mode === "demo"

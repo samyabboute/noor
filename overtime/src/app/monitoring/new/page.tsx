@@ -10,8 +10,8 @@ export const dynamic = "force-dynamic";
 
 export default async function NewRequestPage({ searchParams }: { searchParams: { draft?: string } }) {
   const user = await requirePageUser("monitoring");
-  const dir = monitoringDirectory();
-  const r = repo();
+  const dir = await monitoringDirectory();
+  const r = await repo();
   const now = nowMinutes();
   // Suggest the usual 18:00 peak, or the next sensible slot if that has passed.
   const suggested = now < 17 * 60 ? "18:00" : fromMinutes(Math.min(23 * 60 + 30, Math.ceil((now + 60) / 15) * 15));

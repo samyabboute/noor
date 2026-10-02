@@ -12,13 +12,13 @@ export function generateMetadata({ params }: { params: { id: string } }): Metada
 
 export default async function RequestPage({ params, searchParams }: { params: { id: string }; searchParams: { launched?: string } }) {
   await requirePageUser("monitoring");
-  const detail = requestDetail(params.id);
+  const detail = await requestDetail(params.id);
   if (!detail) notFound();
-  const dir = monitoringDirectory();
+  const dir = await monitoringDirectory();
   return (
     <RequestDetailView
       detail={detail}
-      nudge={pendingNudgeDraft(params.id)}
+      nudge={await pendingNudgeDraft(params.id)}
       directory={{ agents: dir.agents, lists: dir.lists, groups: dir.groups }}
       launched={searchParams.launched === "1" && detail.card.status === "live"}
     />

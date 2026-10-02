@@ -22,7 +22,7 @@ export function parseFilters(sp: URLSearchParams | Record<string, string | strin
   const status = get("status");
   return {
     range: range === 7 || range === 90 ? range : 30,
-    team: team === "rbc" || team === "rsm" || team === "bm" ? team : undefined,
+    team: team && /^[a-z0-9-]{1,16}$/.test(team) ? team : undefined,
     dl: get("dl"),
     agent: get("agent"),
     owner: get("owner"),
@@ -43,8 +43,8 @@ const empty = (): Slice => ({ requests: 0, recipients: 0, confirmed: 0, declined
 const avg = (xs: number[]) => (xs.length ? xs.reduce((a, b) => a + b, 0) / xs.length : 0);
 
 /** Aggregates only — names appear solely in the participation ranking, never contact details. */
-export function analytics(f: AnalyticsFilters) {
-  const r = repo();
+export async function analytics(f: AnalyticsFilters) {
+  const r = await repo();
   const today = todayISO();
   const from = shiftDate(today, -(f.range - 1));
   const prevFrom = shiftDate(from, -f.range);
@@ -170,4 +170,4 @@ export function analytics(f: AnalyticsFilters) {
   };
 }
 
-export type Analytics = ReturnType<typeof analytics>;
+export type Analytics = Awaited<ReturnType<typeof analytics>>;

@@ -1,10 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { KeyRound } from "lucide-react";
+import { api } from "@/lib/api";
+import { useToast } from "@/components/ui/toast";
 import { Search } from "lucide-react";
 import { formatDuration, relativeTime } from "@/lib/time";
 import { SectionTitle } from "@/components/ui/card";
-import { Segmented } from "@/components/ui/select";
+import { Select } from "@/components/ui/select";
 import { DataTable, type Column } from "@/components/ui/data-table";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -25,11 +29,25 @@ interface Agent {
   minutes: number;
   rate: number;
   lastResponse: string | null;
+  hasPin: boolean;
 }
 
-export function AgentDirectory({ agents }: { agents: Agent[] }) {
+export function AgentDirectory({ agents, pins }: { agents: Agent[]; pins: boolean }) {
   const [q, setQ] = useState("");
   const [team, setTeam] = useState("all");
+  const router = useRouter();
+  const { toast } = useToast();
+  const teams = useMemo(() => [...new Set(agents.map((a) => a.teamCode).filter(Boolean))].sort(), [agents]);
+
+  async function resetPin(a: Agent) {
+    try {
+      await api(`/api/people/${a.id}/reset-pin`, { method: "POST" });
+      toast({ title: `PIN reset for ${a.name}`, description: "They choose a new one at their next sign-in." });
+      router.refresh();
+    } catch (e) {
+      toast({ tone: "error", title: "Couldn’t reset the PIN", description: (e as Error).message });
+    }
+  }
   const rows = useMemo(
     () => agents.filter((a) => (team === "all" || a.teamCode === team) && (a.name + " " + a.email).toLowerCase().includes(q.trim().toLowerCase())),
     [agents, q, team],
@@ -70,6 +88,23 @@ export function AgentDirectory({ agents }: { agents: Agent[] }) {
     },
     { key: "min", header: "Extra time", sort: (a) => a.minutes, cell: (a) => <span className="tnum text-ink-600">{a.minutes ? `+${formatDuration(a.minutes)}` : "—"}</span> },
     { key: "last", header: "Last answer", sort: (a) => a.lastResponse || "", cell: (a) => <span className="text-ink-400" suppressHydrationWarning>{a.lastResponse ? relativeTime(a.lastResponse) : "—"}</span> },
+    ...(pins
+      ? [
+          {
+            key: "pin",
+            header: "PIN",
+            align: "right" as const,
+            cell: (a: Agent) =>
+              a.hasPin ? (
+                <button onClick={() => resetPin(a)} className="inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[12.5px] font-medium text-ink-500 hover:bg-ink-50 hover:text-ink-900">
+                  <KeyRound size={13} /> Reset
+                </button>
+              ) : (
+                <span className="text-[12.5px] text-ink-300">Not signed in yet</span>
+              ),
+          },
+        ]
+      : []),
   ];
 
   return (
@@ -80,7 +115,7 @@ export function AgentDirectory({ agents }: { agents: Agent[] }) {
           <Search size={16} className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-ink-400" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search agent…" aria-label="Search agents" className="field pl-10" />
         </div>
-        <Segmented label="Team" value={team} onChange={setTeam} options={["all", "RBC", "RSM", "BM"].map((t) => ({ value: t, label: t === "all" ? "All teams" : t }))} />
+        <Select label="Team" value={team} onChange={setTeam} options={["all", ...teams].map((t) => ({ value: t, label: t === "all" ? "All teams" : t }))} className="w-40" />
       </div>
       <div className="surface mt-4 overflow-hidden">
         <DataTable
@@ -88,7 +123,7 @@ export function AgentDirectory({ agents }: { agents: Agent[] }) {
           rows={rows}
           rowKey={(a) => a.id}
           columns={columns}
-          empty={<EmptyState compact art="people" title="No agents match." description="Try a different name or team." />}
+          empty={<EmptyState compact art="people" title={agents.length ? "No agents match." : "No agents yet."} description={agents.length ? "Try a different name or team." : "Import your distribution lists to bring your agents in."} />}
           mobile={(a) => (
             <div className="flex items-center gap-3">
               <Avatar name={a.name} size={34} />

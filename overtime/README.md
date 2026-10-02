@@ -10,7 +10,11 @@ Overtime replaces the "Bonjour à tous… envoyez-nous votre nouvelle heure de d
 
 ---
 
-## Run it
+## Put it online
+
+**→ [DEPLOY.md](./DEPLOY.md)** (in French): Vercel + Neon Postgres, access-code sign-in, importing the DLs. About 15 minutes, no IT access or SSO required.
+
+## Run it locally
 
 ```bash
 cd overtime
@@ -84,22 +88,45 @@ overtime/
   supabase/migrations/      Production Postgres schema + Row Level Security
 ```
 
-- **Repository** (`server/store.ts`): a single interface that every page and route goes through. Demo mode keeps seeded data in memory (`server/seed.ts`: 46 agents, 3 DLs, 2 groups, 6 templates, about 90 days of history, one live request, one draft). For production, implement the same surface on Supabase with `supabase/migrations/0001_init.sql`.
+- **Repository** (`server/store.ts`): every page reads through `await repo()` and every change goes through `await mutate(r => …)`, which runs in a transaction (`server/backend.ts`). Demo mode starts from seeded sample data (`server/seed.ts`: 46 fictional agents, 3 DLs, about 90 days of history, one live request and one draft). The other modes start empty with the default templates.
 - **Read models** (`server/views.ts`): pages get role-shaped data, never raw rows. An agent's data never includes another agent's details. Management gets aggregates, plus names only in the participation ranking.
 - **Live updates**: `useLiveRefresh` re-renders the server page every 4–8 s while the tab is visible, and the launch screen polls a lightweight endpoint. Supabase Realtime or SSE can replace this later without changing any page.
 
 **Stack:** Next.js 14, TypeScript (strict), Tailwind CSS, Framer Motion, NextAuth (Entra ID), Geist, lucide-react. The rest of this repository (Maison Noor) already used Next 14, Tailwind, Framer Motion and NextAuth, so Overtime keeps the same stack as a separate app in its own folder and touches nothing else.
 
-## Authentication — two modes, never mixed
+## Authentication: three modes, never mixed
 
-| | Demo mode | Production (Entra) mode |
-|---|---|---|
-| Activates | default when Entra isn't configured | automatically when `AZURE_AD_CLIENT_ID/SECRET/TENANT_ID` are set (or `AUTH_MODE=entra`) |
-| Sign-in | persona picker, labelled **DEMO** everywhere | **Sign in with Microsoft** (NextAuth Azure AD) |
-| Session | HMAC-signed, httpOnly, SameSite=Lax cookie (12 h) | NextAuth JWT |
-| Role | from the directory record (a cookie can't raise its own role) | from Entra security groups (`ENTRA_GROUP_MONITORING`, `ENTRA_GROUP_MANAGEMENT`) |
+| | Demo | Access code (no SSO) | Microsoft Entra ID |
+|---|---|---|---|
+| Activates | nothing configured | `ACCESS_CODE_AGENT` + `ACCESS_CODE_MONITORING` set | `AZURE_AD_CLIENT_ID/SECRET/TENANT_ID` set |
+| Sign-in | persona picker, badged **DEMO** | role code → your name → personal 4–8 digit PIN (chosen at first sign-in) | **Sign in with Microsoft** |
+| People | seeded, fictional | agents imported from DL exports; Monitoring/Management add themselves with their code | from the directory |
+| Session | HMAC-signed httpOnly cookie (12 h) | same | NextAuth JWT |
+| Role | directory record | the code used (verified on every call) | Entra security groups |
 
-In Entra mode `/api/auth/demo` returns `404`.
+`AUTH_MODE` can force a mode. Outside demo, `/api/auth/demo` returns `404`.
+
+**Access-code mode, security details:**
+- PINs are stored as salted scrypt hashes.
+- 5 wrong PINs lock that person for 15 minutes (persisted). Monitoring can reset a PIN.
+- Wrong access codes are slowed down per client address. Successful sign-ins never count, because a whole floor shares one IP.
+- Agents can't add themselves: only people on an imported DL can sign in.
+- Each confirmation still leaves from the agent's own Outlook mailbox.
+
+## Data
+
+| `DATABASE_URL` / `POSTGRES_URL` | Storage |
+|---|---|
+| not set | in memory, one copy per process (local and demo) |
+| set (Neon, Supabase, Vercel Postgres) | Postgres. The whole workspace is one JSONB row. Every change runs in a `SELECT … FOR UPDATE` transaction, so simultaneous answers are applied one after another and never lost (tested with 60 agents answering at once). The table is created automatically. |
+
+`supabase/migrations/0001_init.sql` is the fully relational schema with RLS, for when Overtime outgrows a single document.
+
+**Real names and addresses never live in the source code.** Monitoring imports each DL in the app: drop the `.docx` export (read in the browser) or paste the members as Outlook copies them. Overtime then:
+- reads the `"Lastname Firstname, Org unit" <email>` format;
+- takes the team from the org unit (RBC, RSM, BM, OVH, MSG…);
+- skips nested groups;
+- deactivates agents who are no longer on any list.
 
 ## Security
 
@@ -131,7 +158,8 @@ Skip links, visible focus rings, ARIA roles on all custom controls (checkbox wit
 - The confirmation email goes **To:** the request owner, **Cc:** the rest of the monitoring team, in the agent's language when a translation exists.
 - "Agents needed" defaults to 60 % of the people reached, and Monitoring can change it.
 - Demo addresses use the reserved `example.com` domain, and demo names are fictional.
-- Demo data lives in server memory, one copy per process. A multi-instance deployment (for example serverless) needs the Supabase repository so that every instance shares state.
+- Without `DATABASE_URL`, data lives in server memory, one copy per process. Online (serverless), set a database: see DEPLOY.md.
+- Imported agents get `DEFAULT_AGENT_LANGUAGE` (default `fr`) and can change it in Profile.
 
 ## Ready to extend
 

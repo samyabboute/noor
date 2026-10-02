@@ -20,7 +20,7 @@ interface Cmd {
 }
 
 /** ⌘K — jump anywhere, or start the one thing you came to do. */
-export function CommandPalette({ role, demo }: { role: Role; demo: boolean }) {
+export function CommandPalette({ role, demo, sso = false }: { role: Role; demo: boolean; sso?: boolean }) {
   const [open, setOpen] = useState(false);
   const [q, setQ] = useState("");
   const [active, setActive] = useState(0);
@@ -60,9 +60,9 @@ export function CommandPalette({ role, demo }: { role: Role; demo: boolean }) {
     if (role === "monitoring") list.push({ id: "new", label: "Create overtime request", group: "Actions", icon: <Plus size={16} />, run: go("/monitoring/new"), keywords: "new launch send" });
     for (const n of NAV[role]) list.push({ id: n.href, label: n.label, group: "Go to", icon: <n.icon size={16} />, run: go(n.href) });
     if (demo) list.push({ id: "switch", label: "Switch persona", group: "Account", icon: <Repeat2 size={16} />, run: go("/login?switch=1"), keywords: "demo role" });
-    list.push({ id: "out", label: "Sign out", group: "Account", icon: <LogOut size={16} />, run: () => doSignOut(demo, router) });
+    list.push({ id: "out", label: "Sign out", group: "Account", icon: <LogOut size={16} />, run: () => doSignOut(sso, router) });
     return list;
-  }, [role, demo, router]);
+  }, [role, demo, sso, router]);
 
   const filtered = cmds.filter((c) => (c.label + " " + (c.keywords || "")).toLowerCase().includes(q.toLowerCase()));
   const groups = [...new Set(filtered.map((c) => c.group))];

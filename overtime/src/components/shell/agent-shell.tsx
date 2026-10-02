@@ -11,7 +11,7 @@ import { DemoBadge, UserMenu } from "./user-menu";
 import { CommandPalette } from "./command-palette";
 
 /** The agent gets no dashboard chrome — a quiet header and the page. */
-export function AgentShell({ user, demo, children }: { user: SessionUser; demo: boolean; children: React.ReactNode }) {
+export function AgentShell({ user, demo, sso = false, children }: { user: SessionUser; demo: boolean; sso?: boolean; children: React.ReactNode }) {
   const pathname = usePathname();
   const nav = NAV.agent;
   return (
@@ -38,7 +38,7 @@ export function AgentShell({ user, demo, children }: { user: SessionUser; demo: 
               );
             })}
           </nav>
-          <UserMenu user={user} demo={demo} compact align="down" />
+          <UserMenu user={user} demo={demo} sso={sso} compact align="down" />
         </div>
       </header>
       <main id="main" className="pb-28 sm:pb-16">
@@ -55,7 +55,7 @@ export function AgentShell({ user, demo, children }: { user: SessionUser; demo: 
           );
         })}
       </nav>
-      <CommandPalette role="agent" demo={demo} />
+      <CommandPalette role="agent" demo={demo} sso={sso} />
     </div>
   );
 }

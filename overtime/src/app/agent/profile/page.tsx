@@ -3,15 +3,14 @@ import { requirePageUser } from "@/server/auth";
 import { repo } from "@/server/store";
 import { Avatar } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { LanguagePicker } from "@/components/agent/language-picker";
 
 export const metadata: Metadata = { title: "Profile" };
 export const dynamic = "force-dynamic";
 
-const LANG: Record<string, string> = { en: "English", fr: "Français", de: "Deutsch", it: "Italiano", pl: "Polski" };
-
 export default async function ProfilePage() {
   const session = await requirePageUser("agent");
-  const r = repo();
+  const r = await repo();
   const user = r.user(session.id)!;
   const team = r.teams().find((t) => t.id === user.teamId);
   const lists = r.dls().filter((d) => d.memberIds.includes(user.id));
@@ -19,10 +18,9 @@ export default async function ProfilePage() {
 
   const rows: [string, React.ReactNode][] = [
     ["Email", user.email],
-    ["Team", team ? `${team.code} — ${team.name}` : "—"],
+    ["Team", team ? (team.name !== team.code ? `${team.code} — ${team.name}` : team.code) : "—"],
     ["Role", user.title],
-    ["Usual logout", <span key="s" className="tnum">{user.shiftEnd}</span>],
-    ["Language", `${LANG[user.language]} · confirmations are written in this language`],
+    ["Language", <LanguagePicker key="l" value={user.language} />],
     ["Distribution lists", <span key="d" className="flex flex-wrap gap-1.5">{lists.map((l) => <Badge key={l.id}>{l.name}</Badge>)}</span>],
     ["Groups", groups.length ? <span key="g" className="flex flex-wrap gap-1.5">{groups.map((g) => <Badge key={g.id}>{g.name}</Badge>)}</span> : "—"],
   ];

@@ -12,6 +12,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { Select } from "@/components/ui/select";
 import { Logo } from "@/components/shell/logo";
 import { useToast } from "@/components/ui/toast";
+import { CodeSignIn } from "./code-sign-in";
 
 interface Persona {
   id: string;
@@ -23,7 +24,7 @@ interface Persona {
 
 const ROLE_TAG: Record<Role, string> = { agent: "Agent", monitoring: "Monitoring", management: "Management" };
 
-export function LoginView({ mode, personas, agents }: { mode: "demo" | "entra"; personas: Persona[]; agents: { id: string; name: string; team: string }[] }) {
+export function LoginView({ mode, personas, agents }: { mode: "demo" | "code" | "entra"; personas: Persona[]; agents: { id: string; name: string; team: string }[] }) {
   const router = useRouter();
   const params = useSearchParams();
   const { toast } = useToast();
@@ -91,8 +92,11 @@ export function LoginView({ mode, personas, agents }: { mode: "demo" | "entra"; 
 
         <div className="mx-auto mt-12 w-full max-w-md lg:mt-0">
           <h2 className="text-2xl font-semibold tracking-[-0.03em]">Sign in</h2>
-          <p className="mt-2 text-sm text-ink-500">Use your work account. Your role decides what you see.</p>
+          <p className="mt-2 text-sm text-ink-500">{mode === "code" ? "Your team code, your name, your PIN. That’s it." : "Use your work account. Your role decides what you see."}</p>
 
+          {mode === "code" && <CodeSignIn />}
+
+          {mode !== "code" && (
           <button
             type="button"
             onClick={() => mode === "entra" && signIn("azure-ad")}
@@ -102,6 +106,7 @@ export function LoginView({ mode, personas, agents }: { mode: "demo" | "entra"; 
             <MicrosoftMark />
             Sign in with Microsoft
           </button>
+          )}
           {mode === "demo" && (
             <p className="mt-2.5 flex items-start gap-2 text-[12.5px] leading-snug text-ink-400">
               <Lock size={13} className="mt-0.5 shrink-0" />

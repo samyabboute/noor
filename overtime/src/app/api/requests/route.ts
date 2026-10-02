@@ -1,13 +1,13 @@
 import { requireUser } from "@/server/auth";
 import { body, route } from "@/server/http";
-import { repo, validateRequestInput } from "@/server/store";
+import { mutate, repo, validateRequestInput } from "@/server/store";
 import { requestCard } from "@/server/views";
 
 type Ctx = { params: Record<string, string> };
 
 export const GET = route<Ctx>(async () => {
   await requireUser("monitoring");
-  const r = repo();
+  const r = await repo();
   return { requests: r.requests().filter((q) => q.status !== "cancelled").map((q) => requestCard(r, q)) };
 });
 
@@ -16,9 +16,12 @@ export const POST = route<Ctx>(async (req) => {
   const user = await requireUser("monitoring");
   const raw = await body<{ send?: boolean; draftId?: string }>(req);
   const send = raw.send === true;
-  const input = validateRequestInput(raw, send);
-  const created = repo().createRequest(user.id, input, send, typeof raw.draftId === "string" ? raw.draftId : undefined);
-  return { id: created.id, status: created.status };
+  const created = await mutate((r) => {
+    const input = validateRequestInput(raw, send, r);
+    const req = r.createRequest(user.id, input, send, typeof raw.draftId === "string" ? raw.draftId : undefined);
+    return { id: req.id, status: req.status };
+  });
+  return created;
 });
 
 export const dynamic = "force-dynamic";

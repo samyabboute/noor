@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HistoryPage() {
   const user = await requirePageUser("agent");
-  const { history, stats } = agentHome(user.id);
+  const { history, stats } = await agentHome(user.id);
   const rate = stats.asked ? Math.round((stats.confirmed / stats.asked) * 100) : 0;
 
   return (
