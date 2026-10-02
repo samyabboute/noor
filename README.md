@@ -1,5 +1,7 @@
 # Maison Noor
 
+> This repository also hosts **[Overtime](./overtime/README.md)** — a separate internal app for one-click voluntary overtime (`cd overtime && npm install && npm run dev`). It is fully self-contained and does not affect the Maison Noor build.
+
 **The light of the date.** A luxury house whose product is the date — designed first for the Polish market.
 
 This is not a "dates shop". It is a cinematic, editorial e-commerce experience with the desirability of a
