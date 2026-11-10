@@ -5,7 +5,8 @@ import Discover from "./components/Discover";
 import OriginScene from "./components/OriginScene";
 import CoatedMoment from "./components/CoatedMoment";
 import CollectionSection from "./components/CollectionSection";
-import { TheDate, Craftsmanship, GiftCollection, Corporate, Story } from "./components/EditorialSections";
+import CoffretsPrestige from "./components/CoffretsPrestige";
+import { TheDate, Craftsmanship, Corporate, Story } from "./components/EditorialSections";
 import DecisionsCounter from "./components/DecisionsCounter";
 import { Reviews, Instagram } from "./components/SocialProof";
 import Newsletter from "./components/Newsletter";
@@ -24,7 +25,7 @@ export default function Home() {
       <TheDate />
       <DecisionsCounter />
       <Craftsmanship />
-      <GiftCollection />
+      <CoffretsPrestige />
       <Corporate />
       <Story />
       <Reviews />

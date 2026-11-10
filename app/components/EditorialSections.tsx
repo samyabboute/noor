@@ -112,46 +112,6 @@ export function Craftsmanship() {
   );
 }
 
-/* 05 — Gift Collection */
-export function GiftCollection() {
-  const { t } = useStore();
-  return (
-    <section id="prezenty" className="relative overflow-hidden bg-paper pad-y text-ink">
-      {/* A warm tonal lean toward the gift, not a glowing circle */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{ background: "linear-gradient(105deg, rgba(252,251,248,0) 45%, rgba(242,236,222,0.55) 100%)" }}
-      />
-      <div className="relative mx-auto grid max-w-[1400px] items-center gap-16 px-6 md:px-10 lg:grid-cols-2">
-        <div>
-          <Reveal><SectionIndex>{t("gift.index")}</SectionIndex></Reveal>
-          <Reveal delay={0.05}><p className="eyebrow mt-5">{t("gift.eyebrow")}</p></Reveal>
-          <Reveal delay={0.1} variant="mask"><h2 className="display mt-3 text-5xl md:text-7xl">{t("gift.title")}</h2></Reveal>
-          <Reveal delay={0.15}>
-            <p className="mt-8 max-w-md font-sans text-[15px] leading-[1.9] text-ink/70">{t("gift.body")}</p>
-          </Reveal>
-          <Reveal delay={0.2}>
-            <Link href="/produkt/collection-noor" className="btn-solid mt-10">
-              {t("gift.cta")}
-            </Link>
-          </Reveal>
-        </div>
-        <Reveal delay={0.1}>
-          <div className="relative mx-auto w-full max-w-[500px]">
-            <Photo
-              src="/products/Coffret-Revelation-02.webp"
-              alt="Maison Noor — L'Écrin Noor"
-              className="aspect-square w-full"
-              fit="contain"
-            />
-          </div>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 /* 06 — Corporate Gifting */
 export function Corporate() {
   const { t } = useStore();

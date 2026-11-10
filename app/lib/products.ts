@@ -308,8 +308,8 @@ export const products: Product[] = [
     name: "L'Écrin Découverte",
     category: "coffret",
     tier: "collection",
-    image: "/products/COFFRET_RAMADAN_SITE_26.webp",
-    fit: "contain",
+    image: "/products/coffret-ecrin-decouverte.webp",
+    fit: "cover",
     tagline: {
       pl: "Pięć sygnatur, by poznać dom Noor.",
       en: "Five signatures, to discover the house of Noor.",
@@ -340,8 +340,8 @@ export const products: Product[] = [
     name: "L'Écrin Noor",
     category: "coffret",
     tier: "royal",
-    image: "/products/Coffret-Revelation-02.webp",
-    fit: "contain",
+    image: "/products/coffret-ecrin-noir.webp",
+    fit: "cover",
     tagline: {
       pl: "Dziesięć oblewanych sygnatur w jednej szkatule.",
       en: "Ten enrobed signatures in one écrin.",
@@ -373,8 +373,8 @@ export const products: Product[] = [
     name: "Le Grand Écrin",
     category: "coffret",
     tier: "royal",
-    image: "/products/Sans-titre-39.webp",
-    fit: "contain",
+    image: "/products/coffret-ecrin-grand.webp",
+    fit: "cover",
     tagline: {
       pl: "Nasz najbardziej okazały gest. Dla chwil, które się liczą.",
       en: "Our most lavish gesture. For the moments that matter.",
@@ -408,8 +408,8 @@ export const products: Product[] = [
     name: "Maison Noor · Corporate",
     category: "coffret",
     tier: "corporate",
-    image: "/products/63_a6d01f44-fd31-4e5c-8080-ab89ff18ae40.webp",
-    fit: "contain",
+    image: "/products/coffret-ecrin-grand.webp",
+    fit: "cover",
     tagline: {
       pl: "Twoja marka, nasze rzemiosło. Prezenty firmowe z klasą.",
       en: "Your brand, our craft. Corporate gifting with grace.",
